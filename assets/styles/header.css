@@ -1,0 +1,5 @@
+.dropdown-item {
+    display: flex !important;
+    align-items: center;
+    gap: 5px;
+}

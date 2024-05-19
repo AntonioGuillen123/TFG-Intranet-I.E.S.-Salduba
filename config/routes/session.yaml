@@ -1,0 +1,18 @@
+try:
+  path: /try
+  controller:  App\Controller\TryController::index
+
+login:
+  path: /session
+  controller:  App\Controller\SessionController::index
+  methods: [GET]
+
+checkUser:
+  path: /session
+  controller:  App\Controller\SessionController::checkUser
+  methods: [POST]
+
+logout:
+  path: /session/logout
+  controller:  App\Controller\SessionController::logout
+  methods: [GET]

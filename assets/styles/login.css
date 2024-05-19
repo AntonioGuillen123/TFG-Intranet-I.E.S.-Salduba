@@ -1,0 +1,62 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-image: url('../../public/images/background.jpg');
+  /* Ruta a tu imagen de fondo */
+  background-size: cover;
+  /* Cubrir todo el área disponible */
+  background-position: center;
+  /* Centrar la imagen */
+  background-repeat: no-repeat;
+  /* Evitar repetición de la imagen */
+}
+
+main {
+  display: flex;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  /* background-color: rgb(50, 100, 150); */
+}
+
+.form-signin {
+  max-width: 25rem;
+  padding: 1rem;
+  background-color: var(--login-color-inside);
+  border-radius: 15px;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  margin-top: .5rem;
+}
+
+#inside-register {
+  background-color: var(--login-color-inside);
+}
+
+#register-body-card {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+input::placeholder {
+  color: white !important;
+}
+
+#login-container {
+  background-color: rgba(99, 119, 143, 0.496);
+}
