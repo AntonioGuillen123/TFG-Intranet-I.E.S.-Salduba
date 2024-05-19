@@ -10,33 +10,34 @@
 	<ul
 		class="navbar-nav flex-row">
 		{# <div class="container mt-3">
-					<div class="dropdown">
-						<button class="btn btn-secondary dropdown-toggle" type="button" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-							<i class="fa-solid fa-bell"></i>
-							<span class="badge bg-danger">3</span>
-						</button>
-						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
-							<li>
-								<h6 class="dropdown-header">Notificaciones</h6>
-							</li>
-							<li>
-								<a class="dropdown-item" href="#">Notificación 1</a>
-							</li>
-							<li>
-								<a class="dropdown-item" href="#">Notificación 2</a>
-							</li>
-							<li>
-								<a class="dropdown-item" href="#">Notificación 3</a>
-							</li>
-							<li><hr class="dropdown-divider"></li>
-							<li>
-								<a class="dropdown-item text-center" href="#">Ver todas</a>
-							</li>
-						</ul>
-					</div>
-				</div> #}
+													<div class="dropdown">
+														<button class="btn btn-secondary dropdown-toggle" type="button" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+															<i class="fa-solid fa-bell"></i>
+															<span class="badge bg-danger">3</span>
+														</button>
+														<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+															<li>
+																<h6 class="dropdown-header">Notificaciones</h6>
+															</li>
+															<li>
+																<a class="dropdown-item" href="#">Notificación 1</a>
+															</li>
+															<li>
+																<a class="dropdown-item" href="#">Notificación 2</a>
+															</li>
+															<li>
+																<a class="dropdown-item" href="#">Notificación 3</a>
+															</li>
+															<li><hr class="dropdown-divider"></li>
+															<li>
+																<a class="dropdown-item text-center" href="#">Ver todas</a>
+															</li>
+														</ul>
+													</div>
+												</div> #}
 		<li class="nav-item text-nowrap">
 			<button class="nav-link px-3 text-white dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-target="" aria-controls="" aria-expanded="false" aria-label="">
+				<span class="badge bg-danger">0</span>
 				<i class="fa-solid fa-bell"></i>
 			</button>
 			<ul class="dropdown-menu dropdown-menu-end position-absolute" aria-labelledby="notificationDropdown">
@@ -45,18 +46,52 @@
 				</li>
 				<li><hr class="dropdown-divider"></li>
 				<li>
-					
-					<a class="dropdown-item" href="#"><i class="fa-solid fa-envelope-open-text"></i>Notificación 1</a>
+					<div class="d-flex align-items-center dropdown-item">
+						<i class="fa-solid fa-envelope-open-text"></i>
+						<div class="d-flex flex-column">
+							<span>
+								<b>Nuevo Mensaje</b>
+							</span>
+							<span>Hello World</span>
+							<span>Yuanma Benitez</span>
+						</div>
+						{# <span>
+													Notificación 1
+												</span> #}
+					</div>
+
 				</li>
 				<li>
-					<a class="dropdown-item" href="#">Notificación 2</a>
+					<div class="d-flex align-items-center dropdown-item">
+						<i class="fa-solid fa-newspaper"></i>
+						<div class="d-flex flex-column">
+							<span>
+								<b>Nueva Publicación</b>
+							</span>
+							<span>El mundo se cae</span>
+							<span>Kevin Soto</span>
+						</div>
+						{# <span>
+													Notificación 1
+												</span> #}
+					</div>
+
 				</li>
 				<li>
-					<a class="dropdown-item" href="#">Notificación 3</a>
-				</li>
-				
-				<li>
-					<a class="dropdown-item text-center" href="#">Ver todas</a>
+					<div class="d-flex align-items-center dropdown-item">
+						<i class="fa-solid fa-envelope-open-text"></i>
+						<div class="d-flex flex-column">
+							<span>
+								<b>Nuevo Mensaje</b>
+							</span>
+							<span>Hello World</span>
+							<span>Yuanma Benitez</span>
+						</div>
+						{# <span>
+													Notificación 1
+												</span> #}
+					</div>
+
 				</li>
 			</ul>
 		</li>
