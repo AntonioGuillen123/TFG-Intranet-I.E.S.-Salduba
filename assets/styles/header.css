@@ -1,5 +1,38 @@
+ul a {
+    text-decoration: none;
+}
+
+#icon-notify:hover, .fa-envelope:hover {
+    color: lightslategray !important;
+    transition: all .3s ease;
+}
+
+.dropdown-menu {
+    --bs-dropdown-link-active-bg: #191C1F;
+}
+
 .dropdown-item {
     display: flex !important;
     align-items: center;
     gap: 25px;
+}
+
+#header-notify {
+    gap: 6.1rem;
+}
+
+.delete-notify, #delete-all-notify{
+    cursor: pointer;
+}
+
+#delete-all-notify:hover{
+    color: green;
+}
+
+.delete-notify:hover{
+    color: firebrick;
+}
+
+.content-notify {
+    width: 8.65rem;
 }
