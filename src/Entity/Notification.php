@@ -16,8 +16,17 @@ class Notification
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\ManyToOne(inversedBy: 'notifications')]
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Session $user_from = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Session $user_to = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?NotificationType $type = null;
 
     public function getId(): ?int
     {
@@ -44,6 +53,30 @@ class Notification
     public function setUserFrom(?Session $user_from): static
     {
         $this->user_from = $user_from;
+
+        return $this;
+    }
+
+    public function getUserTo(): ?Session
+    {
+        return $this->user_to;
+    }
+
+    public function setUserTo(?Session $user_to): static
+    {
+        $this->user_to = $user_to;
+
+        return $this;
+    }
+
+    public function getType(): ?NotificationType
+    {
+        return $this->type;
+    }
+
+    public function setType(?NotificationType $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }

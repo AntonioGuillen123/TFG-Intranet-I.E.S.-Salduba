@@ -19,6 +19,7 @@ Encore
     .addStyleEntry('login', './assets/styles/login.css')
     .addStyleEntry('dashboard', './assets/styles/dashboard.css')
     .enableSassLoader()
-    .enableSingleRuntimeChunk();
+    .enableSingleRuntimeChunk()
+    .autoProvidejQuery();
 
 module.exports = Encore.getWebpackConfig();

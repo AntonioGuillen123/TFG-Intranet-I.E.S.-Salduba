@@ -1,0 +1,4 @@
+getNotifications:
+  path: /notification
+  controller:  App\Controller\NotificationController::index
+  methods: [GET]
