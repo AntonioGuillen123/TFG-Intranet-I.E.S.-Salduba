@@ -1,4 +1,9 @@
 getNotifications:
   path: /notification
-  controller:  App\Controller\NotificationController::index
+  controller: App\Controller\NotificationController::index
   methods: [GET]
+
+deleteNotification:
+  path: /notification/{id}
+  controller: App\Controller\NotificationController::delete
+  methods: [DELETE]
