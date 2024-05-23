@@ -11,7 +11,15 @@ import 'bootstrap'
 import './styles/global.scss'
 import $ from 'jquery'
 
-$(document).ready(() => getNotifications())
+$(document).ready(() => {
+    const deleteAllNotificationsButton = document.getElementById('delete-all-notify')
+    deleteAllNotificationsButton.addEventListener('click', (event) => {
+        event.stopPropagation()
+        deleteAllNotifications()
+    })
+
+    getNotifications()
+})
 
 const getNotifications = async () => {
     await $.ajax({
@@ -20,7 +28,6 @@ const getNotifications = async () => {
         success: (response) => {
             const data = JSON.parse(response)
 
-            console.log(data)
 
             createNotifications(data)
         },
@@ -36,7 +43,20 @@ const deleteNotification = async (id) => {
         type: 'DELETE',
         success: (data) => {
             /* alert('Borrao Picha') */
-            console.log(data)
+            getNotifications()
+        },
+        error: (err) => {
+            console.log('Error :(')
+        }
+    })
+}
+
+const deleteAllNotifications = async () => {
+    await $.ajax({
+        url: `/notification`,
+        type: 'DELETE',
+        success: () => {
+            console.log('e')
             getNotifications()
         },
         error: (err) => {
@@ -46,13 +66,18 @@ const deleteNotification = async (id) => {
 }
 
 const createNotifications = (data) => {
+    const { length } = data
+
     const notifyContainer = document.querySelector('#notify-container')
+    const getNotificationsElements = () => notifyContainer.querySelectorAll('.notify-element')
+    const notificationCount = document.querySelector('#notification-count')
+    notificationCount.innerHTML = length > 99 ? '99+' : length
 
-    const notifications = notifyContainer.querySelectorAll('.notify-element')
+    getNotificationsElements().forEach((item) => item.remove())
 
-    const { length } = notifications
+    console.log(data)
 
-    for (let i = 0; i < length; i++) notifications[i].remove()
+    data = data.slice(0, 3)
 
     data.forEach((item) => {
         const {
@@ -73,7 +98,7 @@ const createNotifications = (data) => {
         li.classList.add('notify-element')
 
         const container = document.createElement('div')
-        container.classList.add('d-flex', 'align-items-center', 'dropdown-item')
+        container.classList.add('dropdown-item')
 
         const iconType = document.createElement('i')
         iconType.classList.add('fa-solid', iconClassName)
@@ -116,10 +141,18 @@ const createNotifications = (data) => {
         notifyContainer.appendChild(li)
     })
 
-    if(notifyContainer.childNodes.length === 1){
-        const empty = document.createElement('li')
-        empty.innerHTML = 'Sin Notificaciones'
+    if (getNotificationsElements().length === 0) {
+        const li = document.createElement('li')
+        li.classList.add('notify-element')
 
-        notifyContainer.appendChild(empty)
+        const empty = document.createElement('div')
+        empty.classList.add('p-3', 'dropdown-item')
+
+        const emptyText = document.createElement('b')
+        emptyText.innerHTML = 'Sin Notificaciones :('
+
+        empty.appendChild(emptyText)
+        li.appendChild(empty)
+        notifyContainer.appendChild(li)
     }
 }

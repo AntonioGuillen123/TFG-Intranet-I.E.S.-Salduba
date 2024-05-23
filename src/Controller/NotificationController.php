@@ -13,10 +13,8 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class NotificationController extends AbstractController
 {
-    public function index(Request $request, SessionService $session, EntityManagerInterface $entityManager) : JsonResponse
+    public function index(Request $request, SessionService $session, EntityManagerInterface $entityManager) : Response
     {
-        define('MAX_NOTIFICATIONS', 3);
-
         $username = $session->get('username');
 
         $response = $this->redirectToRoute('index');
@@ -28,7 +26,6 @@ class NotificationController extends AbstractController
                 'SELECT n FROM App\Entity\Notification n WHERE n.user_to IN 
                 (SELECT s.id FROM APP\Entity\Session s WHERE s.username = :username)'
             )
-                ->setMaxResults(MAX_NOTIFICATIONS)
                 ->setParameters([
                     'username' => $username
                 ]);
@@ -49,13 +46,13 @@ class NotificationController extends AbstractController
 
             $response = $this->json(json_encode($result));
         } else {
-            $response = $this->json(['hola' => 'mundo']);
+            $response = $this->redirectToRoute('index');
         }
 
         return $response;
     }
-
-    public function delete(int $id, Request $request, SessionService $session, EntityManagerInterface $entityManager)
+    
+    public function delete(int $id, Request $request, SessionService $session, EntityManagerInterface $entityManager) : Response
     {
         $response = $this->redirectToRoute('index');
 
@@ -68,10 +65,31 @@ class NotificationController extends AbstractController
             $entityManager->flush();
             
             $response = new Response('Notification deleted', Response::HTTP_NO_CONTENT);
-            $response = $this->json(['hola' => 'f']);
 
         } else {
-            $response = $this->json(['hola' => 'mundo']);
+            $response = $this->redirectToRoute('index');
+        }
+
+        return $response;
+    }
+
+    public function deleteAll(Request $request, SessionService $session, EntityManagerInterface $entityManager) : Response
+    {
+        $response = $this->redirectToRoute('index');
+
+        $isAYAX = $request->isXmlHttpRequest();
+
+        if ($isAYAX) {
+            $notifications = $entityManager->getRepository(Notification::class)->findAll();
+
+            foreach($notifications as $notification) $entityManager->remove($notification);
+
+            $entityManager->flush();
+            
+            $response = new Response('Notifications deleted', Response::HTTP_NO_CONTENT);
+
+        } else {
+            $response = $this->redirectToRoute('index');
         }
 
         return $response;

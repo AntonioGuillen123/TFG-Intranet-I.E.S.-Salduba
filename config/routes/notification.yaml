@@ -7,3 +7,8 @@ deleteNotification:
   path: /notification/{id}
   controller: App\Controller\NotificationController::delete
   methods: [DELETE]
+
+deleteAllNotifications:
+  path: /notification
+  controller: App\Controller\NotificationController::deleteAll
+  methods: [DELETE]
