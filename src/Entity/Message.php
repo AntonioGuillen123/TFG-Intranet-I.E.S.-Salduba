@@ -39,10 +39,10 @@ class Message
     #[ORM\ManyToMany(targetEntity: UploadFileMessage::class)]
     private Collection $file;
 
-    #[ORM\Column]
+    #[ORM\Column(options: ["default" => false])]
     private ?bool $removed = false;
 
-    #[ORM\Column]
+    #[ORM\Column(options: ["default" => false])]
     private ?bool $important = false;
 
     public function __construct()

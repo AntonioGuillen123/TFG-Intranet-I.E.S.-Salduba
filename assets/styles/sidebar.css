@@ -6,6 +6,8 @@
     width: 1.5rem;
 } */
 
-/* .sidebar {
-    height: 100vh;
-} */
+@media (min-width: 768px) {
+    .sidebar {
+        height: 93vh !important;
+    }
+}

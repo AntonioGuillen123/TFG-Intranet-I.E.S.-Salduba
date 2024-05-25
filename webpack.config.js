@@ -13,6 +13,7 @@ Encore
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
     .addEntry('app', './assets/app.js')
+    .addEntry('messagejs', './assets/js/message.js')
     .addStyleEntry('global', './assets/styles/global.scss')
     .addStyleEntry('header', './assets/styles/header.css')
     .addStyleEntry('sidebar', './assets/styles/sidebar.css')

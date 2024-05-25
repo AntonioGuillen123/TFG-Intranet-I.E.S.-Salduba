@@ -1,3 +1,7 @@
+.card {
+    width: 41rem;
+}
+
 .message-check-container {
     width: 17% !important;
 }
@@ -13,6 +17,18 @@
 
 .icon-message {
     font-size: 1.5rem;
+}
+
+.icon-message.fa-recycle{
+    cursor: pointer;
+}
+
+.icon-message.fa-recycle:hover {
+    color: firebrick;
+}
+
+.image-message-container {
+    width: 5rem !important;
 }
 
 .col-1 {

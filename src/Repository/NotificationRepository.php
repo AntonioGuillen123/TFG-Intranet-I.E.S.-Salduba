@@ -16,28 +16,27 @@ class NotificationRepository extends ServiceEntityRepository
         parent::__construct($registry, Notification::class);
     }
 
-    //    /**
-    //     * @return Notification[] Returns an array of Notification objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('n')
-    //            ->andWhere('n.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('n.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findAllNotificationsFromUser($username)
+    {
 
-    //    public function findOneBySomeField($value): ?Notification
-    //    {
-    //        return $this->createQueryBuilder('n')
-    //            ->andWhere('n.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        $queryResult = $this->createQueryBuilder('n')
+            ->where('n.user_to IN (SELECT s.id FROM App\Entity\Session s WHERE s.username = :username)')
+            ->setParameter('username', $username)
+            ->getQuery()
+            ->getResult();
+
+        $result = [];
+
+        for ($i = 0; $i < count($queryResult); $i++) {
+            $result[] = [
+                'id' => $queryResult[$i]->getId(),
+                'title' => $queryResult[$i]->getTitle(),
+                'user_from' => $queryResult[$i]->getUserFrom()->getUsername(),
+                'user_to' => $queryResult[$i]->getUserTo()->getUsername(),
+                'type' => $queryResult[$i]->getType()->getName()
+            ];
+        }
+
+        return $result;
+    }
 }
