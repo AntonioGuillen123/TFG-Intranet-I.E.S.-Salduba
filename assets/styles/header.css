@@ -2,7 +2,7 @@ ul a {
     text-decoration: none;
 }
 
-#icon-notify:hover, .fa-envelope:hover {
+.icon-header:hover {
     color: lightslategray !important;
     transition: all .3s ease;
 }
@@ -16,6 +16,10 @@ ul a {
     align-items: center;
     justify-content: center;
     gap: 25px;
+}
+
+.message-category {
+    justify-content: space-between !important;
 }
 
 #notify-container {

@@ -18,6 +18,7 @@ Encore
     .addStyleEntry('sidebar', './assets/styles/sidebar.css')
     .addStyleEntry('login', './assets/styles/login.css')
     .addStyleEntry('dashboard', './assets/styles/dashboard.css')
+    .addStyleEntry('message', './assets/styles/message.css')
     .enableSassLoader()
     .enableSingleRuntimeChunk()
     .autoProvidejQuery();

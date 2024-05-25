@@ -1,0 +1,26 @@
+.message-check-container {
+    width: 17% !important;
+}
+
+.message-check-container i {
+    cursor: pointer;
+}
+
+.icon-message-container {
+    height: 2rem !important;
+    justify-content: flex-end;
+}
+
+.icon-message {
+    font-size: 1.5rem;
+}
+
+.col-1 {
+    width: max-content !important;
+}
+
+@media (max-width: 768px) {
+    .message-check-container {
+        display: none !important;
+    }
+}

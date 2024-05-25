@@ -3,40 +3,13 @@
 {% endblock %}
 
 <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
-	<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#">
+	<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="/">
 		<b>I.E.S. SALDUBA</b>
 	</a>
 
-	<ul
-		class="navbar-nav flex-row">
-		{# <div class="container mt-3">
-																							<div class="dropdown">
-																								<button class="btn btn-secondary dropdown-toggle" type="button" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-																									<i class="fa-solid fa-bell"></i>
-																									<span class="badge bg-danger">3</span>
-																								</button>
-																								<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
-																									<li>
-																										<h6 class="dropdown-header">Notificaciones</h6>
-																									</li>
-																									<li>
-																										<a class="dropdown-item" href="#">Notificación 1</a>
-																									</li>
-																									<li>
-																										<a class="dropdown-item" href="#">Notificación 2</a>
-																									</li>
-																									<li>
-																										<a class="dropdown-item" href="#">Notificación 3</a>
-																									</li>
-																									<li><hr class="dropdown-divider"></li>
-																									<li>
-																										<a class="dropdown-item text-center" href="#">Ver todas</a>
-																									</li>
-																								</ul>
-																							</div>
-																						</div> #}
+	<ul class="navbar-nav flex-row">
 		<li class="nav-item text-nowrap">
-			<button id="icon-notify" class="nav-link px-3 text-white dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-target="" aria-controls="" aria-expanded="false" aria-label="">
+			<button class="nav-link px-3 text-white dropdown-toggle icon-header" type="button" data-bs-toggle="dropdown" data-bs-target="" aria-controls="" aria-expanded="false" aria-label="notifications">
 				<span id="notification-count" class="badge bg-danger">0</span>
 				<i class="fa-solid fa-bell"></i>
 			</button>
@@ -48,58 +21,70 @@
 					</div>
 				</li>
 				<li><hr class="dropdown-divider"></li>
-				{# <li>
-					<div class="d-flex align-items-center dropdown-item">
-						<i class="fa-solid fa-envelope-open-text"></i>
-						<div class="d-flex flex-column content-notify">
-							<span>
-								<b>Nuevo Mensaje</b>
-							</span>
-							<span>Hello World</span>
-							<span>Yuanma Benitez</span>
-						</div>
-						<div class="delete-notify">
-							<i class="fa-solid fa-recycle"></i>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="d-flex align-items-center dropdown-item">
-						<i class="fa-solid fa-newspaper"></i>
-						<div class="d-flex flex-column content-notify">
-							<span>
-								<b>Nueva Publicación</b>
-							</span>
-							<span>El mundo se cae</span>
-							<span>Kevin Soto</span>
-						</div>
-						<div class="delete-notify">
-							<i class="fa-solid fa-recycle"></i>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="d-flex align-items-center dropdown-item">
-						<i class="fa-solid fa-envelope-open-text"></i>
-						<div class="d-flex flex-column content-notify">
-							<span>
-								<b>Nuevo Mensaje</b>
-							</span>
-							<span>Hello World</span>
-							<span>Yuanma Benitez</span>
-						</div>
-						<div class="delete-notify">
-							<i class="fa-solid fa-recycle"></i>
-						</div>
-					</div>
-
-				</li> #}
 			</ul>
 		</li>
 		<li class="nav-item text-nowrap">
-			<button class="nav-link px-3 text-white" type="button" data-bs-toggle="collapse" data-bs-target="" aria-controls="" aria-expanded="false" aria-label="">
+			<button class="nav-link px-3 text-white dropdown-toggle icon-header" type="button" data-bs-toggle="dropdown" data-bs-target="" aria-controls="" aria-expanded="false" aria-label="messages">
 				<i class="fa-solid fa-envelope"></i>
 			</button>
+			<ul id="message-menu-container" class="dropdown-menu dropdown-menu-end position-absolute" aria-labelledby="notificationDropdown">
+				<li id="header-notify" class="d-flex align-items-center">
+					<h6 class="dropdown-header">Mensajes</h6>
+				</li>
+				<li><hr class="dropdown-divider"></li>
+				<li>
+					<div class="d-flex align-items-center dropdown-item message-category">
+						<i class="fa-solid fa-inbox"></i>
+						<div class="d-flex flex-column content-notify">
+							<span>
+								<b>Todos</b>
+							</span>
+						</div>
+						<div>
+							<b id="all_message_count">0</b>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="d-flex align-items-center dropdown-item message-category">
+						<i class="fa-solid fa-star"></i>
+						<div class="d-flex flex-column content-notify">
+							<span>
+								<b>Favoritos</b>
+							</span>
+						</div>
+						<div>
+							<b id="important_message_count">0</b>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="d-flex align-items-center dropdown-item message-category">
+						<i class="fa-solid fa-paper-plane"></i>
+						<div class="d-flex flex-column content-notify">
+							<span>
+								<b>Enviados</b>
+							</span>
+						</div>
+						<div>
+							<b id="send_message_count">0</b>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="d-flex align-items-center dropdown-item message-category">
+						<i class="fa-solid fa-trash-can"></i>
+						<div class="d-flex flex-column content-notify">
+							<span>
+								<b>Papelera</b>
+							</span>
+						</div>
+						<div>
+							<b id="trash_message_count">0</b>
+						</div>
+					</div>
+				</li>
+			</ul>
 		</li>
 		<li class="nav-item text-nowrap d-md-none">
 			<button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">

@@ -1,0 +1,14 @@
+getMessages:
+  path: /message
+  controller: App\Controller\MessageController::index
+  methods: [GET]
+
+deleteNotification:
+  path: /notification/{id}
+  controller: App\Controller\NotificationController::delete
+  methods: [DELETE]
+
+deleteAllNotifications:
+  path: /notification
+  controller: App\Controller\NotificationController::deleteAll
+  methods: [DELETE]
