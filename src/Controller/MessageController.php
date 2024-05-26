@@ -30,7 +30,10 @@ class MessageController extends AbstractController
                     break;
                 case 'important':
                     $mode = 'Destacados';
-                    $messages = $messageRepository->findImportantMessagesFromUser($username);
+                    $messages = array_merge(
+                        $messageRepository->findImportantMessagesFromUser($username),
+                        $messageRepository->findImportantSendMessagesFromUser($username)
+                    );
 
                     break;
                 case 'send':
@@ -87,8 +90,6 @@ class MessageController extends AbstractController
             } catch (Exception $e) {
                 $response = new Response($status = Response::HTTP_NO_CONTENT);
             }
-        } else {
-            $response = $this->redirectToRoute('index');
         }
 
         return $response;
@@ -107,12 +108,13 @@ class MessageController extends AbstractController
                 $allMessages = $messageRepository->findAllMessagesFromUser($username);
                 $sendMessages = $messageRepository->findSendMessagesFromUser($username);
                 $importantMessages = $messageRepository->findImportantMessagesFromUser($username);
+                $importantSendMessages = $messageRepository->findImportantSendMessagesFromUser($username);
                 $removedMessages = $messageRepository->findRemovedMessagesFromUser($username);
 
                 $messages = [
                     'all' => count($allMessages),
                     'removed' => count($removedMessages),
-                    'important' => count($importantMessages),
+                    'important' => count($importantMessages) + count($importantSendMessages),
                     'send' => count($sendMessages)
                 ];
 
@@ -120,8 +122,6 @@ class MessageController extends AbstractController
             } catch (Exception $e) {
                 $response = new Response($status = Response::HTTP_NO_CONTENT);
             }
-        } else {
-            $response = $this->redirectToRoute('index');
         }
 
         return $response;
@@ -131,7 +131,7 @@ class MessageController extends AbstractController
     {
         $messages = $request->toArray();
 
-         foreach ($messages as $message) {
+        foreach ($messages as $message) {
             $findMessage = $entityManager->getRepository(Message::class)->find($message['id']);
 
             if ($findMessage) {
@@ -148,5 +148,63 @@ class MessageController extends AbstractController
         $entityManager->flush();
 
         return new Response($status = Response::HTTP_ACCEPTED);
+    }
+
+    public function markImportant(int $id, Request $request, EntityManagerInterface $entityManager)
+    {
+        $response = $this->redirectToRoute('index');
+
+        $isAYAX = $request->isXmlHttpRequest();
+
+        if ($isAYAX) {
+            try {
+                $message = $entityManager->getRepository(Message::class)->find($id);
+
+                $messageValue = $message->isImportant();
+
+                $message->setImportant(!$messageValue);
+
+                $entityManager->persist($message);
+
+                $entityManager->flush();
+
+                $response = $this->json([
+                    'isImportant' => !$messageValue
+                ]);
+            } catch (Exception $e) {
+                $response = new Response($status = Response::HTTP_NO_CONTENT);
+            }
+        }
+
+        return $response;
+    }
+
+    public function markReaded(int $id, Request $request, SessionService $session, EntityManagerInterface $entityManager)
+    {
+        $username = $session->get('username');
+
+        $response = $this->redirectToRoute('index');
+
+        $isAYAX = $request->isXmlHttpRequest();
+
+        if ($isAYAX) {
+            try {
+                $message = $entityManager->getRepository(Message::class)->find($id);
+
+                $userTo = $message->getUserTo()->getUsername();
+
+                if ($userTo === $username) $message->setReaded(true);
+
+                $entityManager->persist($message);
+
+                $entityManager->flush();
+
+                $response = new Response($status = Response::HTTP_ACCEPTED);
+            } catch (Exception $e) {
+                $response = new Response($status = Response::HTTP_NO_CONTENT);
+            }
+        }
+
+        return $response;
     }
 }

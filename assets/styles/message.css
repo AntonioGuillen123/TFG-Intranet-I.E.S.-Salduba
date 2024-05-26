@@ -27,11 +27,24 @@
     color: firebrick;
 }
 
-/* .image-message-container {
+.star {
+    line-height: 1.4rem !important;
+}
+
+.star:hover {
+    color: gold;
+    cursor: pointer;
+}
+
+.star.fa-solid {
+    color: gold;
+}
+
+.image-message-container {
     width: 5rem !important;
     border: 3px solid #212529;
     border-radius: 50%;
-} */
+}
 
 .col-1 {
     width: max-content !important;

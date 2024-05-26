@@ -31,13 +31,16 @@
 <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
 	<i class="fa-solid fa-calendar-days"></i>
 	This week
-</button>{% endblock %}{% block pageContent %}{# <h3>Todos</h3> #}{% set messages = messagesRaw %}{% for message in messages %}
+</button>{% endblock %}{% block pageContent %}{% set messages = messagesRaw %}{% for message in messages %}
 {% set id = message.id %}
 {% set affair = message.affair %}
 {% set content = message.content %}
 {% set send_date = message.send_date %}
-{% set isRemoved = message.removed ? 'Removio' : 'No Removio' %}
-{% set isImportant = message.important ? 'Destacado' : 'No Destacado' %}
+{% set isRemoved = message.removed %}
+{% set isImportant = message.important %}
+{% set isReaded = message.readed %}
+{% set iconImportant = isImportant ? 'fa-solid' : 'fa-regular' %}
+{% set iconReaded = isReaded ? 'fa-eye' : 'fa-eye-slash' %}
 {% set userFrom = message.user_from %}
 {% set userTo = message.user_to %}
 
@@ -50,9 +53,11 @@
 		{% if username == userFrom %}
 			<div class="row g-0 icon-message-container">
 				<div class="col-1 p-2">
-					<i class="fa-solid fa-eye-slash icon-message"></i>
+					<i id="eyeElement" class="fa-solid {{iconReaded}} icon-message"></i>
 				</div>
 			</div>
+		{% else %}
+			<div id="eyeElement" style="display: none;" class="{{iconReaded}}"></div>
 		{% endif %}
 		<div class="row g-0">
 			<div class="d-flex flex-column justify-content-center col-md-3 align-items-center my-2 gap-3">
@@ -82,40 +87,43 @@
 		</div>
 		<div class="row g-0 icon-message-container mb-2">
 			<div class="col-1 p-2">
+				{% if not isRemoved %}
+					<i class="{{iconImportant}} fa-star icon-message star"></i>
+				{% endif %}
 				<i class="fa-solid fa-recycle icon-message"></i>
 			</div>
 		</div>
 	</div>
 
 	{# <div class="card mb-3">
-																																																																									<div class="row g-0">
-																																																																										<div class="col-md-4">
-																																																																											<img src="./images/iessalduba.jpg" class="img-fluid rounded-start" alt="...">
-																																																																										</div>
-																																																																										<div class="col-md-8">
-																																																																											<div class="card-body">
-																																																																												<h5 class="card-title">Card title</h5>
-																																																																												<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-																																																																												<p class="card-text">
-																																																																													<small class="text-muted">Last updated 3 mins ago</small>
-																																																																												</p>
-																																																																											</div>
-																																																																										</div>
-																																																																									</div>
-																																																																								</div> #}
+																																																																															<div class="row g-0">
+																																																																																<div class="col-md-4">
+																																																																																	<img src="./images/iessalduba.jpg" class="img-fluid rounded-start" alt="...">
+																																																																																</div>
+																																																																																<div class="col-md-8">
+																																																																																	<div class="card-body">
+																																																																																		<h5 class="card-title">Card title</h5>
+																																																																																		<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+																																																																																		<p class="card-text">
+																																																																																			<small class="text-muted">Last updated 3 mins ago</small>
+																																																																																		</p>
+																																																																																	</div>
+																																																																																</div>
+																																																																															</div>
+																																																																														</div> #}
 
 	{# <div class="card mb-3" style="max-width: 540px;">
-																																												<div class="row g-0">
-																																													{{message.id}}
-																																													<br>
-																																													{{message.affair}}<br>
-																																													{{message.content}}<br>
-																																													{{message.send_date}}<br>
-																																													{{message.removed ? 'Removio' : 'No Removio'}}<br>
-																																													{{message.important ? 'Destacado' : 'No Destacado'}}<br>
-																																													De:
-																																													{{message.user_from}}<br>
-																																													Para:
-																																													{{message.user_to}}<br><br>
-																																																		                    <script>console.log('{message}')</script>
+																																																		<div class="row g-0">
+																																																			{{message.id}}
+																																																			<br>
+																																																			{{message.affair}}<br>
+																																																			{{message.content}}<br>
+																																																			{{message.send_date}}<br>
+																																																			{{message.removed ? 'Removio' : 'No Removio'}}<br>
+																																																			{{message.important ? 'Destacado' : 'No Destacado'}}<br>
+																																																			De:
+																																																			{{message.user_from}}<br>
+																																																			Para:
+																																																			{{message.user_to}}<br><br>
+																																																								                          <script>console.log('{message}')</script>
 </div></div>#}</div>{% endfor %}{% endblock %}

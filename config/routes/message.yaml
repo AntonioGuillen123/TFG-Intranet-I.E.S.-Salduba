@@ -3,6 +3,21 @@ getMessages:
   controller: App\Controller\MessageController::index
   methods: [GET]
 
+getAllMessagesCount:
+  path: /message/count
+  controller: App\Controller\MessageController::getAllMessagesCount
+  methods: [GET]
+
+markImportantMessage:
+  path: /message/markImportantMessage/{id}
+  controller: App\Controller\MessageController::markImportant
+  methods: [PUT]
+
+markReadedMessage:
+  path: /message/markReadedMessage/{id}
+  controller: App\Controller\MessageController::markReaded
+  methods: [PUT]
+
 deleteSelectedMessages:
   path: /message/deleteSelectedMessages
   controller: App\Controller\MessageController::deleteSelectedMessages
@@ -12,8 +27,3 @@ deleteMessage:
   path: /message/{id}
   controller: App\Controller\MessageController::delete
   methods: [DELETE]
-
-getAllMessagesCount:
-  path: /message/count
-  controller: App\Controller\MessageController::getAllMessagesCount
-  methods: [GET]

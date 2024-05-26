@@ -14,8 +14,23 @@ $(document).ready(() => {
 
         const card = item.querySelector('.card')
         const messageCheck = item.querySelector('.message-check-container i')
+        const eyeElement = item.querySelector('#eyeElement')
         const dateElement = item.querySelector('small')
+        const starElement = item.querySelector('.fa-star')
         const trashElement = item.querySelector('.fa-recycle')
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach((item) => {
+                if (item.isIntersecting && eyeElement.classList.contains('fa-eye-slash') && eyeElement.style.display === 'none') {
+                    markReadedMessage(id)
+                    console.log('hola')
+                }
+                /* TODO FUNCIONA LO DE MARCAR LEIDO, PERO FALTA INDICARLE CUANDO LO ENVÍA, SE PODRÍA HACER DETECTANDO LA CLASE DEL OJO, PERO 
+            */
+            })
+        })
+
+        observer.observe(card)
 
         const messagesSelected = JSON.parse(localStorage.getItem('selected-messages')) ?? []
         const isSelected = messagesSelected.find((item) => item.id === id)
@@ -35,6 +50,13 @@ $(document).ready(() => {
             changeSelected(card, messageCheck, dateElement, localMessages, deleteAll, checkAll)
         })
 
+        starElement.addEventListener('click', () => {
+            starElement.classList.toggle('fa-regular')
+            starElement.classList.toggle('fa-solid')
+
+            markImportantMessage(id)
+        })
+
         trashElement.addEventListener('click', async () => {
             await deleteMessage(id)
 
@@ -52,7 +74,9 @@ $(document).ready(() => {
 
                 } else {
                     localStorage.clear()
+
                     deleteAll.classList.add('disabled')
+                    checkAll.classList.add('d-none')
                 }
             }
 
@@ -136,8 +160,6 @@ const deleteMessage = async (id) => {
 const deleteSelectedMessages = async () => {
     const selectedMessages = JSON.parse(localStorage.getItem('selected-messages'))
 
-    /* const messages = selectedMessages.filter((item) => typeofdocument.getElementById(item.id) !== null) */
-
     const isDelete = (item) => document.getElementById(item.id) !== null
 
     const deletedMessages = selectedMessages.filter((item) => isDelete(item))
@@ -166,6 +188,49 @@ const deleteSelectedMessages = async () => {
             } else {
                 console.log('Error al borrar los mensajes :(')
             }
+        },
+        error: (err) => {
+            console.log(`Error :( ${err.responseText}`)
+        }
+    })
+}
+
+const markImportantMessage = async (id) => {
+    await $.ajax({
+        url: `/message/markImportantMessage/${id}`,
+        type: 'PUT',
+        success: (response) => {
+            const message = document.getElementById(id)
+
+            const { isImportant } = response
+
+            const parameters = window.location.search;
+
+            const newUrl = new URLSearchParams(parameters);
+
+            const mode = newUrl.get('mode');
+
+            if (mode === 'important') if (!isImportant) message.remove()
+
+            getMessages()
+        },
+        error: (err) => {
+            console.log(`Error :( ${err.responseText}`)
+        }
+    })
+}
+
+const markReadedMessage = async (id) => {
+    await $.ajax({
+        url: `/message/markReadedMessage/${id}`,
+        type: 'PUT',
+        success: () => {
+            const message = document.getElementById(id)
+
+            const eye = message.querySelector('i.fa-eye-slash')
+
+            eye.classList.remove('fa-eye-slash')
+            eye.classList.add('fa-eye')
         },
         error: (err) => {
             console.log(`Error :( ${err.responseText}`)

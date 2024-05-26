@@ -45,6 +45,9 @@ class Message
     #[ORM\Column(options: ["default" => false])]
     private ?bool $important = false;
 
+    #[ORM\Column(options: ["default" => false])]
+    private ?bool $readed = null;
+
     public function __construct()
     {
         $this->file = new ArrayCollection();
@@ -160,6 +163,18 @@ class Message
     public function setImportant(bool $important): static
     {
         $this->important = $important;
+
+        return $this;
+    }
+
+    public function isReaded(): ?bool
+    {
+        return $this->readed;
+    }
+
+    public function setReaded(bool $readed): static
+    {
+        $this->readed = $readed;
 
         return $this;
     }

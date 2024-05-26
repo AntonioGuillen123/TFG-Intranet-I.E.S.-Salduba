@@ -28,6 +28,7 @@ class MessageRepository extends ServiceEntityRepository
                 'send_date' => $queryResult[$i]->getSendDate()->format('d-m-Y'),
                 'removed' => $queryResult[$i]->isRemoved(),
                 'important' => $queryResult[$i]->isImportant(),
+                'readed' => $queryResult[$i]->isReaded(),
                 'user_from' => $queryResult[$i]->getUserFrom()->getUsername(),
                 'user_to' => $queryResult[$i]->getUserTo()->getUsername(),
             ];
@@ -65,6 +66,20 @@ class MessageRepository extends ServiceEntityRepository
     {
         $queryResult = $this->createQueryBuilder('m')
             ->where('m.user_to IN (SELECT s.id FROM App\Entity\Session s WHERE s.username = :username)')
+            ->andWhere('m.important = true')
+            ->andWhere('m.removed = false')
+            ->setParameter('username', $username)
+            ->orderBy('m.send_date', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        return $this->convertTOJSON($queryResult);
+    }
+
+    public function findImportantSendMessagesFromUser($username)
+    {
+        $queryResult = $this->createQueryBuilder('m')
+            ->where('m.user_from IN (SELECT s.id FROM App\Entity\Session s WHERE s.username = :username)')
             ->andWhere('m.important = true')
             ->andWhere('m.removed = false')
             ->setParameter('username', $username)
