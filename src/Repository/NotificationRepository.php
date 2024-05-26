@@ -16,6 +16,24 @@ class NotificationRepository extends ServiceEntityRepository
         parent::__construct($registry, Notification::class);
     }
 
+    public function convertTOJSON($queryResult)
+    {
+        $result = [];
+
+        for ($i = 0; $i < count($queryResult); $i++) {
+            $result[] = [
+                'id' => $queryResult[$i]->getId(),
+                'title' => $queryResult[$i]->getTitle(),
+                'user_from' => $queryResult[$i]->getUserFrom()->getUsername(),
+                'user_to' => $queryResult[$i]->getUserTo()->getUsername(),
+                'type' => $queryResult[$i]->getType()->getName(),
+                'associated_id' => $queryResult[$i]->getAssociatedId()
+            ];
+        }
+
+        return $result;
+    }
+
     public function findAllNotificationsFromUser($username)
     {
 
@@ -25,18 +43,6 @@ class NotificationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
 
-        $result = [];
-
-        for ($i = 0; $i < count($queryResult); $i++) {
-            $result[] = [
-                'id' => $queryResult[$i]->getId(),
-                'title' => $queryResult[$i]->getTitle(),
-                'user_from' => $queryResult[$i]->getUserFrom()->getUsername(),
-                'user_to' => $queryResult[$i]->getUserTo()->getUsername(),
-                'type' => $queryResult[$i]->getType()->getName()
-            ];
-        }
-
-        return $result;
+        return $this->convertTOJSON($queryResult);
     }
 }

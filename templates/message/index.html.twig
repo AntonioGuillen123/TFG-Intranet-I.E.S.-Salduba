@@ -1,6 +1,8 @@
 {% extends 'dashboard.html.twig' %}
 
-{% block titlePage %}Mensajes
+{% block titlePage %}
+	Mensajes -
+	{{mode}}
 {% endblock %}
 
 {% block jsContent %}
@@ -24,17 +26,19 @@
 	{% set userFrom = message.user_from %}
 	{% set userTo = message.user_to %}
 
-	<div class="d-flex message-item-{{id}}">
+	<div id="message-item-{{id}}" class="d-flex">
 		<div class="d-flex align-items-center justify-content-center message-check-container">
 			<i class="fa-solid fa-square-check fa-3x"></i>
 		</div>
 
 		<div class="card mb-3">
-			<div class="row g-0 icon-message-container">
-				<div class="col-1 p-2">
-					<i class="fa-solid fa-eye-slash icon-message"></i>
+			{% if username == userFrom %}
+				<div class="row g-0 icon-message-container">
+					<div class="col-1 p-2">
+						<i class="fa-solid fa-eye-slash icon-message"></i>
+					</div>
 				</div>
-			</div>
+			{% endif %}
 			<div class="row g-0">
 				<div class="d-flex flex-column justify-content-center col-md-3 align-items-center my-2 gap-3">
 					<div class="d-flex justify-content-center image-message-container">
@@ -53,7 +57,8 @@
 						<h5 class="card-title">{{affair}}</h5>
 						<p class="card-text">{{content}}</p>
 						<p class="card-text">
-							<small class="text-muted">Fecha de envío:
+							<small class="text-muted">
+								<b>Fecha de envio:</b>
 								{{send_date}}</small>
 						</p>
 					</div>
@@ -62,41 +67,41 @@
 			</div>
 			<div class="row g-0 icon-message-container mb-2">
 				<div class="col-1 p-2">
-					<i class="fa-solid fa-recycle icon-message" onclick="deleteMessage('{{id}}')"></i>
+					<i class="fa-solid fa-recycle icon-message"></i>
 				</div>
 			</div>
 		</div>
 
 		{# <div class="card mb-3">
-																																																				<div class="row g-0">
-																																																					<div class="col-md-4">
-																																																						<img src="./images/iessalduba.jpg" class="img-fluid rounded-start" alt="...">
-																																																					</div>
-																																																					<div class="col-md-8">
-																																																						<div class="card-body">
-																																																							<h5 class="card-title">Card title</h5>
-																																																							<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-																																																							<p class="card-text">
-																																																								<small class="text-muted">Last updated 3 mins ago</small>
-																																																							</p>
-																																																						</div>
-																																																					</div>
-																																																				</div>
-																																																			</div> #}
+																																																														<div class="row g-0">
+																																																															<div class="col-md-4">
+																																																																<img src="./images/iessalduba.jpg" class="img-fluid rounded-start" alt="...">
+																																																															</div>
+																																																															<div class="col-md-8">
+																																																																<div class="card-body">
+																																																																	<h5 class="card-title">Card title</h5>
+																																																																	<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+																																																																	<p class="card-text">
+																																																																		<small class="text-muted">Last updated 3 mins ago</small>
+																																																																	</p>
+																																																																</div>
+																																																															</div>
+																																																														</div>
+																																																													</div> #}
 
 		{# <div class="card mb-3" style="max-width: 540px;">
-																							<div class="row g-0">
-																								{{message.id}}
-																								<br>
-																								{{message.affair}}<br>
-																								{{message.content}}<br>
-																								{{message.send_date}}<br>
-																								{{message.removed ? 'Removio' : 'No Removio'}}<br>
-																								{{message.important ? 'Destacado' : 'No Destacado'}}<br>
-																								De:
-																								{{message.user_from}}<br>
-																								Para:
-																								{{message.user_to}}<br><br>
-																													         <script>console.log('{message}')</script>
+																																	<div class="row g-0">
+																																		{{message.id}}
+																																		<br>
+																																		{{message.affair}}<br>
+																																		{{message.content}}<br>
+																																		{{message.send_date}}<br>
+																																		{{message.removed ? 'Removio' : 'No Removio'}}<br>
+																																		{{message.important ? 'Destacado' : 'No Destacado'}}<br>
+																																		De:
+																																		{{message.user_from}}<br>
+																																		Para:
+																																		{{message.user_to}}<br><br>
+																																							              <script>console.log('{message}')</script>
 	</div>
 </div>#}</div>{% endfor %}{% endblock %}

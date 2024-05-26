@@ -1,3 +1,5 @@
+import { getMessages } from "../app.js"
+
 $(document).ready(() => {
     const messages = document.querySelectorAll('[class*="message-item-"]')
 
@@ -6,7 +8,13 @@ $(document).ready(() => {
 
         const id = className.split('-')[2]
 
-        item.addEventListener('click', () => deleteMessage(id))
+        const trashElement = item.querySelector('.fa-recycle')
+
+        trashElement.addEventListener('click', async () => {
+            await deleteMessage(id)
+
+            getMessages()
+        })
     })
 })
 
@@ -16,7 +24,7 @@ const deleteMessage = async (id) => {
         type: 'DELETE',
         success: (response) => {
             if (response === '202') {
-                $(`.message-item-${id}`).remove()
+                $(`#message-item-${id}`).remove()
             } else {
                 console.log('Error al borrar el mensaje :(')
             }

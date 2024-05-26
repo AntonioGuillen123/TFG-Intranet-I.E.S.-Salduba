@@ -16,14 +16,8 @@ class MessageRepository extends ServiceEntityRepository
         parent::__construct($registry, Message::class);
     }
 
-    public function findAllMessagesFromUser($username)
+    public function convertTOJSON($queryResult)
     {
-        $queryResult = $this->createQueryBuilder('m')
-            ->where('m.user_to IN (SELECT s.id FROM App\Entity\Session s WHERE s.username = :username)')
-            ->setParameter('username', $username)
-            ->getQuery()
-            ->getResult();
-
         $result = [];
 
         for ($i = 0; $i < count($queryResult); $i++) {
@@ -38,7 +32,68 @@ class MessageRepository extends ServiceEntityRepository
                 'user_to' => $queryResult[$i]->getUserTo()->getUsername(),
             ];
         }
-
         return $result;
+    }
+
+    public function findAllMessagesFromUser($username)
+    {
+        $queryResult = $this->createQueryBuilder('m')
+            ->where('m.user_to IN (SELECT s.id FROM App\Entity\Session s WHERE s.username = :username)')
+            ->andWhere('m.removed = false')
+            ->setParameter('username', $username)
+            ->orderBy('m.send_date', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        return $this->convertTOJSON($queryResult);
+    }
+
+    public function findSendMessagesFromUser($username)
+    {
+        $queryResult = $this->createQueryBuilder('m')
+            ->where('m.user_from IN (SELECT s.id FROM App\Entity\Session s WHERE s.username = :username)')
+            ->andWhere('m.removed = false')
+            ->setParameter('username', $username)
+            ->orderBy('m.send_date', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        return $this->convertTOJSON($queryResult);
+    }
+
+    public function findImportantMessagesFromUser($username)
+    {
+        $queryResult = $this->createQueryBuilder('m')
+            ->where('m.user_to IN (SELECT s.id FROM App\Entity\Session s WHERE s.username = :username)')
+            ->andWhere('m.important = true')
+            ->andWhere('m.removed = false')
+            ->setParameter('username', $username)
+            ->orderBy('m.send_date', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        return $this->convertTOJSON($queryResult);
+    }
+
+    public function findRemovedMessagesFromUser($username)
+    {
+        $queryResultTo = $this->createQueryBuilder('m')
+            ->where('m.user_to IN (SELECT s.id FROM App\Entity\Session s WHERE s.username = :username) 
+                ')
+            ->andWhere('m.removed = true')
+            ->setParameter('username', $username)
+            ->orderBy('m.send_date', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        $queryResultFrom = $this->createQueryBuilder('m')
+            ->where('m.user_from IN (SELECT s.id FROM App\Entity\Session s WHERE s.username = :username)')
+            ->andWhere('m.removed = true')
+            ->setParameter('username', $username)
+            ->orderBy('m.send_date', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        return $this->convertTOJSON(array_merge($queryResultTo, $queryResultFrom));
     }
 }

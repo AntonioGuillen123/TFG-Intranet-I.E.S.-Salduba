@@ -1,13 +1,40 @@
-/* img {
-    width: 100%;
+
+/*
+ * Sidebar
+ */
+
+@media (min-width: 768px) {
+  .sidebar .offcanvas-lg {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 48px;
+  }
+
+  .navbar-search {
+    display: block;
+  }
 }
 
-.button-image {
-    width: 1.5rem;
-} */
+.sidebar .nav-link {
+  font-size: .875rem;
+  font-weight: 500;
+}
+
+.sidebar .nav-link.active {
+  color: #2470dc;
+}
+
+.sidebar-heading {
+  font-size: .75rem;
+}
+
+.sidebar{
+    top: 3rem !important;
+    z-index: 99;
+}
 
 @media (min-width: 768px) {
     .sidebar {
-        height: 93vh !important;
+        height: 100vh !important;
     }
 }

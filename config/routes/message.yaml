@@ -8,6 +8,11 @@ deleteMessage:
   controller: App\Controller\MessageController::delete
   methods: [DELETE]
 
+getAllMessagesCount:
+  path: /message/count
+  controller: App\Controller\MessageController::getAllMessagesCount
+  methods: [GET]
+
 deleteAllNotifications:
   path: /notification
   controller: App\Controller\NotificationController::deleteAll

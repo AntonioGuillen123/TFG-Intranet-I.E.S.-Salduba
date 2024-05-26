@@ -14,21 +14,56 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class MessageController extends AbstractController
 {
-    public function index(Request $request, SessionService $session, MessageRepository $messageRepository)
+    public function index(Request $request, SessionService $session, MessageRepository $messageRepository): Response
     {
         $username = $session->get('username');
 
         $mode = $request->get('mode');
 
-        $messages = $messageRepository->findAllMessagesFromUser($username);
+        try {
+
+            switch ($mode) {
+                case 'inbox':
+                    $mode = 'Recibidos';
+                    $messages = $messageRepository->findAllMessagesFromUser($username);
+
+                    break;
+                case 'important':
+                    $mode = 'Destacados';
+                    $messages = $messageRepository->findImportantMessagesFromUser($username);
+
+                    break;
+                case 'send':
+                    $mode = 'Enviados';
+                    $messages = $messageRepository->findSendMessagesFromUser($username);
+
+                    break;
+                case 'removed':
+                    $mode = 'Eliminados';
+                    $messages = $messageRepository->findRemovedMessagesFromUser($username);
+
+                    break;
+                default:
+                    $mode = 'Todos';
+                    $messages = array_merge(
+                        $messageRepository->findAllMessagesFromUser($username),
+                        $messageRepository->findSendMessagesFromUser($username)
+                    );
+
+                    break;
+            }
+        } catch (Exception $e) {
+            $messages = [];
+        }
 
         return $this->render('message/index.html.twig', [
             'username' => $username,
+            'mode' => $mode,
             'messagesRaw' => $messages
         ]);
     }
 
-    public function delete(int $id, Request $request, SessionService $session, EntityManagerInterface $entityManager)
+    public function delete(int $id, Request $request, SessionService $session, EntityManagerInterface $entityManager): Response
     {
         $response = $this->redirectToRoute('index');
 
@@ -38,10 +73,50 @@ class MessageController extends AbstractController
             try {
                 $message = $entityManager->getRepository(Message::class)->find($id);
 
-                $entityManager->remove($message);
+                if ($message->isRemoved()) {
+                    $entityManager->remove($message);
+                } else {
+                    $message->setRemoved(true);
+
+                    $entityManager->persist($message);
+                }
+
                 $entityManager->flush();
 
                 $response = new Response($status = Response::HTTP_ACCEPTED);
+            } catch (Exception $e) {
+                $response = new Response($status = Response::HTTP_NO_CONTENT);
+            }
+        } else {
+            $response = $this->redirectToRoute('index');
+        }
+
+        return $response;
+    }
+
+    public function getAllMessagesCount(Request $request, SessionService $session, MessageRepository $messageRepository): Response
+    {
+        $username = $session->get('username');
+
+        $response = $this->redirectToRoute('index');
+
+        $isAYAX = $request->isXmlHttpRequest();
+
+        if ($isAYAX) {
+            try {
+                $allMessages = $messageRepository->findAllMessagesFromUser($username);
+                $sendMessages = $messageRepository->findSendMessagesFromUser($username);
+                $importantMessages = $messageRepository->findImportantMessagesFromUser($username);
+                $removedMessages = $messageRepository->findRemovedMessagesFromUser($username);
+
+                $messages = [
+                    'all' => count($allMessages),
+                    'removed' => count($removedMessages),
+                    'important' => count($importantMessages),
+                    'send' => count($sendMessages)
+                ];
+
+                $response = $this->json(json_encode($messages));
             } catch (Exception $e) {
                 $response = new Response($status = Response::HTTP_NO_CONTENT);
             }

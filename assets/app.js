@@ -15,10 +15,12 @@ $(document).ready(() => {
     const deleteAllNotificationsButton = document.getElementById('delete-all-notify')
     deleteAllNotificationsButton.addEventListener('click', (event) => {
         event.stopPropagation()
+
         deleteAllNotifications()
     })
 
     getNotifications()
+    getMessages()
 })
 
 const getNotifications = async () => {
@@ -27,7 +29,6 @@ const getNotifications = async () => {
         type: 'GET',
         success: (response) => {
             const data = JSON.parse(response)
-
 
             createNotifications(data)
         },
@@ -66,16 +67,18 @@ const deleteAllNotifications = async () => {
 }
 
 const createNotifications = (data) => {
+    const MESSAGE_TYPE = 'message'
+
     const { length } = data
 
-    const notifyContainer = document.querySelector('#notify-container')
     const getNotificationsElements = () => notifyContainer.querySelectorAll('.notify-element')
+
+    const notifyContainer = document.querySelector('#notify-container')
+
     const notificationCount = document.querySelector('#notification-count')
     notificationCount.innerHTML = length > 99 ? '99+' : length
 
     getNotificationsElements().forEach((item) => item.remove())
-
-    console.log(data)
 
     data = data.slice(0, 3)
 
@@ -85,14 +88,19 @@ const createNotifications = (data) => {
             type,
             title,
             user_from,
-            user_to
+            user_to,
+            associated_id
         } = item
 
-        const isMail = type === 'email'
+        const isMail = type === MESSAGE_TYPE
 
         const headerNotify = isMail ? 'Nuevo Mensaje' : 'Nueva Publicación'
+        const notifyType = isMail ? 'message' : 'news'
 
         const iconClassName = isMail ? 'fa-envelope-open-text' : 'fa-newspaper'
+
+        const a = document.createElement('a')
+        a.setAttribute('href', `/${notifyType}#message-item-${associated_id}`)
 
         const li = document.createElement('li')
         li.classList.add('notify-element')
@@ -107,6 +115,7 @@ const createNotifications = (data) => {
         messageContainer.classList.add('d-flex', 'flex-column', 'content-notify')
 
         const typeMessage = document.createElement('span')
+        typeMessage.classList.add()
         typeMessage.innerHTML = `<b>${headerNotify}</b>`
 
         const titleMessage = document.createElement('span')
@@ -137,8 +146,10 @@ const createNotifications = (data) => {
         container.appendChild(deleteContainer)
 
         li.appendChild(container)
+        
+        a.appendChild(li)
 
-        notifyContainer.appendChild(li)
+        notifyContainer.appendChild(a)
     })
 
     if (getNotificationsElements().length === 0) {
@@ -155,4 +166,37 @@ const createNotifications = (data) => {
         li.appendChild(empty)
         notifyContainer.appendChild(li)
     }
+}
+
+export const getMessages = async () => {
+    await $.ajax({
+        url: `/message/count`,
+        type: 'GET',
+        success: (response) => {
+            console.log(response)
+            const data = JSON.parse(response)
+
+            createMessages(data)
+        },
+        error: (err) => {
+            console.log('Error :(')
+        }
+    })
+}
+
+const createMessages = (data) => {
+    const allMessageCount = document.querySelector('#all_message_count')
+    allMessageCount.innerHTML = data.all + data.send
+
+    const inboxMessageCount = document.querySelector('#inbox_message_count')
+    inboxMessageCount.innerHTML = data.all
+
+    const removedMessageCount = document.querySelector('#removed_message_count')
+    removedMessageCount.innerHTML = data.removed
+
+    const importantMessageCount = document.querySelector('#important_message_count')
+    importantMessageCount.innerHTML = data.important
+
+    const sendMessageCount = document.querySelector('#send_message_count')
+    sendMessageCount.innerHTML = data.send
 }

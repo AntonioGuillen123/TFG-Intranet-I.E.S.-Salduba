@@ -2,7 +2,7 @@
 	{{ encore_entry_link_tags('header') }}
 {% endblock %}
 
-<header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
+<header class="navbar sticky-top position-fixed w-100 bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
 	<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="/">
 		<b>I.E.S. SALDUBA</b>
 	</a>
@@ -32,58 +32,83 @@
 					<h6 class="dropdown-header">Mensajes</h6>
 				</li>
 				<li><hr class="dropdown-divider"></li>
-				<li>
-					<div class="d-flex align-items-center dropdown-item message-category">
-						<i class="fa-solid fa-inbox"></i>
-						<div class="d-flex flex-column content-notify">
-							<span>
-								<b>Todos</b>
-							</span>
+				<a href="message">
+					<li>
+						<div class="d-flex align-items-center dropdown-item message-category">
+							<i class="fa-solid fa-earth-americas"></i>
+							<div class="d-flex flex-column content-notify">
+								<span>
+									<b>Todos</b>
+								</span>
+							</div>
+							<div>
+								<b id="all_message_count"></b>
+							</div>
 						</div>
-						<div>
-							<b id="all_message_count">0</b>
+					</li>
+				</a>
+				<a href="message?mode=inbox">
+					<li>
+						<div class="d-flex align-items-center dropdown-item message-category">
+							<i class="fa-solid fa-inbox"></i>
+							<div class="d-flex flex-column content-notify">
+								<span>
+									<b>Recibidos</b>
+								</span>
+							</div>
+							<div>
+								<b id="inbox_message_count"></b>
+							</div>
 						</div>
-					</div>
-				</li>
-				<li>
-					<div class="d-flex align-items-center dropdown-item message-category">
-						<i class="fa-solid fa-star"></i>
-						<div class="d-flex flex-column content-notify">
-							<span>
-								<b>Favoritos</b>
-							</span>
+					</li>
+				</a>
+				<a href="message?mode=important">
+
+					<li>
+						<div class="d-flex align-items-center dropdown-item message-category">
+							<i class="fa-solid fa-star"></i>
+							<div class="d-flex flex-column content-notify">
+								<span>
+									<b>Favoritos</b>
+								</span>
+							</div>
+							<div>
+								<b id="important_message_count"></b>
+							</div>
 						</div>
-						<div>
-							<b id="important_message_count">0</b>
+					</li>
+				</a>
+				<a href="message?mode=send">
+
+					<li>
+						<div class="d-flex align-items-center dropdown-item message-category">
+							<i class="fa-solid fa-paper-plane"></i>
+							<div class="d-flex flex-column content-notify">
+								<span>
+									<b>Enviados</b>
+								</span>
+							</div>
+							<div>
+								<b id="send_message_count"></b>
+							</div>
 						</div>
-					</div>
-				</li>
-				<li>
-					<div class="d-flex align-items-center dropdown-item message-category">
-						<i class="fa-solid fa-paper-plane"></i>
-						<div class="d-flex flex-column content-notify">
-							<span>
-								<b>Enviados</b>
-							</span>
+					</li>
+				</a>
+				<a href="message?mode=removed">
+					<li>
+						<div class="d-flex align-items-center dropdown-item message-category">
+							<i class="fa-solid fa-trash-can"></i>
+							<div class="d-flex flex-column content-notify">
+								<span>
+									<b>Papelera</b>
+								</span>
+							</div>
+							<div>
+								<b id="removed_message_count"></b>
+							</div>
 						</div>
-						<div>
-							<b id="send_message_count">0</b>
-						</div>
-					</div>
-				</li>
-				<li>
-					<div class="d-flex align-items-center dropdown-item message-category">
-						<i class="fa-solid fa-trash-can"></i>
-						<div class="d-flex flex-column content-notify">
-							<span>
-								<b>Papelera</b>
-							</span>
-						</div>
-						<div>
-							<b id="trash_message_count">0</b>
-						</div>
-					</div>
-				</li>
+					</li>
+				</a>
 			</ul>
 		</li>
 		<li class="nav-item text-nowrap d-md-none">

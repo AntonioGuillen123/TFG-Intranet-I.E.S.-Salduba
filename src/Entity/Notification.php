@@ -28,6 +28,9 @@ class Notification
     #[ORM\JoinColumn(nullable: false)]
     private ?NotificationType $type = null;
 
+    #[ORM\Column]
+    private ?int $associated_id = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -77,6 +80,18 @@ class Notification
     public function setType(?NotificationType $type): static
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getAssociatedId(): ?int
+    {
+        return $this->associated_id;
+    }
+
+    public function setAssociatedId(int $associated_id): static
+    {
+        $this->associated_id = $associated_id;
 
         return $this;
     }
