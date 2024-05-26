@@ -3,6 +3,11 @@ getMessages:
   controller: App\Controller\MessageController::index
   methods: [GET]
 
+deleteSelectedMessages:
+  path: /message/deleteSelectedMessages
+  controller: App\Controller\MessageController::deleteSelectedMessages
+  methods: [DELETE]
+
 deleteMessage:
   path: /message/{id}
   controller: App\Controller\MessageController::delete
@@ -12,8 +17,3 @@ getAllMessagesCount:
   path: /message/count
   controller: App\Controller\MessageController::getAllMessagesCount
   methods: [GET]
-
-deleteSelectedMessages:
-  path: /message/deleteSelectedMessages
-  controller: App\Controller\MessageController::deleteSelectedMessages
-  methods: [DELETE]

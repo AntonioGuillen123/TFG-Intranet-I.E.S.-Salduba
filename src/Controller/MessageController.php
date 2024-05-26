@@ -129,10 +129,10 @@ class MessageController extends AbstractController
 
     public function deleteSelectedMessages(Request $request, EntityManagerInterface $entityManager)
     {
-        /* $messages = json_decode($request->getContent()); */
+        $messages = $request->toArray();
 
-         /* foreach ($messages as $message) {
-            $findMessage = $entityManager->getRepository(Message::class)->find($message);
+         foreach ($messages as $message) {
+            $findMessage = $entityManager->getRepository(Message::class)->find($message['id']);
 
             if ($findMessage) {
                 if ($findMessage->isRemoved()) {
@@ -143,12 +143,10 @@ class MessageController extends AbstractController
                     $entityManager->persist($findMessage);
                 }
             }
-        } */
+        }
 
-        /* $entityManager->flush(); */
-        /* return $this->json([
-            'que' => json_encode($messages)
-        ]); */
+        $entityManager->flush();
+
         return new Response($status = Response::HTTP_ACCEPTED);
     }
 }

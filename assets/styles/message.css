@@ -27,11 +27,11 @@
     color: firebrick;
 }
 
-.image-message-container {
+/* .image-message-container {
     width: 5rem !important;
     border: 3px solid #212529;
     border-radius: 50%;
-}
+} */
 
 .col-1 {
     width: max-content !important;
@@ -46,8 +46,26 @@
     border-color: white;
 }
 
+#check-all {
+    cursor: pointer;
+}
+
 @media (max-width: 768px) {
+    #main-content {
+        justify-content: center !important;
+        gap: 5rem !important;
+    }
+
     .message-check-container {
         display: none !important;
     }
+
+    .card {
+        width: 15rem !important;
+    }
+
+    #delete-all-messages {
+        display: none;
+    }
+    
 }
