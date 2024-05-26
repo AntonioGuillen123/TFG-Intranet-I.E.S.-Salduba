@@ -23,6 +23,10 @@ ul a {
     transition: all .3s ease;
 }
 
+.icon-header.show {
+    color: lightslategray !important;
+}
+
 .dropdown-menu {
     --bs-dropdown-link-active-bg: #191C1F;
 }

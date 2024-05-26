@@ -34,15 +34,19 @@ class NotificationRepository extends ServiceEntityRepository
         return $result;
     }
 
+    public function findAllNotificationsFromUserToJSON($username)
+    {
+        $notifications = $this->findAllNotificationsFromUser($username);
+
+        return $this->convertTOJSON($notifications);
+    }
+
     public function findAllNotificationsFromUser($username)
     {
-
-        $queryResult = $this->createQueryBuilder('n')
+        return $this->createQueryBuilder('n')
             ->where('n.user_to IN (SELECT s.id FROM App\Entity\Session s WHERE s.username = :username)')
             ->setParameter('username', $username)
             ->getQuery()
             ->getResult();
-
-        return $this->convertTOJSON($queryResult);
     }
 }

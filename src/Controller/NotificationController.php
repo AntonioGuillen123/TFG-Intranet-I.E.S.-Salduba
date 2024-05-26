@@ -24,7 +24,7 @@ class NotificationController extends AbstractController
         $isAYAX = $request->isXmlHttpRequest();
 
         if ($isAYAX) {
-            $notifications = $notificationRepository->findAllNotificationsFromUser($username);
+            $notifications = $notificationRepository->findAllNotificationsFromUserToJSON($username);
 
             $response = $this->json(json_encode($notifications));
         } else {
@@ -58,14 +58,16 @@ class NotificationController extends AbstractController
         return $response;
     }
 
-    public function deleteAll(Request $request, SessionService $session, EntityManagerInterface $entityManager): Response
+    public function deleteAll(Request $request, SessionService $session, EntityManagerInterface $entityManager, NotificationRepository $notificationRepository): Response
     {
+        $username = $session->get('username');
+
         $response = $this->redirectToRoute('index');
 
         $isAYAX = $request->isXmlHttpRequest();
 
         if ($isAYAX) {
-            $notifications = $entityManager->getRepository(Notification::class)->findAll();
+            $notifications = $notificationRepository->findAllNotificationsFromUser($username);
 
             foreach ($notifications as $notification) $entityManager->remove($notification);
 

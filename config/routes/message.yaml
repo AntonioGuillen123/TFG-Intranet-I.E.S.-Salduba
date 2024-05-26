@@ -13,7 +13,7 @@ getAllMessagesCount:
   controller: App\Controller\MessageController::getAllMessagesCount
   methods: [GET]
 
-deleteAllNotifications:
-  path: /notification
-  controller: App\Controller\NotificationController::deleteAll
+deleteSelectedMessages:
+  path: /message/deleteSelectedMessages
+  controller: App\Controller\MessageController::deleteSelectedMessages
   methods: [DELETE]

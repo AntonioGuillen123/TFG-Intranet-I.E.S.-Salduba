@@ -13,6 +13,27 @@
 	{{ encore_entry_link_tags('message') }}
 {% endblock %}
 
+{% block toolbarPage %}
+	<button type="button" id="delete-all-messages" class="btn btn-sm btn-outline-danger disabled"><b>Borrar</b></button>
+
+	<div class="btn-group me-2">
+		<div type="button" class="input-group-prepend">
+			<i class="fa-solid fa-magnifying-glass input-group-text" id="inputGroup-sizing-sm"></i>
+		</div>
+		<input type="button" class="form-control"></input>
+
+
+
+
+
+
+	</div>
+	<button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
+		<i class="fa-solid fa-calendar-days"></i>
+		This week
+	</button>
+{% endblock %}
+
 {% block pageContent %}
 {# <h3>Todos</h3> #}
 {% set messages = messagesRaw %}
@@ -26,9 +47,9 @@
 	{% set userFrom = message.user_from %}
 	{% set userTo = message.user_to %}
 
-	<div id="message-item-{{id}}" class="d-flex">
+	<div id="{{id}}" class="d-flex message-item">
 		<div class="d-flex align-items-center justify-content-center message-check-container">
-			<i class="fa-solid fa-square-check fa-3x"></i>
+			<i class="fa-regular fa-square fa-3x"></i>
 		</div>
 
 		<div class="card mb-3">
@@ -73,35 +94,35 @@
 		</div>
 
 		{# <div class="card mb-3">
-																																																														<div class="row g-0">
-																																																															<div class="col-md-4">
-																																																																<img src="./images/iessalduba.jpg" class="img-fluid rounded-start" alt="...">
-																																																															</div>
-																																																															<div class="col-md-8">
-																																																																<div class="card-body">
-																																																																	<h5 class="card-title">Card title</h5>
-																																																																	<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-																																																																	<p class="card-text">
-																																																																		<small class="text-muted">Last updated 3 mins ago</small>
-																																																																	</p>
-																																																																</div>
-																																																															</div>
-																																																														</div>
-																																																													</div> #}
+																																																																								<div class="row g-0">
+																																																																									<div class="col-md-4">
+																																																																										<img src="./images/iessalduba.jpg" class="img-fluid rounded-start" alt="...">
+																																																																									</div>
+																																																																									<div class="col-md-8">
+																																																																										<div class="card-body">
+																																																																											<h5 class="card-title">Card title</h5>
+																																																																											<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+																																																																											<p class="card-text">
+																																																																												<small class="text-muted">Last updated 3 mins ago</small>
+																																																																											</p>
+																																																																										</div>
+																																																																									</div>
+																																																																								</div>
+																																																																							</div> #}
 
 		{# <div class="card mb-3" style="max-width: 540px;">
-																																	<div class="row g-0">
-																																		{{message.id}}
-																																		<br>
-																																		{{message.affair}}<br>
-																																		{{message.content}}<br>
-																																		{{message.send_date}}<br>
-																																		{{message.removed ? 'Removio' : 'No Removio'}}<br>
-																																		{{message.important ? 'Destacado' : 'No Destacado'}}<br>
-																																		De:
-																																		{{message.user_from}}<br>
-																																		Para:
-																																		{{message.user_to}}<br><br>
-																																							              <script>console.log('{message}')</script>
+																																											<div class="row g-0">
+																																												{{message.id}}
+																																												<br>
+																																												{{message.affair}}<br>
+																																												{{message.content}}<br>
+																																												{{message.send_date}}<br>
+																																												{{message.removed ? 'Removio' : 'No Removio'}}<br>
+																																												{{message.important ? 'Destacado' : 'No Destacado'}}<br>
+																																												De:
+																																												{{message.user_from}}<br>
+																																												Para:
+																																												{{message.user_to}}<br><br>
+																																																	                   <script>console.log('{message}')</script>
 	</div>
 </div>#}</div>{% endfor %}{% endblock %}

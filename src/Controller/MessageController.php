@@ -70,7 +70,7 @@ class MessageController extends AbstractController
         $isAYAX = $request->isXmlHttpRequest();
 
         if ($isAYAX) {
-            try {
+            try { //TODO REUTILIZAR ESTO
                 $message = $entityManager->getRepository(Message::class)->find($id);
 
                 if ($message->isRemoved()) {
@@ -125,5 +125,30 @@ class MessageController extends AbstractController
         }
 
         return $response;
+    }
+
+    public function deleteSelectedMessages(Request $request, EntityManagerInterface $entityManager)
+    {
+        /* $messages = json_decode($request->getContent()); */
+
+         /* foreach ($messages as $message) {
+            $findMessage = $entityManager->getRepository(Message::class)->find($message);
+
+            if ($findMessage) {
+                if ($findMessage->isRemoved()) {
+                    $entityManager->remove($findMessage);
+                } else {
+                    $findMessage->setRemoved(true);
+
+                    $entityManager->persist($findMessage);
+                }
+            }
+        } */
+
+        /* $entityManager->flush(); */
+        /* return $this->json([
+            'que' => json_encode($messages)
+        ]); */
+        return new Response($status = Response::HTTP_ACCEPTED);
     }
 }

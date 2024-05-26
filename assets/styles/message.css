@@ -29,10 +29,21 @@
 
 .image-message-container {
     width: 5rem !important;
+    border: 3px solid #212529;
+    border-radius: 50%;
 }
 
 .col-1 {
     width: max-content !important;
+}
+
+.selected {
+    background-color: #212529;
+    color: white;
+}
+
+.selected .image-message-container {
+    border-color: white;
 }
 
 @media (max-width: 768px) {
