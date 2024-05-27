@@ -27,3 +27,13 @@ deleteMessage:
   path: /message/{id}
   controller: App\Controller\MessageController::delete
   methods: [DELETE]
+
+createViewMessage:
+  path: /message/create
+  controller: App\Controller\MessageController::createView
+  methods: [GET]
+
+createMessage:
+  path: /message/create
+  controller: App\Controller\MessageController::create
+  methods: [POST]

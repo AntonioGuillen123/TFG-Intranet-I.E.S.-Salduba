@@ -51,7 +51,6 @@ class Message
     public function __construct()
     {
         $this->file = new ArrayCollection();
-        $this->send_date = new \DateTimeInterface();
     }
 
     public function getId(): ?int

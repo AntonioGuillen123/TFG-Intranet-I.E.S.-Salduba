@@ -23,7 +23,7 @@ $(document).ready(() => {
     getMessages()
 })
 
-const getNotifications = async () => {
+export const getNotifications = async () => {
     await $.ajax({
         url: '/notification',
         type: 'GET',
@@ -100,7 +100,7 @@ const createNotifications = (data) => {
         const iconClassName = isMail ? 'fa-envelope-open-text' : 'fa-newspaper'
 
         const a = document.createElement('a')
-        a.setAttribute('href', `/${notifyType}#message-item-${associated_id}`)
+        a.setAttribute('href', `/${notifyType}#${associated_id}`)
 
         const li = document.createElement('li')
         li.classList.add('notify-element')
@@ -128,6 +128,7 @@ const createNotifications = (data) => {
         deleteContainer.classList.add('delete-notify')
         deleteContainer.addEventListener('click', (event) => {
             event.stopPropagation()
+            event.preventDefault()
 
             deleteNotification(id)
         })

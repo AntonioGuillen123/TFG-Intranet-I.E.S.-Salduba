@@ -74,5 +74,4 @@ class Session
 
         return $this;
     }
-
 }

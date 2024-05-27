@@ -63,6 +63,10 @@
     cursor: pointer;
 }
 
+/* #message {
+    display: flex;
+} */
+
 @media (max-width: 768px) {
     #main-content {
         justify-content: center !important;

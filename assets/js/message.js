@@ -1,3 +1,4 @@
+import { getNotifications } from "../app.js"
 import { getMessages } from "../app.js"
 
 $(document).ready(() => {
@@ -8,6 +9,9 @@ $(document).ready(() => {
 
     const deleteAll = document.querySelector('#delete-all-messages')
     deleteAll.addEventListener('click', () => deleteSelectedMessages())
+
+    const createNew = document.querySelector('#new-message-button')
+    createNew.addEventListener('click', () => createNewMessage())
 
     messages.forEach((item) => {
         const id = parseInt(item.id)
@@ -50,7 +54,7 @@ $(document).ready(() => {
             changeSelected(card, messageCheck, dateElement, localMessages, deleteAll, checkAll)
         })
 
-        starElement.addEventListener('click', () => {
+        starElement?.addEventListener('click', () => {
             starElement.classList.toggle('fa-regular')
             starElement.classList.toggle('fa-solid')
 
@@ -147,6 +151,8 @@ const deleteMessage = async (id) => {
         success: (response) => {
             if (response === '202') {
                 $(`#${id}`).remove()
+
+                getNotifications()
             } else {
                 console.log('Error al borrar el mensaje :(')
             }
@@ -164,8 +170,6 @@ const deleteSelectedMessages = async () => {
 
     const deletedMessages = selectedMessages.filter((item) => isDelete(item))
     const unDeletedMessages = selectedMessages.filter((item) => !isDelete(item))
-
-    console.log(JSON.stringify(selectedMessages))
 
     await $.ajax({
         url: `/message/deleteSelectedMessages`,
@@ -185,6 +189,7 @@ const deleteSelectedMessages = async () => {
                 checkAll.classList.add('d-none')
 
                 getMessages()
+                getNotifications()
             } else {
                 console.log('Error al borrar los mensajes :(')
             }
@@ -236,4 +241,8 @@ const markReadedMessage = async (id) => {
             console.log(`Error :( ${err.responseText}`)
         }
     })
+}
+
+const createNewMessage = () => {
+    window.location.href = '/message/create'
 }

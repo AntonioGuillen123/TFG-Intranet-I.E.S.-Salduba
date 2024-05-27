@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Message;
+use App\Form\MessageType;
 use App\Repository\MessageRepository;
 use App\Service\SessionService;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -29,7 +31,7 @@ class MessageController extends AbstractController
 
                     break;
                 case 'important':
-                    $mode = 'Destacados';
+                    $mode = 'Favoritos';
                     $messages = array_merge(
                         $messageRepository->findImportantMessagesFromUser($username),
                         $messageRepository->findImportantSendMessagesFromUser($username)
@@ -64,6 +66,43 @@ class MessageController extends AbstractController
             'mode' => $mode,
             'messagesRaw' => $messages
         ]);
+    }
+
+    public function createView(Request $request, SessionService $session, EntityManagerInterface $entityManager)
+    {
+        $form = $this->createForm(MessageType::class);
+
+        return $this->render('message/create.html.twig', [
+            'form' => $form
+        ]);
+    }
+
+    public function create(Request $request, SessionService $session, EntityManagerInterface $entityManager)
+    {
+        $form = $this->createForm(MessageType::class);
+
+        $newMessage = new Message();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            try{
+                $entityManager->persist($newMessage);
+
+            $entityManager->flush();
+            }catch (Exception $e){
+                error_log('Error' . $e);
+            }
+        }
+
+        $newMessage = new Message();
+
+        $url = $this->generateUrl('getMesage', [
+            'mode' => 'send'
+        ]) . '#' . $newMessage->getId();
+
+        return new RedirectResponse($url, 301);
     }
 
     public function delete(int $id, Request $request, SessionService $session, EntityManagerInterface $entityManager): Response
