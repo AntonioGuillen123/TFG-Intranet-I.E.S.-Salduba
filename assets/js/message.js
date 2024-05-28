@@ -2,6 +2,12 @@ import { getNotifications } from "../app.js"
 import { getMessages } from "../app.js"
 
 $(document).ready(() => {
+    const newUrlParams = getQueryParams()
+
+    const newMessage = newUrlParams.get('newMessage')
+
+    if (newMessage) window.location.href = `/message#${newMessage}`
+
     const messages = document.querySelectorAll('.message-item')
 
     const checkAll = document.querySelector('#check-all')
@@ -25,12 +31,7 @@ $(document).ready(() => {
 
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach((item) => {
-                if (item.isIntersecting && eyeElement.classList.contains('fa-eye-slash') && eyeElement.style.display === 'none') {
-                    markReadedMessage(id)
-                    console.log('hola')
-                }
-                /* TODO FUNCIONA LO DE MARCAR LEIDO, PERO FALTA INDICARLE CUANDO LO ENVÍA, SE PODRÍA HACER DETECTANDO LA CLASE DEL OJO, PERO 
-            */
+                if (item.isIntersecting && eyeElement.classList.contains('fa-eye-slash') && eyeElement.style.display === 'none')  markReadedMessage(id)
             })
         })
 
@@ -209,11 +210,9 @@ const markImportantMessage = async (id) => {
 
             const { isImportant } = response
 
-            const parameters = window.location.search;
+            const newUrlParams = getQueryParams()
 
-            const newUrl = new URLSearchParams(parameters);
-
-            const mode = newUrl.get('mode');
+            const mode = newUrlParams.get('mode')
 
             if (mode === 'important') if (!isImportant) message.remove()
 
@@ -243,6 +242,12 @@ const markReadedMessage = async (id) => {
     })
 }
 
-const createNewMessage = () => {
-    window.location.href = '/message/create'
+const createNewMessage = () => window.location.href = '/message/create'
+
+const getQueryParams = () => {
+    const parameters = window.location.search
+
+    const newUrlParams = new URLSearchParams(parameters)
+
+    return newUrlParams
 }

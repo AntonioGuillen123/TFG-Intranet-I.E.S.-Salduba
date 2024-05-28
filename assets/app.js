@@ -122,7 +122,7 @@ const createNotifications = (data) => {
         titleMessage.innerHTML = `<b>${title}</b>`
 
         const fromMessage = document.createElement('span')
-        fromMessage.innerHTML = `<b>${user_from}</b>`
+        fromMessage.innerHTML = `<b>De: ${user_from}</b>`
 
         const deleteContainer = document.createElement('div')
         deleteContainer.classList.add('delete-notify')

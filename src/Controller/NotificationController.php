@@ -27,8 +27,6 @@ class NotificationController extends AbstractController
             $notifications = $notificationRepository->findAllNotificationsFromUserToJSON($username);
 
             $response = $this->json(json_encode($notifications));
-        } else {
-            $response = $this->redirectToRoute('index');
         }
 
         return $response;
@@ -51,8 +49,6 @@ class NotificationController extends AbstractController
             } catch (Exception $e) {
                 $response = new Response($status = Response::HTTP_NO_CONTENT);
             }
-        } else {
-            $response = $this->redirectToRoute('index');
         }
 
         return $response;
@@ -74,8 +70,6 @@ class NotificationController extends AbstractController
             $entityManager->flush();
 
             $response = new Response('Notifications deleted', Response::HTTP_NO_CONTENT);
-        } else {
-            $response = $this->redirectToRoute('index');
         }
 
         return $response;

@@ -84,8 +84,7 @@
 {% block styleContent %}
 	{{ encore_entry_link_tags('dashboard') }}
 
-	{% block styleContentDashBoard %}
-	{% endblock %}
+	{% block styleContentDashBoard %}{% endblock %}
 {% endblock %}
 
 {% block body %}
@@ -114,9 +113,9 @@
 						{% endblock %}
 					</div>
 				</div>
-				<div id="main-content" class=" d-flex flex-wrap align-items-center m-4">
-					{% block pageContent %}
 
+				{% block pageContent %}
+					<div id="main-content" class=" d-flex flex-wrap align-items-center m-4">
 
 						<h2>Section title</h2>
 						<div class="table-responsive small">
@@ -246,11 +245,12 @@
 								</tbody>
 							</table>
 						</div>
-					{% endblock %}
-				</div>
-			</main>
+						<div id="main-content" class=" d-flex flex-wrap align-items-center m-4">
+						{% endblock %}
+					</div>
+				</main>
 
 
+			</div>
 		</div>
-	</div>
-{% endblock %}
+	{% endblock %}

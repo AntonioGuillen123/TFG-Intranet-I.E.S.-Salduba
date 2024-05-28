@@ -9,6 +9,7 @@
 
 {% block pageContent %}
 	{{ form_start(form) }}
+	<div id="form" class="d-flex flex-column">
 
 	<div class="form-group inline-form">
 		{{ form_label(form.user_to) }}
@@ -26,6 +27,7 @@
 	</div>
 
 	<button type="submit" class="btn btn-primary">Enviar Mensage</button>
+	<div>
 
 	{{ form_end(form) }}
 {% endblock %}

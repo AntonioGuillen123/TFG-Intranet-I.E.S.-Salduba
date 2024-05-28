@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Message;
+use App\Entity\Session;
 use App\Form\MessageType;
 use App\Repository\MessageRepository;
 use App\Service\SessionService;
@@ -23,7 +24,6 @@ class MessageController extends AbstractController
         $mode = $request->get('mode');
 
         try {
-
             switch ($mode) {
                 case 'inbox':
                     $mode = 'Recibidos';
@@ -70,7 +70,12 @@ class MessageController extends AbstractController
 
     public function createView(Request $request, SessionService $session, EntityManagerInterface $entityManager)
     {
-        $form = $this->createForm(MessageType::class);
+        $username = $session->get('username');
+
+        $form = $this->createForm(MessageType::class, null, [
+            'username' => $username,
+            'entity' => $entityManager
+        ]);
 
         return $this->render('message/create.html.twig', [
             'form' => $form
@@ -79,30 +84,39 @@ class MessageController extends AbstractController
 
     public function create(Request $request, SessionService $session, EntityManagerInterface $entityManager)
     {
-        $form = $this->createForm(MessageType::class);
+        $username = $session->get('username');
 
         $newMessage = new Message();
+
+        $form = $this->createForm(MessageType::class, $newMessage, [
+            'username' => $username,
+            'entity' => $entityManager
+        ]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $userFrom = $entityManager->getRepository(Session::class)->findOneBy(['username' => $username]);
 
-            try{
+                $newMessage->setUserFrom($userFrom);
+                $newMessage->setSendDate(new \DateTime());
+                $newMessage->setRemoved(false);
+                $newMessage->setReaded(false);
+                $newMessage->setImportant(false);
+
                 $entityManager->persist($newMessage);
 
-            $entityManager->flush();
-            }catch (Exception $e){
+                $entityManager->flush();
+            } catch (Exception $e) {
                 error_log('Error' . $e);
             }
         }
 
-        $newMessage = new Message();
-
-        $url = $this->generateUrl('getMesage', [
-            'mode' => 'send'
-        ]) . '#' . $newMessage->getId();
-
-        return new RedirectResponse($url, 301);
+        return $this->redirectToRoute('getMessages', [
+            'mode' => 'send',
+            'newMessage' => $newMessage->getId()
+        ]);
     }
 
     public function delete(int $id, Request $request, SessionService $session, EntityManagerInterface $entityManager): Response

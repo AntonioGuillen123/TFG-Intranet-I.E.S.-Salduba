@@ -63,9 +63,9 @@
     cursor: pointer;
 }
 
-/* #message {
-    display: flex;
-} */
+#search-bg {
+    background-color: #212529 !important;
+}
 
 @media (max-width: 768px) {
     #main-content {

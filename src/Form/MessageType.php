@@ -4,7 +4,9 @@ namespace App\Form;
 
 use App\Entity\Message;
 use App\Entity\Session;
+use Doctrine\ORM\EntityRepository;
 use App\Entity\UploadFileMessage;
+use App\Repository\SessionRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -16,13 +18,22 @@ class MessageType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $username = $options['username'];
+        $entityManager = $options['entity'];
+
+        $user = $entityManager->getRepository(Session::class)->findOneBy(['username' => $username]);
+
         $builder
             ->add('user_to', EntityType::class, [
                 'class' => Session::class,
                 'label' => 'Para',
                 'choice_label' => 'username',
-                'attr' => [
-                ]
+                'query_builder' => function (SessionRepository $messageRepository) use ($user) {
+                    return $messageRepository->createQueryBuilder('s')
+                        ->where('s.id != :username')
+                        ->setParameter('username', $user->getId());
+                },
+                'attr' => []
             ])
             ->add('affair', TextType::class, [
                 'label' => 'Asunto',
@@ -49,6 +60,16 @@ class MessageType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Message::class,
+            'username' => null,
+            'entity' => null
         ]);
     }
 }
+
+   /*  $getUsers = function (SessionRepository $messageRepository) use ($username) {
+            return $messageRepository->createQueryBuilder('s')
+                ->where('s.id = :username')
+                ->setParameter([
+                    'username' => $username
+                ]);
+        } */

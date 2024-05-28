@@ -24,107 +24,111 @@
 	</button>
 
 	<div class="btn-group me-2">
-		<div type="button" class="input-group-prepend">
-			<i class="fa-solid fa-magnifying-glass input-group-text" id="inputGroup-sizing-sm"></i>
+		<div class="input-group-prepend">
+			<span id="search-bg" class="input-group-text bg-white border-right-0 d-flex gap-3" id="search-addon">
+				<i class="fas fa-search text-white"></i>
+				<input type="text" class="form-control border-left-0 rounded" placeholder="Buscar Mensaje...">
+			</span>
 		</div>
-		<input type="button" class="form-control"></input>
-</div>
-<button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
-	<i class="fa-solid fa-calendar-days"></i>
-	This week
-</button>{% endblock %}{% block pageContent %}{% set messages = messagesRaw %}{% for message in messages %}
-{% set id = message.id %}
-{% set affair = message.affair %}
-{% set content = message.content %}
-{% set send_date = message.send_date %}
-{% set isRemoved = message.removed %}
-{% set isImportant = message.important %}
-{% set isReaded = message.readed %}
-{% set iconImportant = isImportant ? 'fa-solid' : 'fa-regular' %}
-{% set iconReaded = isReaded ? 'fa-eye' : 'fa-eye-slash' %}
-{% set userFrom = message.user_from %}
-{% set userTo = message.user_to %}
-
-<div id="{{id}}" class="d-flex message-item">
-	<div class="d-flex align-items-center justify-content-center message-check-container">
-		<i class="fa-regular fa-square fa-3x"></i>
 	</div>
+{% endblock %}
+{% block pageContent %}<div id="main-content" class=" d-flex flex-wrap align-items-center m-4">
+	{% set messages = messagesRaw %}
+	{% for message in messages %}
+		{% set id = message.id %}
+		{% set affair = message.affair %}
+		{% set content = message.content %}
+		{% set send_date = message.send_date %}
+		{% set isRemoved = message.removed %}
+		{% set isImportant = message.important %}
+		{% set isReaded = message.readed %}
+		{% set iconImportant = isImportant ? 'fa-solid' : 'fa-regular' %}
+		{% set iconReaded = isReaded ? 'fa-eye' : 'fa-eye-slash' %}
+		{% set userFrom = message.user_from %}
+		{% set userTo = message.user_to %}
+		{% set userName = userFrom == username ? 'Para: ' ~ userTo : 'De: ' ~ userFrom %}
 
-	<div class="card mb-3">
-		{% if username == userFrom %}
-			<div class="row g-0 icon-message-container">
-				<div class="col-1 p-2">
-					<i id="eyeElement" class="fa-solid {{iconReaded}} icon-message"></i>
-				</div>
-			</div>
-		{% else %}
-			<div id="eyeElement" style="display: none;" class="{{iconReaded}}"></div>
-		{% endif %}
-		<div class="row g-0">
-			<div class="d-flex flex-column justify-content-center col-md-3 align-items-center my-2 gap-3">
-				<div class="d-flex justify-content-center image-message-container">
-					<img src="./images/iessalduba.jpg" class="img-fluid rounded-circle" alt="...">
-				</div>
-				<div class="d-flex justify-content-center">
-					<span>
-						<b>{{userFrom}}</b>
-					</span>
-				</div>
-			</div>
-			<div class="col-md-8">
-				<div
-					class="card-body p-3">
-					{# TODO Esto de padding 3 se tiene que mirar #}
-					<h5 class="card-title">{{affair}}</h5>
-					<p class="card-text">{{content}}</p>
-					<p class="card-text">
-						<small class="text-muted">
-							<b>Fecha de envio:</b>
-							{{send_date}}</small>
-					</p>
-				</div>
+		<div id="{{id}}" class="d-flex message-item">
+			<div class="d-flex align-items-center justify-content-center message-check-container">
+				<i class="fa-regular fa-square fa-3x"></i>
 			</div>
 
-		</div>
-		<div class="row g-0 icon-message-container mb-2">
-			<div class="col-1 p-2">
-				{% if not isRemoved %}
-					<i class="{{iconImportant}} fa-star icon-message star"></i>
+			<div class="card mb-3">
+				{% if username == userFrom %}
+					<div class="row g-0 icon-message-container">
+						<div class="col-1 p-2">
+							<i id="eyeElement" class="fa-solid {{iconReaded}} icon-message"></i>
+						</div>
+					</div>
+				{% else %}
+					<div id="eyeElement" style="display: none;" class="{{iconReaded}}"></div>
 				{% endif %}
-				<i class="fa-solid fa-recycle icon-message"></i>
+				<div class="row g-0">
+					<div class="d-flex flex-column justify-content-center col-md-3 align-items-center my-2 gap-3">
+						<div class="d-flex justify-content-center image-message-container">
+							<img src="./images/iessalduba.jpg" class="img-fluid rounded-circle" alt="...">
+						</div>
+						<div class="d-flex justify-content-center">
+							<span>
+								<b>{{userName}}</b>
+							</span>
+						</div>
+					</div>
+					<div class="col-md-8">
+						<div
+							class="card-body p-3">
+							{# TODO Esto de padding 3 se tiene que mirar #}
+							<h5 class="card-title">{{affair}}</h5>
+							<p class="card-text">{{content}}</p>
+							<p class="card-text">
+								<small class="text-muted">
+									<b>Fecha de envio:</b>
+									{{send_date}}</small>
+							</p>
+						</div>
+					</div>
+
+				</div>
+				<div class="row g-0 icon-message-container mb-2">
+					<div class="col-1 p-2">
+						{% if not isRemoved %}
+							<i class="{{iconImportant}} fa-star icon-message star"></i>
+						{% endif %}
+						<i class="fa-solid fa-recycle icon-message"></i>
+					</div>
+				</div>
 			</div>
+
+			{# <div class="card mb-3">
+																																																																																																				<div class="row g-0">
+																																																																																																					<div class="col-md-4">
+																																																																																																						<img src="./images/iessalduba.jpg" class="img-fluid rounded-start" alt="...">
+																																																																																																					</div>
+																																																																																																					<div class="col-md-8">
+																																																																																																						<div class="card-body">
+																																																																																																							<h5 class="card-title">Card title</h5>
+																																																																																																							<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+																																																																																																							<p class="card-text">
+																																																																																																								<small class="text-muted">Last updated 3 mins ago</small>
+																																																																																																							</p>
+																																																																																																						</div>
+																																																																																																					</div>
+																																																																																																				</div>
+																																																																																																			</div> #}
+
+			{# <div class="card mb-3" style="max-width: 540px;">
+																																																																							<div class="row g-0">
+																																																																								{{message.id}}
+																																																																								<br>
+																																																																								{{message.affair}}<br>
+																																																																								{{message.content}}<br>
+																																																																								{{message.send_date}}<br>
+																																																																								{{message.removed ? 'Removio' : 'No Removio'}}<br>
+																																																																								{{message.important ? 'Destacado' : 'No Destacado'}}<br>
+																																																																								De:
+																																																																								{{message.user_from}}<br>
+																																																																								Para:
+																																																																								{{message.user_to}}<br><br>
+																																																																													                                      <script>console.log('{message}')</script>
 		</div>
-	</div>
-
-	{# <div class="card mb-3">
-																																																																																				<div class="row g-0">
-																																																																																					<div class="col-md-4">
-																																																																																						<img src="./images/iessalduba.jpg" class="img-fluid rounded-start" alt="...">
-																																																																																					</div>
-																																																																																					<div class="col-md-8">
-																																																																																						<div class="card-body">
-																																																																																							<h5 class="card-title">Card title</h5>
-																																																																																							<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-																																																																																							<p class="card-text">
-																																																																																								<small class="text-muted">Last updated 3 mins ago</small>
-																																																																																							</p>
-																																																																																						</div>
-																																																																																					</div>
-																																																																																				</div>
-																																																																																			</div> #}
-
-	{# <div class="card mb-3" style="max-width: 540px;">
-																																																							<div class="row g-0">
-																																																								{{message.id}}
-																																																								<br>
-																																																								{{message.affair}}<br>
-																																																								{{message.content}}<br>
-																																																								{{message.send_date}}<br>
-																																																								{{message.removed ? 'Removio' : 'No Removio'}}<br>
-																																																								{{message.important ? 'Destacado' : 'No Destacado'}}<br>
-																																																								De:
-																																																								{{message.user_from}}<br>
-																																																								Para:
-																																																								{{message.user_to}}<br><br>
-																																																													                               <script>console.log('{message}')</script>
-</div></div>#}</div>{% endfor %}{% endblock %}
+	</div>#}</div>{% endfor %}</div>{% endblock %}
