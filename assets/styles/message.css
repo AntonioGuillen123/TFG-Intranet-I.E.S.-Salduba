@@ -62,10 +62,10 @@
 #check-all {
     cursor: pointer;
 }
-
+/* 
 #search-bg {
     background-color: #212529 !important;
-}
+} */
 
 @media (max-width: 768px) {
     #main-content {

@@ -1,8 +1,11 @@
 import { getNotifications } from "../app.js"
 import { getMessages } from "../app.js"
 
+
 $(document).ready(() => {
     const newUrlParams = getQueryParams()
+
+    const mainContent = document.querySelector('#main-content')
 
     const newMessage = newUrlParams.get('newMessage')
 
@@ -19,6 +22,31 @@ $(document).ready(() => {
     const createNew = document.querySelector('#new-message-button')
     createNew.addEventListener('click', () => createNewMessage())
 
+    const searchBar = document.querySelector('#search-bg input')
+    searchBar.addEventListener('keyup', function () {
+        const searchValue = this.value
+
+        const searchMessages = Object.values(messages).filter((item) => {
+            const content = item.outerHTML
+
+            return content.toLocaleLowerCase().includes(searchValue.toLowerCase())
+        })
+
+        mainContent.innerHTML = searchMessages.map((item) => item.outerHTML)
+
+        renderMessages(checkAll, deleteAll)
+
+       /*  if (value === ''){
+
+        } */
+    })
+
+    renderMessages(checkAll, deleteAll)
+})
+
+const renderMessages = (checkAll, deleteAll) => {
+    const messages = document.querySelectorAll('.message-item')
+
     messages.forEach((item) => {
         const id = parseInt(item.id)
 
@@ -31,7 +59,7 @@ $(document).ready(() => {
 
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach((item) => {
-                if (item.isIntersecting && eyeElement.classList.contains('fa-eye-slash') && eyeElement.style.display === 'none')  markReadedMessage(id)
+                if (item.isIntersecting && eyeElement?.classList.contains('fa-eye-slash') && eyeElement?.style.display === 'none') markReadedMessage(id)
             })
         })
 
@@ -81,14 +109,15 @@ $(document).ready(() => {
                     localStorage.clear()
 
                     deleteAll.classList.add('disabled')
-                    checkAll.classList.add('d-none')
+                    checkAll.classList.add('invisible')
                 }
             }
 
             getMessages()
         })
+
     })
-})
+}
 
 const deleteLocalSelected = (localMessages, element) => {
     const indexOf = localMessages.findIndex((item) => item === element)
@@ -113,12 +142,12 @@ const changeSelected = (card, messageCheck, dateElement, messages, deleteAll, ch
     if (messages.length === 0) {
         deleteAll.classList.add('disabled')
 
-        checkAll.classList.add('d-none')
+        checkAll.classList.add('invisible')
     } else {
         if (deleteAll.classList.contains('disabled')) {
             deleteAll.classList.remove('disabled')
 
-            checkAll.classList.remove('d-none')
+            checkAll.classList.remove('invisible')
         }
     }
 }
@@ -187,7 +216,7 @@ const deleteSelectedMessages = async () => {
                 localStorage.setItem('selected-messages', JSON.stringify(unDeletedMessages))
 
                 deleteAll.classList.add('disabled')
-                checkAll.classList.add('d-none')
+                checkAll.classList.add('invisible')
 
                 getMessages()
                 getNotifications()
