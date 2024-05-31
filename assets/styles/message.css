@@ -1,7 +1,7 @@
-.card {
-    width: 41rem;
+/* .card {
+    width: 100%;
 }
-
+ */
 .message-check-container {
     width: 17% !important;
 }
@@ -11,8 +11,11 @@
 }
 
 .icon-message-container {
-    height: 2rem !important;
-    justify-content: flex-end;
+    width: 11% !important;
+}
+
+.icon-message-container .col-1 {
+    height: max-content !important;
 }
 
 .icon-message {
@@ -78,11 +81,29 @@
     }
 
     .card {
-        width: 15rem !important;
+        width: 100% !important;
+        flex-direction: column !important;
+    }
+
+    .card-content {
+        flex-direction: column !important;
+    }
+
+    .card-content > div {
+        width: 100% !important;
+    }
+
+    .icon-message-container {
+        width: 100% !important;
+        justify-content: space-between !important;
     }
 
     #delete-all-messages {
         display: none;
+    }
+
+    #check-all.invisible {
+        display: none !important;
     }
     
 }

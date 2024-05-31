@@ -11,6 +11,17 @@ import 'bootstrap'
 import './styles/global.scss'
 import $ from 'jquery'
 
+export const debounce = (func, delay) => {
+    let timer
+
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            func(...args);
+        }, delay);
+    }
+}
+
 $(document).ready(() => {
     const deleteAllNotificationsButton = document.getElementById('delete-all-notify')
     deleteAllNotificationsButton.addEventListener('click', (event) => {
@@ -147,7 +158,7 @@ const createNotifications = (data) => {
         container.appendChild(deleteContainer)
 
         li.appendChild(container)
-        
+
         a.appendChild(li)
 
         notifyContainer.appendChild(a)

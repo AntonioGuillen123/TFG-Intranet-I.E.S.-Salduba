@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Enum\UserType;
 use App\Repository\SessionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -31,8 +30,9 @@ class Session
     )]
     private ?string $password = null;
 
-    #[ORM\Column(type: 'string', enumType: UserType::class)]
-    private ?UserType $type = null;
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false,  options: ["default" => 1])]
+    private ?UserRol $type = null;
 
     public function getId(): ?int
     {
@@ -63,12 +63,12 @@ class Session
         return $this;
     }
 
-    public function getType(): ?UserType
+    public function getType(): ?UserRol
     {
         return $this->type;
     }
 
-    public function setType(?UserType $type): static
+    public function setType(?UserRol $type): static
     {
         $this->type = $type;
 

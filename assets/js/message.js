@@ -1,17 +1,12 @@
-import { getNotifications } from "../app.js"
-import { getMessages } from "../app.js"
+import { getNotifications, getMessages, debounce } from "../app.js"
 
 
 $(document).ready(() => {
     const newUrlParams = getQueryParams()
 
-    const mainContent = document.querySelector('#main-content')
-
     const newMessage = newUrlParams.get('newMessage')
 
     if (newMessage) window.location.href = `/message#${newMessage}`
-
-    const messages = document.querySelectorAll('.message-item')
 
     const checkAll = document.querySelector('#check-all')
     checkAll.addEventListener('click', () => selectAll())
@@ -23,29 +18,15 @@ $(document).ready(() => {
     createNew.addEventListener('click', () => createNewMessage())
 
     const searchBar = document.querySelector('#search-bg input')
-    searchBar.addEventListener('keyup', function () {
-        const searchValue = this.value
-
-        const searchMessages = Object.values(messages).filter((item) => {
-            const content = item.outerHTML
-
-            return content.toLocaleLowerCase().includes(searchValue.toLowerCase())
-        })
-
-        mainContent.innerHTML = searchMessages.map((item) => item.outerHTML)
-
-        renderMessages(checkAll, deleteAll)
-
-       /*  if (value === ''){
-
-        } */
-    })
+    searchBar.addEventListener('keyup', debounce((event) => getRenderMessages(event.target.value), 500))
 
     renderMessages(checkAll, deleteAll)
 })
 
 const renderMessages = (checkAll, deleteAll) => {
     const messages = document.querySelectorAll('.message-item')
+
+    let anyProductSelected = 0
 
     messages.forEach((item) => {
         const id = parseInt(item.id)
@@ -59,7 +40,12 @@ const renderMessages = (checkAll, deleteAll) => {
 
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach((item) => {
-                if (item.isIntersecting && eyeElement?.classList.contains('fa-eye-slash') && eyeElement?.style.display === 'none') markReadedMessage(id)
+                if (
+                    item.isIntersecting
+                    && eyeElement?.classList.contains('fa-eye-slash')
+                    && eyeElement?.style.display === 'none'
+                )
+                    markReadedMessage(id)
             })
         })
 
@@ -68,7 +54,11 @@ const renderMessages = (checkAll, deleteAll) => {
         const messagesSelected = JSON.parse(localStorage.getItem('selected-messages')) ?? []
         const isSelected = messagesSelected.find((item) => item.id === id)
 
-        if (isSelected) changeSelected(card, messageCheck, dateElement, messagesSelected, deleteAll, checkAll)
+        if (isSelected) {
+            anyProductSelected++
+
+            changeSelected(card, messageCheck, dateElement, messagesSelected, deleteAll, checkAll)
+        }
 
         messageCheck.addEventListener('click', () => {
             const localMessages = JSON.parse(localStorage.getItem('selected-messages')) ?? []
@@ -115,8 +105,14 @@ const renderMessages = (checkAll, deleteAll) => {
 
             getMessages()
         })
-
     })
+
+    const messagesSelected = JSON.parse(localStorage.getItem('selected-messages')) ?? []
+
+    if (messagesSelected.length !== 0 && anyProductSelected === 0) {
+        deleteAll.classList.add('disabled')
+        checkAll.classList.add('invisible')
+    }
 }
 
 const deleteLocalSelected = (localMessages, element) => {
@@ -213,7 +209,7 @@ const deleteSelectedMessages = async () => {
 
                 $(`.message-item:has(.card.selected)`).each((index, item) => item.remove())
 
-                localStorage.setItem('selected-messages', JSON.stringify(unDeletedMessages))
+                unDeletedMessages.length !== 0 ? localStorage.setItem('selected-messages', JSON.stringify(unDeletedMessages)) : localStorage.clear()
 
                 deleteAll.classList.add('disabled')
                 checkAll.classList.add('invisible')
@@ -279,4 +275,33 @@ const getQueryParams = () => {
     const newUrlParams = new URLSearchParams(parameters)
 
     return newUrlParams
+}
+
+const getRenderMessages = async (input) => {
+    const newUrlParams = getQueryParams()
+
+    const mode = newUrlParams.get('mode')
+
+    const parameter = mode ? `?mode=${mode}` : ''
+
+    await $.ajax({
+        url: `/message/render${parameter}`,
+        type: 'POST',
+        headers: 'Content-Type: application/json',
+        data: {
+            input: input
+        },
+        success: (response) => {
+            const checkAll = document.querySelector('#check-all')
+
+            const deleteAll = document.querySelector('#delete-all-messages')
+
+            $('#main-content').html(response.content)
+
+            renderMessages(checkAll, deleteAll)
+        },
+        error: (err) => {
+            console.log(`Error :( ${err.responseText}`)
+        }
+    })
 }

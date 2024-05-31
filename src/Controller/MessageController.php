@@ -10,6 +10,7 @@ use App\Service\SessionService;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,6 +24,17 @@ class MessageController extends AbstractController
 
         $mode = $request->get('mode');
 
+        [$messages, $mode] = $this->getMessages($messageRepository, $username, $mode);
+
+        return $this->render('message/index.html.twig', [
+            'username' => $username,
+            'mode' => $mode,
+            'messages' => $messages
+        ]);
+    }
+
+    public function getMessages($messageRepository, $username,  $mode)
+    {
         try {
             switch ($mode) {
                 case 'inbox':
@@ -31,7 +43,7 @@ class MessageController extends AbstractController
 
                     break;
                 case 'important':
-                    $mode = 'Favoritos';
+                    $mode = 'Destacados';
                     $messages = array_merge(
                         $messageRepository->findImportantMessagesFromUser($username),
                         $messageRepository->findImportantSendMessagesFromUser($username)
@@ -61,11 +73,43 @@ class MessageController extends AbstractController
             $messages = [];
         }
 
-        return $this->render('message/index.html.twig', [
+        return [$messages, $mode];
+    }
+
+    public function renderMessages(Request $request, SessionService $session, MessageRepository $messageRepository)
+    {
+        $username = $session->get('username');
+
+        $mode = $request->get('mode');
+
+        $input = strtolower($request->request->get('input'));
+
+        [$messages, $mode] = $this->getMessages($messageRepository, $username, $mode);
+
+        $searchMessages = [];
+
+        foreach ($messages as $message) {
+            $searchUser = $username == $message['user_from'] ? 'user_to' : 'user_from';
+
+            $messageAffair = $message['affair'];
+            $messageContent = $message['content'];
+            $messageAuthor = $message[$searchUser];
+
+            if (
+                str_contains(strtolower($messageAffair), $input)
+                || str_contains(strtolower($messageContent), $input)
+                || str_contains(strtolower($messageAuthor), $input)
+            )
+                $searchMessages[] = $message;
+        }
+
+        $content = $this->renderView('message/partials/messages.html.twig', [
             'username' => $username,
             'mode' => $mode,
-            'messagesRaw' => $messages
+            'messages' => $searchMessages
         ]);
+
+        return new JsonResponse(['content' => $content]);
     }
 
     public function createView(Request $request, SessionService $session, EntityManagerInterface $entityManager)
