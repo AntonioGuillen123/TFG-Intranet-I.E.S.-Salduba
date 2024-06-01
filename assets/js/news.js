@@ -13,19 +13,22 @@ $(document).ready(() => {
     })
 
     const news = document.querySelectorAll('.new')
-    news.forEach((item) => {
-        const eye = item.querySelector('.eye')
+    news.forEach((newsItem) => {
+        const id = newsItem.getAttribute('id')
+        const eye = newsItem.querySelector('.eye')
+        const value = eye?.getAttribute('value')
 
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach((item) => {
                 if (
                     item.isIntersecting
-                    && eyeElement?.classList.contains('fa-eye-slash')
-                    && eyeElement?.style.display === 'none'
+                    && value === ''
                 )
-                    markReadedMessage(id)
+                    markViewNew(id)
             })
         })
+
+        observer.observe(newsItem)
     })
 })
 
@@ -39,6 +42,20 @@ const getRenderNews = async (input) => {
         },
         success: (response) => {
             $('#main-content').html(response.content)
+        },
+        error: (err) => {
+            console.log(`Error :( ${err.responseText}`)
+        }
+    })
+}
+
+const markViewNew = async (id) => {
+    await $.ajax({
+        url: `/news/markViewNew/${id}`,
+        type: 'PUT',
+        success: (response) => {
+            console.log('LISTO AB AB AB')
+            console.log(response)
         },
         error: (err) => {
             console.log(`Error :( ${err.responseText}`)

@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Service\SessionService;
+use DateTimeZone;
 use Exception;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,11 +19,15 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class NewsController extends AbstractController
 {
-    public function index(SessionService $session, NewsRepository $newsRepository): Response
+    public function index(SessionService $session, EntityManagerInterface $entityManager, NewsRepository $newsRepository): Response
     {
         $username = $session->get('username');
 
-        $news = $newsRepository->findAllNews();
+        $user = $entityManager->getRepository(Session::class)->findOneBy(['username' => $username]);
+
+        $userId = $user->getId();
+
+        $news = $newsRepository->findAllNews($userId);
 
         return $this->render('news/index.html.twig', [
             'username' => $username,
@@ -30,13 +35,21 @@ class NewsController extends AbstractController
         ]);
     }
 
-    public function searchNew(Request $request, SessionService $session, NewsRepository $newsRepository): Response
+    public function searchNew(Request $request, EntityManagerInterface $entityManager, SessionService $session, NewsRepository $newsRepository): Response
     {
         $username = $session->get('username');
 
+        try {
+            $user = $entityManager->getRepository(Session::class)->findOneBy(['username' => $username]);
+        } catch (Exception $e) {
+            error_log('Error' . $e);
+        }
+
+        $userId = $user->getId();
+
         $input = $request->request->get('input');
 
-        $news = $newsRepository->findSearchNews($input);
+        $news = $newsRepository->findSearchNews($input, $userId);
 
         $content = $this->renderView('news/partials/news.html.twig', [
             'username' => $username,
@@ -86,9 +99,11 @@ class NewsController extends AbstractController
             try {
                 $userFrom = $entityManager->getRepository(Session::class)->findOneBy(['username' => $username]);
 
+                $date = new \DateTime('Europe/Madrid');
+                $date->setTimezone(new DateTimeZone('Europe/Madrid'));
+
                 $newNews->setUserFrom($userFrom);
-                $newNews->setPublishDate(new \DateTime());
-                $newNews->setViews(0);
+                $newNews->setPublishDate($date);
 
                 $entityManager->persist($newNews);
 
@@ -102,8 +117,35 @@ class NewsController extends AbstractController
             var_dump($image);
         }
 
-        //return $this->render('news/index.html.twig');
-
         return $this->redirectToRoute('getNews');
+    }
+
+    public function markViewNew(int $id, Request $request, SessionService $session, EntityManagerInterface $entityManager, SluggerInterface $slugger)
+    {
+        $username = $session->get('username');
+
+        $response = $this->redirectToRoute('index');
+
+        $isAYAX = $request->isXmlHttpRequest();
+
+        if ($isAYAX) {
+            try {
+                $user = $entityManager->getRepository(Session::class)->findOneBy(['username' => $username]);
+
+                $new = $entityManager->getRepository(News::class)->find($id);
+
+                $new->addView($user);
+
+                $entityManager->persist($new);
+
+                $entityManager->flush();
+
+                $response = new Response($status = Response::HTTP_ACCEPTED);
+            } catch (Exception $e) {
+                $response = new Response($status = Response::HTTP_NO_CONTENT);
+            }
+        }
+
+        return $response;
     }
 }

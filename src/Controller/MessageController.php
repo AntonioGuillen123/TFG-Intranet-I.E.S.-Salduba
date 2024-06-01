@@ -7,6 +7,7 @@ use App\Entity\Session;
 use App\Form\MessageType;
 use App\Repository\MessageRepository;
 use App\Service\SessionService;
+use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -142,9 +143,11 @@ class MessageController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $userFrom = $entityManager->getRepository(Session::class)->findOneBy(['username' => $username]);
+                $date = new \DateTime('Europe/Madrid');
+                $date->setTimezone(new DateTimeZone('Europe/Madrid'));
 
                 $newMessage->setUserFrom($userFrom);
-                $newMessage->setSendDate(new \DateTime());
+                $newMessage->setSendDate($date);
                 $newMessage->setRemoved(false);
                 $newMessage->setReaded(false);
                 $newMessage->setImportant(false);
@@ -163,7 +166,7 @@ class MessageController extends AbstractController
         ]);
     }
 
-    public function delete(int $id, Request $request, SessionService $session, EntityManagerInterface $entityManager): Response
+    public function delete(int $id, Request $request, EntityManagerInterface $entityManager): Response
     {
         $response = $this->redirectToRoute('index');
 

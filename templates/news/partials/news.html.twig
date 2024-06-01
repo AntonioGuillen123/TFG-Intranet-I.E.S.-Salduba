@@ -4,11 +4,13 @@
 	{% set content = new.content %}
 	{% set image = new.image %}
 	{% set views = new.views %}
+	{% set isView = new.isView %}
 	{% set userFrom = new.user_from %}
 	{% set publishDate = new.publish_date %}
 	{% set indexNumber = news|length - (loop.index - 1) %}
 
 	<div id="{{id}}" class="new p-4 md:w-1/3">
+	<div type="hidden"></div>
 		<div class="h-full border-2 border-gray-800 rounded-lg overflow-hidden">
 			{% if image %}
 				<img class="lg:h-48 md:h-36 w-full object-cover object-center" src="files/{{image}}" alt="Publicación {{indexNumber}}">
@@ -24,7 +26,7 @@
 							<b>Fecha de publicación:</b>
 							{{publishDate}}</small>
 					</p>
-					<span class="eye text-gray-500 mr-0 inline-flex items-center lg:ml-0 md:ml-0 ml-0 leading-none text-sm border-gray-600">
+					<span value="{{isView}}" class="eye text-gray-500 mr-0 inline-flex items-center lg:ml-0 md:ml-0 ml-0 leading-none text-sm border-gray-600">
 						<svg class="w-4 h-4 mr-1" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" viewbox="0 0 24 24">
 							<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
 							<circle cx="12" cy="12" r="3"></circle>

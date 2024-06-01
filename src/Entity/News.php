@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\NewsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,8 +25,8 @@ class News
     #[ORM\Column(type: Types::TEXT)]
     private ?string $image = null;
 
-    #[ORM\Column(options: ["default" => "0"])]
-    private ?int $views = null;
+/*     #[ORM\Column(options: ["default" => "0"])]
+    private ?int $views = null; */
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
@@ -32,6 +34,17 @@ class News
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, options: ["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeInterface $publish_date = null;
+
+    /**
+     * @var Collection<int, Session>
+     */
+    #[ORM\ManyToMany(targetEntity: Session::class)]
+    private Collection $views;
+
+    public function __construct()
+    {
+        $this->views = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -74,7 +87,7 @@ class News
         return $this;
     }
 
-    public function getViews(): ?int
+   /*  public function getViews(): ?int
     {
         return $this->views;
     }
@@ -84,7 +97,7 @@ class News
         $this->views = $views;
 
         return $this;
-    }
+    } */
 
     public function getUserFrom(): ?Session
     {
@@ -106,6 +119,30 @@ class News
     public function setPublishDate(\DateTimeInterface $publish_date): static
     {
         $this->publish_date = $publish_date;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Session>
+     */
+    public function getViews(): Collection
+    {
+        return $this->views;
+    }
+
+    public function addView(Session $view): static
+    {
+        if (!$this->views->contains($view)) {
+            $this->views->add($view);
+        }
+
+        return $this;
+    }
+
+    public function removeView(Session $view): static
+    {
+        $this->views->removeElement($view);
 
         return $this;
     }

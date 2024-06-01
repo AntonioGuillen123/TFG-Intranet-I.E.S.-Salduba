@@ -28,22 +28,22 @@ const renderMessages = (checkAll, deleteAll) => {
 
     let anyProductSelected = 0
 
-    messages.forEach((item) => {
-        const id = parseInt(item.id)
+    messages.forEach((message) => {
+        const id = parseInt(message.id)
 
-        const card = item.querySelector('.card')
-        const messageCheck = item.querySelector('.message-check-container i')
-        const eyeElement = item.querySelector('#eyeElement')
-        const dateElement = item.querySelector('small')
-        const starElement = item.querySelector('.fa-star')
-        const trashElement = item.querySelector('.fa-recycle')
+        const card = message.querySelector('.card')
+        const messageCheck = message.querySelector('.message-check-container i')
+        const eyeElement = message.querySelector('#eyeElement')
+        const dateElement = message.querySelector('small')
+        const starElement = message.querySelector('.fa-star')
+        const trashElement = message.querySelector('.fa-recycle')
 
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach((item) => {
                 if (
                     item.isIntersecting
+                    && eyeElement?.classList.contains('invisible')
                     && eyeElement?.classList.contains('fa-eye-slash')
-                    && eyeElement?.style.display === 'none'
                 )
                     markReadedMessage(id)
             })

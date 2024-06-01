@@ -25,7 +25,7 @@ class MessageRepository extends ServiceEntityRepository
                 'id' => $queryResult[$i]->getId(),
                 'affair' => $queryResult[$i]->getAffair(),
                 'content' => $queryResult[$i]->getContent(),
-                'send_date' => $queryResult[$i]->getSendDate()->format('d-m-Y'),
+                'send_date' => $queryResult[$i]->getSendDate()->format('d-m-Y H:i'),
                 'removed' => $queryResult[$i]->isRemoved(),
                 'important' => $queryResult[$i]->isImportant(),
                 'readed' => $queryResult[$i]->isReaded(),

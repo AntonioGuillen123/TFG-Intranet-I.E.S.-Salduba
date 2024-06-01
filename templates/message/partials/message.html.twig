@@ -42,16 +42,12 @@
 				</div>
 			</div>
 			<div class="row g-0 icon-message-container align-content-between justify-content-end">
-				{% if username == userFrom %}
-					<div class="col-1 p-2">
-						<i id="eyeElement" class="fa-solid {{iconReaded}} icon-message"></i>
-					</div>
-				{% else %}
-					<div class="col-1 p-2">
+				<div class="col-1 p-2">
+					{% set invisible = username != userFrom ? 'invisible' : '' %}
+					
+					<i id="eyeElement" class="fa-solid {{iconReaded}} icon-message {{invisible}}"></i>
+				</div>
 
-						<i id="eyeElement" class="fa-solid {{iconReaded}} icon-message invisible"></i>
-					</div>
-				{% endif %}
 				<div class="col-1 p-2">
 					{% if not isRemoved %}
 						<i class="{{iconImportant}} fa-star icon-message star"></i>

@@ -16,28 +16,28 @@ class SessionRepository extends ServiceEntityRepository
         parent::__construct($registry, Session::class);
     }
 
-    //    /**
-    //     * @return Session[] Returns an array of Session objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('s')
-    //            ->andWhere('s.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('s.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function convertTOJSON($queryResult)
+    {
+        $result = [];
 
-    //    public function findOneBySomeField($value): ?Session
-    //    {
-    //        return $this->createQueryBuilder('s')
-    //            ->andWhere('s.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        for ($i = 0; $i < count($queryResult); $i++) {
+            $result[] = [
+                'id' => $queryResult[$i]->getId(),
+                'username' => $queryResult[$i]->getUsername(),
+                'password' => $queryResult[$i]->getPassword(),
+                'type' => $queryResult[$i]->getType()
+            ];
+        }
+        return $result;
+    }
+
+    public function getViewsFromNew($news)
+    {
+        $queryResult = $this->createQueryBuilder('s')
+            ->orderBy('n.publish_date', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        return $this->convertTOJSON($queryResult);
+    }
 }

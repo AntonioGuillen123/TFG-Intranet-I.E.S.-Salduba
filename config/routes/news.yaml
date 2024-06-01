@@ -17,3 +17,8 @@ createNew:
   path: /news/create
   controller: App\Controller\NewsController::create
   methods: [POST]
+
+markViewNew:
+  path: /news/markViewNew/{id}
+  controller: App\Controller\NewsController::markViewNew
+  methods: [PUT]
