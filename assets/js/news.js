@@ -11,6 +11,22 @@ $(document).ready(() => {
 
         console.log(event.target.files)
     })
+
+    const news = document.querySelectorAll('.new')
+    news.forEach((item) => {
+        const eye = item.querySelector('.eye')
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach((item) => {
+                if (
+                    item.isIntersecting
+                    && eyeElement?.classList.contains('fa-eye-slash')
+                    && eyeElement?.style.display === 'none'
+                )
+                    markReadedMessage(id)
+            })
+        })
+    })
 })
 
 const getRenderNews = async (input) => {
