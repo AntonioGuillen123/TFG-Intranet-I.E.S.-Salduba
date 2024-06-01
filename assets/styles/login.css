@@ -22,6 +22,16 @@ main {
   /* background-color: rgb(50, 100, 150); */
 }
 
+#form-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* #form-login input {
+  width: 100% !important;
+} */
+
 .form-signin {
   max-width: 25rem;
   padding: 1rem;

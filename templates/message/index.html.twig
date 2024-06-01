@@ -1,5 +1,9 @@
 {% extends 'dashboard.html.twig' %}
 
+{% block title %}
+    Intranet - Mensajes
+{% endblock %}
+
 {% block titlePage %}
 	Mensajes -
 	{{mode}}
@@ -14,28 +18,10 @@
 {% endblock %}
 
 {% block toolbarPage %}
-	<div class="btn-group me-2">
-		<div class="input-group-prepend">
-			<span id="search-bg" class="input-group-text bg-white border-right-0 d-flex border-0 gap-3" id="search-addon">
-				<i class="fas fa-search "></i>
-				<input type="text" class="form-control border-left-0 rounded" placeholder="Buscar Mensaje...">
-			</span>
-		</div>
-	</div>
-
-	<i id="check-all" class="fa-regular fa-square fa-2x invisible"></i>
-
-	<button type="button" id="delete-all-messages" class="btn btn-sm btn-outline-danger disabled">
-		<b>Borrar</b>
-	</button>
-
-	<button type="button" id="new-message-button" class="btn btn-sm btn-outline-success">
-		<i class="fa-solid fa-plus"></i>
-	</button>
-
+		{% include 'message/partials/toolbar.html.twig' %}
 {% endblock %}
 {% block pageContent %}
 	<div id="main-content" class=" d-flex flex-wrap align-items-center m-4">
-		{% include 'message/partials/messages.html.twig' %}
+		{% include 'message/partials/message.html.twig' %}
 	</div>
 {% endblock %}

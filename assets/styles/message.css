@@ -10,10 +10,6 @@
     cursor: pointer;
 }
 
-.icon-message-container {
-    width: 11% !important;
-}
-
 .icon-message-container .col-1 {
     height: max-content !important;
 }

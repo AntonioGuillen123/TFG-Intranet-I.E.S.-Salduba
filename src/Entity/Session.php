@@ -31,7 +31,7 @@ class Session
     private ?string $password = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false,  options: ["default" => 1])]
+    #[ORM\JoinColumn(nullable: false,  options: ["default" => 3])]
     private ?UserRol $type = null;
 
     public function getId(): ?int

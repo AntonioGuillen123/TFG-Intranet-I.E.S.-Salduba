@@ -14,13 +14,16 @@ Encore
     .enableVersioning(Encore.isProduction())
     .addEntry('app', './assets/app.js')
     .addEntry('messagejs', './assets/js/message.js')
+    .addEntry('newsjs', './assets/js/news.js')
     .addStyleEntry('global', './assets/styles/global.scss')
     .addStyleEntry('header', './assets/styles/header.css')
     .addStyleEntry('sidebar', './assets/styles/sidebar.css')
     .addStyleEntry('login', './assets/styles/login.css')
     .addStyleEntry('dashboard', './assets/styles/dashboard.css')
     .addStyleEntry('message', './assets/styles/message.css')
+    .addStyleEntry('news', './assets/styles/news.css')
     .enableSassLoader()
+    .enablePostCssLoader()
     .enableSingleRuntimeChunk()
     .autoProvidejQuery();
 

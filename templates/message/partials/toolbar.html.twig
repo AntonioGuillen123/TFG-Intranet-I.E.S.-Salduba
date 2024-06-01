@@ -1,0 +1,13 @@
+{% set searchValue = 'Mensajes' %}
+
+{% include 'partials/searchbar.html.twig' %}
+
+<i id="check-all" class="fa-regular fa-square fa-2x invisible"></i>
+
+<button type="button" id="delete-all-messages" class="btn btn-sm btn-outline-danger disabled">
+	<b>Borrar</b>
+</button>
+
+<button type="button" id="new-message-button" class="btn btn-sm btn-outline-success">
+	<i class="fa-solid fa-plus"></i>
+</button>

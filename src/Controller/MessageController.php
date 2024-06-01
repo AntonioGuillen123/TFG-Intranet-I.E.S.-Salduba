@@ -103,7 +103,7 @@ class MessageController extends AbstractController
                 $searchMessages[] = $message;
         }
 
-        $content = $this->renderView('message/partials/messages.html.twig', [
+        $content = $this->renderView('message/partials/message.html.twig', [
             'username' => $username,
             'mode' => $mode,
             'messages' => $searchMessages

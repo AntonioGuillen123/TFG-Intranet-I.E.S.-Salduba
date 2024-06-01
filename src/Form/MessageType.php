@@ -48,12 +48,7 @@ class MessageType extends AbstractType
                 'attr' => [
                     'class' => 'mb-3'
                 ]
-            ])
-            /*  ->add('file', EntityType::class, [
-                'class' => UploadFileMessage::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ]) */;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -65,11 +60,3 @@ class MessageType extends AbstractType
         ]);
     }
 }
-
-   /*  $getUsers = function (SessionRepository $messageRepository) use ($username) {
-            return $messageRepository->createQueryBuilder('s')
-                ->where('s.id = :username')
-                ->setParameter([
-                    'username' => $username
-                ]);
-        } */

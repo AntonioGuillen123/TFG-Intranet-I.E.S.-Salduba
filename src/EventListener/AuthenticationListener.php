@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class AuthenticationListener
-{ // TODO HACER LO DE LA SESSION QUE SE INYECTE EL ROUTER Y PONERLO EN EL SESSIONCONTROLLER COMO UN ATRIBUTO PRIVADO, CON ESO ESTARÍA LA REDIRECCIÒN, LO PRÓXIMO EL LOGIN Y YA LOS DATOS
+{
     private $urlGenerator;
     private $session;
     private $entityManager;

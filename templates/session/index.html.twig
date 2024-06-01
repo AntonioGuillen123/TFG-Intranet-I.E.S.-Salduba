@@ -78,20 +78,20 @@
 {% block body %}
 
 	{% if redirect %}
-		 <script>alert('Usuario o contraseña incorrect@ :(')</script>
+		 <script>alert('Usuario o contraseña incorrectos :(')</script>
 	{% endif %}
 
 	<main class="d-flex align-items-center py-4 h-100">
 		<section id="login-container" class="form-signin w-100 m-auto text-center shadow-lg">
-			<form id="formLogin" action="session" method="POST">
-				<img class="mb-4 rounded-lg" src="images/iessalduba.jpg" alt="I.E.S. Salduba" height="150">
+			<form id="form-login" action="session" method="POST">
+				<img class="mb-4 rounded-lg w-40" src="images/iessalduba.jpg" alt="I.E.S. Salduba" height="150">
 				<h1 id="title-page" class="h3 text-white mb-3">Intranet - I.E.S. Salduba</h1>
 
-				<div class="form-floating">
+				<div class="form-floating w-100">
 					<input type="text" name="username" class="form-control" id="floatingInput" maxlength="75" placeholder="Usuario" required>
 					<label for="floatingInput">Usuario</label>
 				</div>
-				<div class="form-floating">
+				<div class="form-floating w-100">
 					<input type="password" name="password" class="form-control" id="floatingPassword" minlength="12" placeholder="Contraseña" required>
 					<label for="floatingPassword">Contraseña</label>
 				</div>

@@ -1,0 +1,19 @@
+getNews:
+  path: /news
+  controller: App\Controller\NewsController::index
+  methods: [GET]
+
+renderNews:
+  path: /news/render
+  controller: App\Controller\NewsController::searchNew
+  methods: [POST]
+
+createViewNew:
+  path: /news/create
+  controller: App\Controller\NewsController::createView
+  methods: [GET]
+
+createNew:
+  path: /news/create
+  controller: App\Controller\NewsController::create
+  methods: [POST]

@@ -1,0 +1,26 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block title %}
+	Intranet - Noticias
+{% endblock %}
+
+{% block titlePage %}
+	Noticias
+{% endblock %}
+
+{% block jsContent %}
+	{{ encore_entry_script_tags('newsjs') }}
+{% endblock %}
+
+{% block toolbarPage %}
+	{% set searchValue = "Publicaciones" %}
+	{% include 'partials/searchbar.html.twig' %}
+{% endblock %}
+
+{% block pageContent %}
+	<div class="container px-5 py-24 mx-auto">
+		<div id="main-content" class="flex flex-wrap -m-4">
+			{% include 'news/partials/news.html.twig' %}
+		</div>
+	</div>
+</div>{% endblock %}
