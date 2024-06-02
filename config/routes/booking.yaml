@@ -1,0 +1,4 @@
+getBookings:
+  path: /booking
+  controller: App\Controller\BookingController::index
+  methods: [GET]
