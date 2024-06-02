@@ -36,13 +36,57 @@ $(document).ready(() => {
 
     for (let weekIndex = 1; weekIndex <= 6; weekIndex++) {
         for (let dayIndex = 1; dayIndex <= 7; dayIndex++) {
-            const cell = document.querySelector(`#day-${weekIndex}-${dayIndex} .day-number`)
+            const day = document.querySelector(`#day-${weekIndex}-${dayIndex}`)
+            const cell = day.querySelector(`.day-number`)
             cell.textContent = newDateDay
 
-            document.querySelector(`#day-${weekIndex}-${dayIndex}`).classList.add(newDate.getMonth() === monthIndex ? 'hover:bg-gray-300' : 'bg-gray-300')
+            day.classList.add(newDate.getMonth() === monthIndex ? 'hover:bg-gray-300' : 'bg-gray-300')
+
+            const bookingOfTheDay = searchDay(newDate)
+
+            if (bookingOfTheDay) {
+
+                const bookingsContainer = day.querySelector('.bookings-container')
+
+                const div = document.createElement('div')
+                div.classList.add('event', 'bg-purple-400', 'text-white', 'rounded', 'p-1', 'text-sm', 'mb-1')
+            
+                const bookingName = document.createElement('div')
+                bookingName.classList.add('event-name')
+                bookingName.innerHTML = bookingOfTheDay.resource_name
+
+                const bookingTime = document.createElement('div')
+                bookingTime.classList.add('time')
+                bookingTime.innerHTML = bookingOfTheDay.booking_date.split(' ')[1]
+
+                div.appendChild(bookingName)
+                div.appendChild(bookingTime)
+                bookingsContainer.appendChild(div)
+            }
 
             newDate = new Date(newDate.getTime() + (EPOCHNEXTDAY * 1000))
             newDateDay = newDate.getDate()
         }
     }
+
+    console.log(bookings)
 })
+
+const searchDay = (date) => {
+    const bookingOfTheDay = bookings.find((item) => {
+        const bookingDate = item.booking_date.split(' ')
+
+        const day = date.getDate()
+        const month = date.getMonth() + 1
+        const year = date.getFullYear()
+
+        const formatedDay = day < 10 ? '0' + day : day
+        const formatedMonth = month < 10 ? '0' + month : month
+
+        const fullDate = `${formatedDay}-${formatedMonth}-${year}`
+
+        return fullDate === bookingDate[0]
+    })
+
+    return bookingOfTheDay
+}

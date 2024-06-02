@@ -3,22 +3,13 @@
 {% endblock %}
 
 <script>
-    console.log('{{bookings[0]["booking_date"]}}')
-    console.log('{{bookings[1]["booking_date"]}}')
-    console.log('{{bookings[2]["booking_date"]}}')
-    console.log('{{bookings[3]["booking_date"]}}')
-    console.log('{{bookings[4]["booking_date"]}}')
-    console.log('{{bookings[5]["booking_date"]}}')
-    console.log('{{bookings[6]["booking_date"]}}')
-    console.log('{{bookings[7]["booking_date"]}}')
-    console.log('{{bookings[8]["booking_date"]}}')
-    console.log('{{bookings[9]["booking_date"]}}')
+	const bookings = {{ bookings|json_encode|raw }}
 </script>
 
 <div class="container mx-auto mt-10">
 	<div class="wrapper bg-white rounded shadow w-full">
 		<div class="header flex justify-between border-b p-2">
-			<span id="year-month" class="text-lg font-bold">{{ 'now'|date('Y F') }}</span>
+			<span id="year-month" class="text-lg font-bold"></span>
 			<div class="buttons">
 				<button class="p-1">
 					<svg width="1em" fill="gray" height="1em" viewbox="0 0 16 16" class="bi bi-arrow-left-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -56,15 +47,21 @@
 									<div class="top h-5 w-full">
 										<span class="text-gray-500 day-number"></span>
 									</div>
-									<div class="bottom flex-grow h-30 py-1 w-full cursor-pointer">
-										<div class="event bg-purple-400 text-white rounded p-1 text-sm mb-1">
+									<div class="bottom flex-grow h-30 py-1 w-full cursor-pointer bookings-container">
+									{# {% if "now"|date("d-m-Y") == bookings[9]["booking_date"]%}
+									<script>console.log('hola0')</script>
+									{% else %}
+									<script>console.log('adios')</script>
+
+									{% endif %} #}
+										{# <div class="event bg-purple-400 text-white rounded p-1 text-sm mb-1">
 											<span class="event-name">Meeting</span>
 											<span class="time">12:00~14:00</span>
 										</div>
 										<div class="event bg-purple-400 text-white rounded p-1 text-sm mb-1">
 											<span class="event-name">Meeting</span>
 											<span class="time">18:00~20:00</span>
-										</div>
+										</div> #}
 									</div>
 								</div>
 							</td>
