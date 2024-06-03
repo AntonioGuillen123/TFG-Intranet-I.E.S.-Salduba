@@ -15,5 +15,51 @@
 {% block toolbarPage %}{% endblock %}
 
 {% block pageContent %}
-	{% include 'booking/partials/booking.html.twig' %}
+	<div class="modal fade" id="booking-modal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="booking-modal-label"></h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div id="resource-type-container">
+						<span>
+							<b>Tipo De Recurso</b>
+						</span>
+						<div></div>
+					</div>
+					<div id="resource-container">
+						<span>
+							<b>Nombre De Recurso</b>
+						</span>
+						<div></div>
+					</div>
+					<div id="booking-date">
+						<span>
+							<b>Hora De Reserva</b>
+						</span>
+						<div>
+							<select class="form-select" aria-label="Default select booking">
+								<option selected>Open this select menu</option>
+								<option value="1">One</option>
+								<option value="2">Two</option>
+								<option value="3">Three</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+					<button type="button" class="btn btn-success disabled">Reservar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="bookings-container" class="container mx-auto mt-10">
+		{% include 'booking/partials/booking.html.twig' %}
+	</div>
+
+
 {% endblock %}

@@ -212,3 +212,17 @@ const createMessages = (data) => {
     const sendMessageCount = document.querySelector('#send_message_count')
     sendMessageCount.innerHTML = data.send
 }
+
+export const getQueryParams = () => {
+    const parameters = window.location.search
+
+    const newUrlParams = new URLSearchParams(parameters)
+
+    return newUrlParams
+}
+
+export const formatDateToSpanish = (date) => {
+    const [day, month, year] = date.split(' ')[0].split('-')
+
+    return `${year}-${day}-${month}`
+}

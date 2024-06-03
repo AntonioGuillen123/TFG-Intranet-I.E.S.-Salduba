@@ -1,4 +1,4 @@
-import { getNotifications, getMessages, debounce } from "../app.js"
+import { getNotifications, getMessages, getQueryParams, debounce } from "../app.js"
 
 
 $(document).ready(() => {
@@ -268,14 +268,6 @@ const markReadedMessage = async (id) => {
 }
 
 const createNewMessage = () => window.location.href = '/message/create'
-
-const getQueryParams = () => {
-    const parameters = window.location.search
-
-    const newUrlParams = new URLSearchParams(parameters)
-
-    return newUrlParams
-}
 
 const getRenderMessages = async (input) => {
     const newUrlParams = getQueryParams()

@@ -35,21 +35,21 @@ class BookingRepository extends ServiceEntityRepository
         return $result;
     }
 
-    public function getBookingsOfThisMonth()
+    public function getBookingsOfThisMonth($date)
     {
         $queryResult = $this->createQueryBuilder('b');
         $queryResult->where(
             $queryResult->expr()->in(
                 'MONTH(b.booking_date)',
                 [
-                    (new \DateTime())->format('n') - 1,
-                    (new \DateTime())->format('n'),
-                    (new \DateTime())->format('n') + 1
+                    $date - 1,
+                    $date,
+                    $date + 1
                 ]
             )
         )
-        ->orderBy('b.booking_date', 'ASC');
-        
+            ->orderBy('b.booking_date', 'ASC');
+
         return $this->convertTOJSON($queryResult);
     }
 }

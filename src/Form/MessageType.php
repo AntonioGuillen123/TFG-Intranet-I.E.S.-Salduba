@@ -33,7 +33,9 @@ class MessageType extends AbstractType
                         ->where('s.id != :username')
                         ->setParameter('username', $user->getId());
                 },
-                'attr' => []
+                'attr' => [
+                    'class' => 'live-search-entity'
+                ]
             ])
             ->add('affair', TextType::class, [
                 'label' => 'Asunto',

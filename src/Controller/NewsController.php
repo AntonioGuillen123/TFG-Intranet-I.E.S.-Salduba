@@ -113,8 +113,6 @@ class NewsController extends AbstractController
             }
 
             $image = $newNews->getImage();
-
-            var_dump($image);
         }
 
         return $this->redirectToRoute('getNews');

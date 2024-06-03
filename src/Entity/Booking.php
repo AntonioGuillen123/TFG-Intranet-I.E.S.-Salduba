@@ -25,6 +25,10 @@ class Booking
     #[ORM\Column(type: Types::DATETIME_MUTABLE, options: ["default" => "CURRENT_TIMESTAMP"])]
     private ?\DateTimeInterface $booking_date = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Schedule $horary_tmp = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,6 +66,18 @@ class Booking
     public function setBookingDate(?\DateTimeInterface $booking_date): static
     {
         $this->booking_date = $booking_date;
+
+        return $this;
+    }
+
+    public function getHoraryTmp(): ?Schedule
+    {
+        return $this->horary_tmp;
+    }
+
+    public function setHoraryTmp(?Schedule $horary_tmp): static
+    {
+        $this->horary_tmp = $horary_tmp;
 
         return $this;
     }
