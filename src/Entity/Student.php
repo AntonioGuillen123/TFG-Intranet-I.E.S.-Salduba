@@ -20,79 +20,79 @@ class Student
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $registration_status = null;
 
-    #[ORM\Column(length: 10)]
+    #[ORM\Column(length: 10, nullable: true)]
     private ?string $school_id = null;
 
-    #[ORM\Column(length: 9)]
+    #[ORM\Column(length: 9, nullable: true)]
     private ?string $dni_student = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $address = null;
 
     #[ORM\Column]
     private ?int $postal_code = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $residence_location = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $birthday = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $residence_province = null;
 
-    #[ORM\Column(length: 9)]
+    #[ORM\Column(length: 9, nullable: true)]
     private ?string $phone = null;
 
-    #[ORM\Column(length: 9)]
+    #[ORM\Column(length: 9, nullable: true)]
     private ?string $emergency_phone = null;
 
-    #[ORM\Column(length: 9)]
+    #[ORM\Column(length: 9, nullable: true)]
     private ?string $student_personal_phone = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $student_personal_email = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $course = null;
 
-    #[ORM\Column(length: 9)]
+    #[ORM\Column(length: 9, nullable: true)]
     private ?string $center_file_number = null;
 
-    #[ORM\Column(length: 30)]
+    #[ORM\Column(length: 30, nullable: true)]
     private ?string $unit = null;
 
-    #[ORM\Column(length: 30)]
+    #[ORM\Column(length: 30, nullable: true)]
     private ?string $first_surname = null;
 
-    #[ORM\Column(length: 30)]
+    #[ORM\Column(length: 30, nullable: true)]
     private ?string $second_surname = null;
 
-    #[ORM\Column(length: 30)]
+    #[ORM\Column(length: 30, nullable: true)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 9)]
+    #[ORM\Column(length: 9, nullable: true)]
     private ?string $first_tutor_dni = null;
 
-    #[ORM\Column(length: 30)]
+    #[ORM\Column(length: 30, nullable: true)]
     private ?string $first_tutor_first_surname = null;
 
-    #[ORM\Column(length: 30)]
+    #[ORM\Column(length: 30, nullable: true)]
     private ?string $first_tutor_second_surname = null;
 
-    #[ORM\Column(length: 30)]
+    #[ORM\Column(length: 30, nullable: true)]
     private ?string $first_tutor_name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $first_tutor_email = null;
 
-    #[ORM\Column(length: 9)]
+    #[ORM\Column(length: 9, nullable: true)]
     private ?string $first_tutor_phone = null;
 
-    #[ORM\Column(length: 1)]
+    #[ORM\Column(length: 1, nullable: true)]
     private ?string $first_tutor_sex = null;
 
     #[ORM\Column(length: 9, nullable: true)]
@@ -116,7 +116,7 @@ class Student
     #[ORM\Column(length: 9, nullable: true)]
     private ?string $second_tutor_phone = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $born_location = null;
 
     #[ORM\Column]
@@ -128,25 +128,25 @@ class Student
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $tuition_observations = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $born_province = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $born_country = null;
 
     #[ORM\Column]
     private ?int $age_last_day_tuition_year = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $nationality = null;
 
-    #[ORM\Column(length: 1)]
+    #[ORM\Column(length: 1, nullable: true)]
     private ?string $student_sex = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $tuition_date = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $social_security_number = null;
 
     #[ORM\Column(length: 255, nullable: true)]

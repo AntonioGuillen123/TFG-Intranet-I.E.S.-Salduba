@@ -113,6 +113,10 @@ const printCalendary = (newDate, newDateDay, monthIndex) => {
 
     for (let weekIndex = 1; weekIndex <= 6; weekIndex++) {
         for (let dayIndex = 1; dayIndex <= 7; dayIndex++) {
+            const newDateDayOfWeek = newDate.getDay()
+
+            const isWeekEnd = newDateDayOfWeek === 0 || newDateDayOfWeek === 6
+
             const dayCopy = newDate
             const day = document.querySelector(`#day-${weekIndex}-${dayIndex}`)
 
@@ -120,12 +124,17 @@ const printCalendary = (newDate, newDateDay, monthIndex) => {
                 day.removeEventListener('click', dayEventListeners.get(day));
             }
 
-            const event = handleDayClick(dayCopy);
-            dayEventListeners.set(day, event);
+            if (!isWeekEnd) {
+                day.setAttribute('data-bs-toggle', 'modal');
+                day.setAttribute('data-bs-target', '#booking-modal');
+                const event = handleDayClick(dayCopy);
+                dayEventListeners.set(day, event);
 
-            day.setAttribute('data-bs-toggle', 'modal');
-            day.setAttribute('data-bs-target', '#booking-modal');
-            day.addEventListener('click', event);
+                day.addEventListener('click', event);
+            }
+
+            const calendaryDay = day.querySelector('.calendary-day')
+            calendaryDay.classList.add(isWeekEnd ? 'cursor-default' : 'cursor-pointer')
 
             const cell = day.querySelector(`.day-number`)
             cell.textContent = newDateDay

@@ -1,0 +1,4 @@
+getStudents:
+  path: /student
+  controller: App\Controller\StudentController::index
+  methods: [GET]

@@ -49,14 +49,14 @@
 			{% for weekIndex in 1..6 %}
 				<tr class="text-center h-20">
 					{% for dayIndex in 1..7 %}
-						<td id="day-{{ weekIndex }}-{{ dayIndex }}" class="border p-1 h-20 xl:w-36 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease">
-							<div class="flex flex-col h-20 aaaa mx-auto xl:w-36 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
+						<td id="day-{{ weekIndex }}-{{ dayIndex }}" class="border p-1 h-20 xl:w-36 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition duration-500 ease">
+							<div class="flex flex-col h-20 calendary-day mx-auto xl:w-36 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
 								<div class="top h-5 w-full">
 									<span class="text-gray-500 day-number"></span>
 								</div>
 
 								<hr>
-								<div class="bottom flex-grow h-30 py-1 w-full cursor-pointer bookings-container"></div>
+								<div class="bottom flex-grow h-30 py-1 w-full bookings-container"></div>
 							</div>
 						</td>
 					{% endfor %}

@@ -33,12 +33,6 @@ class Message
     #[ORM\JoinColumn(nullable: false)]
     private ?Session $user_to = null;
 
-    /**
-     * @var Collection<int, UploadFileMessage>
-     */
-    #[ORM\ManyToMany(targetEntity: UploadFileMessage::class)]
-    private Collection $file;
-
     #[ORM\Column(options: ["default" => false])]
     private ?bool $removed = false;
 
@@ -114,30 +108,6 @@ class Message
     public function setUserTo(?Session $user_to): static
     {
         $this->user_to = $user_to;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, UploadFileMessage>
-     */
-    public function getFile(): Collection
-    {
-        return $this->file;
-    }
-
-    public function addFile(UploadFileMessage $file): static
-    {
-        if (!$this->file->contains($file)) {
-            $this->file->add($file);
-        }
-
-        return $this;
-    }
-
-    public function removeFile(UploadFileMessage $file): static
-    {
-        $this->file->removeElement($file);
 
         return $this;
     }
