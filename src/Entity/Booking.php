@@ -27,7 +27,7 @@ class Booking
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Schedule $horary_tmp = null;
+    private ?Schedule $horary = null;
 
     public function getId(): ?int
     {
@@ -70,14 +70,14 @@ class Booking
         return $this;
     }
 
-    public function getHoraryTmp(): ?Schedule
+    public function getHorary(): ?Schedule
     {
-        return $this->horary_tmp;
+        return $this->horary;
     }
 
-    public function setHoraryTmp(?Schedule $horary_tmp): static
+    public function setHorary(?Schedule $horary): static
     {
-        $this->horary_tmp = $horary_tmp;
+        $this->horary = $horary;
 
         return $this;
     }

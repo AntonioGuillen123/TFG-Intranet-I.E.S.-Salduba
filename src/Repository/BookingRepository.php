@@ -29,7 +29,8 @@ class BookingRepository extends ServiceEntityRepository
                 'user_from' => $queryResult[$i]->getUserFrom()->getUsername(),
                 'resource_name' => $queryResult[$i]->getResource()->getName(),
                 'resource_type' => $queryResult[$i]->getResource()->getResourceType()->getName(),
-                'booking_date' => $queryResult[$i]->getBookingDate()->format('d-m-Y H:i')
+                'booking_date' => $queryResult[$i]->getBookingDate()->format('d-m-Y H:i'),
+                'horary' => $queryResult[$i]->getHorary()->getName()
             ];
         }
         return $result;
@@ -52,4 +53,54 @@ class BookingRepository extends ServiceEntityRepository
 
         return $this->convertTOJSON($queryResult);
     }
+
+    public function getBookingsFromResourceIdAndDate($resourceID, $bookingDate, $schedule)
+    {
+        $content = [];
+        
+        foreach ($schedule as $item) { // Para cada horario que son todos los de la BD mirar si hay registro
+            $horaryID = $item->getId();
+            $horaryName = $item->getName();
+
+            $queryResult = $this->createQueryBuilder('b')
+                ->where('b.resource = :resource_id')
+                ->andWhere('b.booking_date = :booking_date')
+                ->andWhere('b.horary = :horary_id')
+                ->setParameter('resource_id', intval($resourceID))
+                ->setParameter('booking_date', $bookingDate) 
+                ->setParameter('horary_id', intval($horaryID))
+                ->orderBy('b.booking_date', 'DESC')
+                ->getQuery()
+                ->getResult();
+
+            $horaryAvailable = count($queryResult) == 1;
+
+            if (!$horaryAvailable)
+                $content[] = [
+                    'id' => $horaryID,
+                    'name' => $horaryName
+                ];
+        }
+
+        return $content;
+    }
 }
+
+
+
+/* $resourceID = 1;
+        $horaryID = 1;
+        $bookingDate = '2024-07-19';
+
+        $queryResult = $this->createQueryBuilder('b')
+                ->where('b.resource = :resource_id')
+                ->andWhere('b.booking_date = :booking_date')
+                ->andWhere('b.horary = :horary_id')
+                ->setParameter('resource_id', $resourceID)
+                ->setParameter('booking_date', $bookingDate) 
+                ->setParameter('horary_id', $horaryID)
+                ->orderBy('b.booking_date', 'DESC')
+                ->getQuery()
+                ->getResult();
+
+            $content = $queryResult; */

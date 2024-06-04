@@ -6,6 +6,7 @@ use App\Entity\Booking;
 use App\Entity\Resource;
 use App\Entity\ResourceType;
 use App\Entity\Schedule;
+use App\Entity\Session;
 use App\Repository\BookingRepository;
 use App\Service\SessionService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -115,7 +116,7 @@ class BookingController extends AbstractController
         return $response;
     }
 
-    public function getScheduleFromResource(Request $request, EntityManagerInterface $entityManager)
+    public function getScheduleFromResource(Request $request, BookingRepository $bookingRepository, EntityManagerInterface $entityManager)
     {
         $response = $this->redirectToRoute('index');
 
@@ -124,24 +125,54 @@ class BookingController extends AbstractController
         $resourceID = intval($request->request->get('resourceID'));
         $date = $request->request->get('date');
         
-
         if ($isAYAX) {
             try {
-                $resource = $entityManager->getRepository(Booking::class)->find($resourceID);
                 $schedule = $entityManager->getRepository(Schedule::class)->findAll();
 
-                $content = [];
+                $content = $bookingRepository->getBookingsFromResourceIdAndDate($resourceID, $date, $schedule);
 
-                foreach($schedule as $item){
-                    $content[] = [
-                        $e = $entityManager->getRepository(Schedule::class)->findAll()
-
-                    ];
-                }
-
-                $response = new JsonResponse(['resources' => $content]);
+                $response = new JsonResponse(['schedule' => $content]);
             } catch (Exception $e) {
-                $response = new Response($status = Response::HTTP_NO_CONTENT);
+                $response = new Response($e);
+            }
+        }
+
+        return $response;
+    }
+
+    public function makeBooking(Request $request, SessionService $session, BookingRepository $bookingRepository, EntityManagerInterface $entityManager)
+    {
+        $response = $this->redirectToRoute('index');
+
+        $isAYAX = $request->isXmlHttpRequest();
+
+        $username = $session->get('username');
+
+        $resourceID = intval($request->request->get('resourceID'));
+        $bookingDate = intval($request->request->get('bookingDateID'));
+        $dateParam = $request->request->get('date');
+        $date = \DateTime::createFromFormat('Y-m-d', $dateParam);
+        $date->setTime(0, 0);
+        
+        if ($isAYAX) {
+            try {
+                $user = $entityManager->getRepository(Session::class)->findOneBy(['username' => $username]);
+                $resource = $entityManager->getRepository(Resource::class)->find($resourceID);
+                $schedule = $entityManager->getRepository(Schedule::class)->find($bookingDate);
+
+                $booking = new Booking();
+                $booking->setUserFrom($user);
+                $booking->setResource($resource);
+                $booking->setHorary($schedule);
+                $booking->setBookingDate($date);
+
+                $entityManager->persist($booking);
+
+                $entityManager->flush();
+
+                $response = new Response($status = Response::HTTP_ACCEPTED);
+            } catch (Exception $e) {
+                $response = new Response($e);
             }
         }
 

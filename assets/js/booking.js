@@ -25,17 +25,43 @@ const months = {
     11: 'Diciembre'
 }
 
+const reversedMonths = {
+    'Enero': 0,
+    'Febrero': 1,
+    'Marzo': 2,
+    'Abril': 3,
+    'Mayo': 4,
+    'Junio': 5,
+    'Julio': 6,
+    'Agosto': 7,
+    'Septiembre': 8,
+    'Octubre': 9,
+    'Noviembre': 10,
+    'Diciembre': 11
+};
+
 let userColors = {}
 
 let arrowEvents = []
 
 const saveHandlers = (number) => () => getRenderBookings(number)
 
+const dayEventListeners = new Map()
+
+function handleDayClick(dayCopy) {
+    return () => {
+        makeModal(dayCopy);
+    };
+}
+
 $(document).ready(() => {
     const todayButton = document.querySelector('#today-button')
     todayButton.addEventListener('click', () => getRenderBookings(0))
 
     getDatesOfMonth()
+
+    const successButton = document.querySelector('.btn-success')
+    successButton.addEventListener('click', () => makeBooking())
 })
 
 const getDatesOfMonth = (id) => {
@@ -89,9 +115,17 @@ const printCalendary = (newDate, newDateDay, monthIndex) => {
         for (let dayIndex = 1; dayIndex <= 7; dayIndex++) {
             const dayCopy = newDate
             const day = document.querySelector(`#day-${weekIndex}-${dayIndex}`)
-            day.setAttribute('data-bs-toggle', 'modal')
-            day.setAttribute('data-bs-target', '#booking-modal')
-            day.addEventListener('click', () => makeModal(day, dayCopy))
+
+            if (dayEventListeners.has(day)) {
+                day.removeEventListener('click', dayEventListeners.get(day));
+            }
+
+            const event = handleDayClick(dayCopy);
+            dayEventListeners.set(day, event);
+
+            day.setAttribute('data-bs-toggle', 'modal');
+            day.setAttribute('data-bs-target', '#booking-modal');
+            day.addEventListener('click', event);
 
             const cell = day.querySelector(`.day-number`)
             cell.textContent = newDateDay
@@ -142,7 +176,7 @@ const printCalendary = (newDate, newDateDay, monthIndex) => {
 
                     const bookingTime = document.createElement('span')
                     bookingTime.classList.add('time')
-                    bookingTime.innerHTML = `<b>Hora: </b> ${item.booking_date.split(' ')[1]}`
+                    bookingTime.innerHTML = `<b>Hora: </b> ${item.horary}`
 
                     const bookingRemitent = document.createElement('span')
                     bookingRemitent.classList.add('remitent', 'text-muted')
@@ -208,7 +242,7 @@ const generateUserColor = () => {
     return color
 }
 
-const makeModal = async (dayContainer, bookingDate) => {
+const makeModal = async (bookingDate) => {
     const modal = document.querySelector('.modal')
 
     const resourceTypeContainer = document.querySelector('#resource-type-container > div')
@@ -220,12 +254,12 @@ const makeModal = async (dayContainer, bookingDate) => {
     bookingDateContainer.innerHTML = ''
 
     const modalLabel = document.querySelector('#booking-modal-label')
-    modalLabel.innerHTML = `Reservar Recurso - ${bookingDate.getDate()} De ${months[bookingDate.getMonth()]}`
+    modalLabel.innerHTML = `Reservar Recurso - ${bookingDate.getDate()} De ${months[bookingDate.getMonth()]} De ${bookingDate.getFullYear()}`
 
     const resourceTypes = await getResourceTypes()
 
     const selectType = document.createElement('select')
-    selectType.classList.add('form-select')
+    selectType.classList.add('form-select', 'cursor-pointer')
     selectType.addEventListener('change', async (event) => {
         const value = event.target.value
 
@@ -241,21 +275,43 @@ const makeModal = async (dayContainer, bookingDate) => {
     const resources = await getResourceFromType(selectType.value)
 
     const selectName = document.createElement('select')
-    selectName.classList.add('form-select')
+    selectName.classList.add('form-select', 'cursor-pointer')
+    selectName.addEventListener('change', async (event) => {
+        const dateSchedule = getDateFromModal()
+
+        const value = event.target.value
+
+        const scheduleFromResource = await getScheduleFromResource(dateSchedule, value)
+
+        selectTime.innerHTML = ''
+
+        makeSelect(scheduleFromResource, selectTime)
+    })
 
     makeSelect(resources, selectName)
 
     const schedule = await getScheduleFromResource(bookingDate, selectName.value)
 
     const selectTime = document.createElement('select')
-    selectTime.classList.add('form-select')
+    selectTime.classList.add('form-select', 'cursor-pointer')
 
     makeSelect(schedule, selectTime)
 
-    console.log(bookingDate)
-
     resourceTypeContainer.appendChild(selectType)
     resourceContainer.appendChild(selectName)
+    bookingDateContainer.appendChild(selectTime)
+}
+
+const getDateFromModal = () => {
+    const modalLabel = document.querySelector('#booking-modal-label')
+
+    const contentDate = modalLabel.innerHTML.split(' ')
+
+    const year = contentDate[7]
+    const month = reversedMonths[contentDate[5]]
+    const day = contentDate[3]
+
+    return new Date(year, month, day)
 }
 
 const makeSelect = (elements, select) => {
@@ -263,6 +319,10 @@ const makeSelect = (elements, select) => {
         const option = document.createElement('option')
         option.value = item.id
         option.innerHTML = item.name
+
+        /*  const inUsed = item.inUsed
+ 
+         if (inUsed) option.setAttribute('disabled', '') */
 
         select.appendChild(option)
     })
@@ -330,14 +390,15 @@ const getScheduleFromResource = async (bookingDate, id) => {
     await $.ajax({
         url: `/booking/getScheduleFromResource`,
         type: 'POST',
-        headers: 'application/json',
-        body: {
+        headers: 'Content-Type: application/json',
+        data: {
             'resourceID': parseInt(id),
             'date': dateFormat
         },
         success: (response) => {
-            console.log(response.resources)
-            result = response.resources
+            console.log(response)
+
+            result = response.schedule
         },
         error: (err) => {
             console.log(`Error :( ${err.responseText}`)
@@ -345,4 +406,36 @@ const getScheduleFromResource = async (bookingDate, id) => {
     })
 
     return result
+}
+
+const makeBooking = async () => {
+    const dateFromModal = getDateFromModal()
+    const date = dateFromModal.toLocaleDateString('sv-SE')
+    const resourceID = document.querySelector('#resource-container select').value
+    const bookingDateID = document.querySelector('#booking-date select').value
+
+    console.log(date)
+
+    await $.ajax({
+        url: `/booking/makeBooking`,
+        type: 'POST',
+        headers: 'Content-Type: application/json',
+        data: {
+            'resourceID': parseInt(resourceID),
+            'date': date,
+            'bookingDateID': parseInt(bookingDateID)
+        },
+        success: (response) => {
+            console.log(response)
+            const actualDate = new Date()
+            const actualMonth = actualDate.getMonth() + 1
+            const month = dateFromModal.getMonth() + 1
+
+            getRenderBookings((month - actualMonth))
+            makeModal(dateFromModal)
+        },
+        error: (err) => {
+            console.log(`Error :( ${err.responseText}`)
+        }
+    })
 }

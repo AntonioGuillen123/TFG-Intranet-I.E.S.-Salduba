@@ -3,11 +3,6 @@ getBookings:
   controller: App\Controller\BookingController::index
   methods: [GET]
 
-renderBookings:
-  path: /booking/{id}
-  controller: App\Controller\BookingController::renderBookings
-  methods: [POST]
-
 getResourceTypes:
   path: /booking/getResourceTypes
   controller: App\Controller\BookingController::getResourceTypes
@@ -18,7 +13,17 @@ getResourceFromType:
   controller: App\Controller\BookingController::getResourceFromType
   methods: [GET]
 
+makeBooking:
+  path: /booking/makeBooking
+  controller: App\Controller\BookingController::makeBooking
+  methods: [POST]
+
 getScheduleFromResource:
   path: /booking/getScheduleFromResource
   controller: App\Controller\BookingController::getScheduleFromResource
+  methods: [POST]
+
+renderBookings:
+  path: /booking/{id}
+  controller: App\Controller\BookingController::renderBookings
   methods: [POST]
