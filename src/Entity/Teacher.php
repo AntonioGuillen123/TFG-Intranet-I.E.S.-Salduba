@@ -40,6 +40,9 @@ class Teacher
     #[ORM\Column]
     private ?bool $coordinator = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $image = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -137,6 +140,18 @@ class Teacher
     public function setCoordinator(bool $coordinator): static
     {
         $this->coordinator = $coordinator;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
 
         return $this;
     }

@@ -31,6 +31,7 @@ class MessageRepository extends ServiceEntityRepository
                 'readed' => $queryResult[$i]->isReaded(),
                 'user_from' => $queryResult[$i]->getUserFrom()->getUsername(),
                 'user_to' => $queryResult[$i]->getUserTo()->getUsername(),
+                'image' => $queryResult[$i]->getUserTo()->getTeacher()->getImage()
             ];
         }
         return $result;

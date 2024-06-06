@@ -34,6 +34,10 @@ class Session
     #[ORM\JoinColumn(nullable: false,  options: ["default" => 3])]
     private ?UserRol $type = null;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Teacher $teacher = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -71,6 +75,18 @@ class Session
     public function setType(?UserRol $type): static
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getTeacher(): ?Teacher
+    {
+        return $this->teacher;
+    }
+
+    public function setTeacher(Teacher $teacher): static
+    {
+        $this->teacher = $teacher;
 
         return $this;
     }

@@ -1,0 +1,54 @@
+{% for teacher in teachers %}
+	<div class="flex flex-col rounded-lg border-4 bg-white text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-black md:min-w-96 md:flex-row">
+		<img class="h-96 w-full rounded-t-lg object-cover md:h-auto md:w-48 md:!rounded-none md:!rounded-s-lg" src="{{teacher.image}}" alt="Imagen no encontrada :("/>
+		<div class="flex flex-col justify-between p-6 md:min-w-96">
+			<div class="w-100">
+				<h5 class="mb-4 text-xl font-medium">{{teacher.employe}}</h5>
+				<p class="mb-2 text-base">
+					<b>
+						DNI:
+					</b>
+					{{teacher.dni}}
+				</p>
+				<p class="mb-2 text-base">
+					<b>
+						Teléfono:
+					</b>
+					{{teacher.phone}}
+				</p>
+				<p class="mb-2 text-base">
+					<b>
+						Email:
+					</b>
+					{{teacher.googleOrMicrosoftAccount}}
+				</p>
+				<p class="mb-2 text-base">
+					<b>
+						Puesto:
+					</b>
+					{{teacher.job}}
+				</p>
+			</div>
+			<div class="mt-2 flex justify-between w-100">
+				<span class="text-s text-surface/75 dark:text-neutral-300">
+					<b>
+						Inicio:
+					</b>
+					{{teacher.startJobDate|date('d/m/Y')}}
+				</span>
+			</div>
+			<div class="flex justify-between w-100">
+				<span class="text-s text-surface/75 dark:text-neutral-300">
+					<b>
+						Fin:
+					</b>
+					{{teacher.endJobDate ? teacher.endJobDate|date('d/m/Y') : 'Aún Activo'}}
+				</span>
+				<span class="text-s text-surface/75 dark:text-neutral-300">
+					{{teacher.coordinator ? 'Es' : 'No es'}}
+					coordinador
+				</span>
+			</div>
+		</div>
+	</div>
+{% endfor %}

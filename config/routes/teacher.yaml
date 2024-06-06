@@ -1,0 +1,4 @@
+getTeachers:
+  path: /teacher
+  controller: App\Controller\TeacherController::index
+  methods: [GET]

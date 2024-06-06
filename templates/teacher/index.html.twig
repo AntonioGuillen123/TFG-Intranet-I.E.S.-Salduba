@@ -1,0 +1,26 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block title %}
+	Intranet - Profesores
+{% endblock %}
+
+{% block titlePage %}
+	Profesores
+{% endblock %}
+
+{% block jsContent %}
+	{{ encore_entry_script_tags('teacherjs') }}
+{% endblock %}
+
+{% block styleContentDashBoard %}
+	{{ encore_entry_link_tags('teacher') }}
+{% endblock %}
+
+{% block toolbarPage %}{% endblock %}
+{% block pageContent %}
+	<div class="flex">
+		<div id="main-content" class="flex flex-wrap gap-4 justify-center mt-4 -m-4">
+			{% include 'teacher/partials/teacher.html.twig' %}
+		</div>
+	</div>
+{% endblock %}

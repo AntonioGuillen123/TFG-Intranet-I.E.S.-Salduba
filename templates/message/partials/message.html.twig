@@ -11,6 +11,7 @@
 	{% set userFrom = message.user_from %}
 	{% set userTo = message.user_to %}
 	{% set userName = userFrom == username ? 'Para: ' ~ userTo : 'De: ' ~ userFrom %}
+	{% set image = message.image %}
 
 	<div id="{{id}}" class="d-flex message-item w-100 justify-content-center">
 		<div class="d-flex align-items-center justify-content-center message-check-container">
@@ -21,7 +22,7 @@
 			<div class="row g-0 w-100 card-content">
 				<div class="d-flex flex-column justify-content-center col-md-3 align-items-center my-2 gap-3 w-25">
 					<div class="d-flex justify-content-center image-message-container">
-						<img src="./images/iessalduba.jpg" class="img-fluid rounded-circle" alt="...">
+						<img src="{{image}}" class="img-fluid rounded-circle" alt="...">
 					</div>
 					<div class="d-flex justify-content-center">
 						<span>
