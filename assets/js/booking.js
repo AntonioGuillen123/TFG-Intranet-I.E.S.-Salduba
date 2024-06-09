@@ -120,17 +120,15 @@ const printCalendary = (newDate, newDateDay, monthIndex) => {
             const dayCopy = newDate
             const day = document.querySelector(`#day-${weekIndex}-${dayIndex}`)
 
-            if (dayEventListeners.has(day)) {
-                day.removeEventListener('click', dayEventListeners.get(day));
-            }
+            if (dayEventListeners.has(day)) day.removeEventListener('click', dayEventListeners.get(day))
 
             if (!isWeekEnd) {
-                day.setAttribute('data-bs-toggle', 'modal');
-                day.setAttribute('data-bs-target', '#booking-modal');
-                const event = handleDayClick(dayCopy);
-                dayEventListeners.set(day, event);
+                day.setAttribute('data-bs-toggle', 'modal')
+                day.setAttribute('data-bs-target', '#booking-modal')
+                const event = handleDayClick(dayCopy)
+                dayEventListeners.set(day, event)
 
-                day.addEventListener('click', event);
+                day.addEventListener('click', event)
             }
 
             const calendaryDay = day.querySelector('.calendary-day')
@@ -328,10 +326,6 @@ const makeSelect = (elements, select) => {
         const option = document.createElement('option')
         option.value = item.id
         option.innerHTML = item.name
-
-        /*  const inUsed = item.inUsed
- 
-         if (inUsed) option.setAttribute('disabled', '') */
 
         select.appendChild(option)
     })

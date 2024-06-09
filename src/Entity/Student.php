@@ -167,6 +167,9 @@ class Student
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $large_family = null;
 
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $image = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -780,6 +783,18 @@ class Student
     public function setLargeFamily(?string $large_family): static
     {
         $this->large_family = $large_family;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): static
+    {
+        $this->image = $image;
 
         return $this;
     }

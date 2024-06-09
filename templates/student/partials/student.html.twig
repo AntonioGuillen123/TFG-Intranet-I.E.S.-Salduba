@@ -1,334 +1,48 @@
-<div class="flex flex-col rounded-lg border-4 bg-white text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-black md:max-w-xl md:flex-row">
-	<img class="h-96 w-full rounded-t-lg object-cover md:h-auto md:w-48 md:!rounded-none md:!rounded-s-lg" src="https://tecdn.b-cdn.net/wp-content/uploads/2020/06/vertical.jpg" alt=""/>
-	<div class="flex flex-col justify-start p-6">
-		<h5 class="mb-4 text-xl font-medium">Antonio Guillén García</h5>
-		<p class="mb-2 text-base">
-			<b>
-				DNI:
-			</b>
-			79122206K
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Teléfono:
-			</b>
-			640104081
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Email:
-			</b>
-			antonioguillengarcia123@gmail.com
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Dirección:
-			</b>
-			C/ Serenata Edf. Puerta Grande, 20 B ati J - 29600
-		</p>
-		<div class="mt-2 flex justify-between">
-			<span class="text-xs text-surface/75 dark:text-neutral-300">
-				04/09/2003
-			</span>
-			<span class="text-xs text-surface/75 dark:text-neutral-300">
-				2º DAW
-			</span>
+{% for student in students %}
+	<div class="flex flex-col rounded-lg border-4 bg-white text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-black md:min-w-96 md:flex-row">
+		<img class="h-96 w-full rounded-t-lg object-cover md:h-auto md:w-48 md:!rounded-none md:!rounded-s-lg" src="{{student.image}}" alt="Imagen no encontrada :("/>
+		<div class="flex flex-col justify-between p-6 md:min-w-96">
+			<div class="w-100">
+				<h5 class="mb-4 text-xl font-medium">{{student.student}}</h5>
+				<p class="mb-2 text-sm">
+					<b>
+						DNI:
+					</b>
+					{{student.dniStudent}}
+				</p>
+				<p class="mb-2 text-sm">
+					<b>
+						Teléfono:
+					</b>
+					{{student.phone}}
+				</p>
+				<p class="mb-2 text-sm">
+					<b>
+						Email:
+					</b>
+					{{student.studentPersonalEmail}}
+				</p>
+				<p class="mb-2 text-sm">
+					<b>
+						Dirección:
+					</b>
+					{{student.address}}
+				</p>
+			</div>
+			<div class="flex justify-between w-100">
+				<span class="text-s text-surface/75 dark:text-neutral-300">
+					<b>
+						Nacimiento:
+					</b>
+					{{student.birthDay|date('d/m/Y')}}
+				</span>
+				<span class="text-s text-surface/75 dark:text-neutral-300">
+					<b>
+						Curso:
+					</b>
+					{{student.unit}}
+				</span>
+			</div>
 		</div>
 	</div>
-</div><div class="flex flex-col rounded-lg border-4 bg-white text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-black md:max-w-xl md:flex-row">
-	<img class="h-96 w-full rounded-t-lg object-cover md:h-auto md:w-48 md:!rounded-none md:!rounded-s-lg" src="https://tecdn.b-cdn.net/wp-content/uploads/2020/06/vertical.jpg" alt=""/>
-	<div class="flex flex-col justify-start p-6">
-		<h5 class="mb-4 text-xl font-medium">Antonio Guillén García</h5>
-		<p class="mb-2 text-base">
-			<b>
-				DNI:
-			</b>
-			79122206K
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Teléfono:
-			</b>
-			640104081
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Email:
-			</b>
-			antonioguillengarcia123@gmail.com
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Dirección:
-			</b>
-			C/ Serenata Edf. Puerta Grande, 20 B ati J - 29600
-		</p>
-		<div class="mt-2 flex justify-between">
-			<span class="text-xs text-surface/75 dark:text-neutral-300">
-				04/09/2003
-			</span>
-			<span class="text-xs text-surface/75 dark:text-neutral-300">
-				2º DAW
-			</span>
-		</div>
-	</div>
-</div><div class="flex flex-col rounded-lg border-4 bg-white text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-black md:max-w-xl md:flex-row">
-	<img class="h-96 w-full rounded-t-lg object-cover md:h-auto md:w-48 md:!rounded-none md:!rounded-s-lg" src="https://tecdn.b-cdn.net/wp-content/uploads/2020/06/vertical.jpg" alt=""/>
-	<div class="flex flex-col justify-start p-6">
-		<h5 class="mb-4 text-xl font-medium">Antonio Guillén García</h5>
-		<p class="mb-2 text-base">
-			<b>
-				DNI:
-			</b>
-			79122206K
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Teléfono:
-			</b>
-			640104081
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Email:
-			</b>
-			antonioguillengarcia123@gmail.com
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Dirección:
-			</b>
-			C/ Serenata Edf. Puerta Grande, 20 B ati J - 29600
-		</p>
-		<div class="mt-2 flex justify-between">
-			<span class="text-xs text-surface/75 dark:text-neutral-300">
-				04/09/2003
-			</span>
-			<span class="text-xs text-surface/75 dark:text-neutral-300">
-				2º DAW
-			</span>
-		</div>
-	</div>
-</div><div class="flex flex-col rounded-lg border-4 bg-white text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-black md:max-w-xl md:flex-row">
-	<img class="h-96 w-full rounded-t-lg object-cover md:h-auto md:w-48 md:!rounded-none md:!rounded-s-lg" src="https://tecdn.b-cdn.net/wp-content/uploads/2020/06/vertical.jpg" alt=""/>
-	<div class="flex flex-col justify-start p-6">
-		<h5 class="mb-4 text-xl font-medium">Antonio Guillén García</h5>
-		<p class="mb-2 text-base">
-			<b>
-				DNI:
-			</b>
-			79122206K
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Teléfono:
-			</b>
-			640104081
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Email:
-			</b>
-			antonioguillengarcia123@gmail.com
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Dirección:
-			</b>
-			C/ Serenata Edf. Puerta Grande, 20 B ati J - 29600
-		</p>
-		<div class="mt-2 flex justify-between">
-			<span class="text-xs text-surface/75 dark:text-neutral-300">
-				04/09/2003
-			</span>
-			<span class="text-xs text-surface/75 dark:text-neutral-300">
-				2º DAW
-			</span>
-		</div>
-	</div>
-</div><div class="flex flex-col rounded-lg border-4 bg-white text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-black md:max-w-xl md:flex-row">
-	<img class="h-96 w-full rounded-t-lg object-cover md:h-auto md:w-48 md:!rounded-none md:!rounded-s-lg" src="https://tecdn.b-cdn.net/wp-content/uploads/2020/06/vertical.jpg" alt=""/>
-	<div class="flex flex-col justify-start p-6">
-		<h5 class="mb-4 text-xl font-medium">Antonio Guillén García</h5>
-		<p class="mb-2 text-base">
-			<b>
-				DNI:
-			</b>
-			79122206K
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Teléfono:
-			</b>
-			640104081
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Email:
-			</b>
-			antonioguillengarcia123@gmail.com
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Dirección:
-			</b>
-			C/ Serenata Edf. Puerta Grande, 20 B ati J - 29600
-		</p>
-		<div class="mt-2 flex justify-between">
-			<span class="text-xs text-surface/75 dark:text-neutral-300">
-				04/09/2003
-			</span>
-			<span class="text-xs text-surface/75 dark:text-neutral-300">
-				2º DAW
-			</span>
-		</div>
-	</div>
-</div><div class="flex flex-col rounded-lg border-4 bg-white text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-black md:max-w-xl md:flex-row">
-	<img class="h-96 w-full rounded-t-lg object-cover md:h-auto md:w-48 md:!rounded-none md:!rounded-s-lg" src="https://tecdn.b-cdn.net/wp-content/uploads/2020/06/vertical.jpg" alt=""/>
-	<div class="flex flex-col justify-start p-6">
-		<h5 class="mb-4 text-xl font-medium">Antonio Guillén García</h5>
-		<p class="mb-2 text-base">
-			<b>
-				DNI:
-			</b>
-			79122206K
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Teléfono:
-			</b>
-			640104081
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Email:
-			</b>
-			antonioguillengarcia123@gmail.com
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Dirección:
-			</b>
-			C/ Serenata Edf. Puerta Grande, 20 B ati J - 29600
-		</p>
-		<div class="mt-2 flex justify-between">
-			<span class="text-xs text-surface/75 dark:text-neutral-300">
-				04/09/2003
-			</span>
-			<span class="text-xs text-surface/75 dark:text-neutral-300">
-				2º DAW
-			</span>
-		</div>
-	</div>
-</div><div class="flex flex-col rounded-lg border-4 bg-white text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-black md:max-w-xl md:flex-row">
-	<img class="h-96 w-full rounded-t-lg object-cover md:h-auto md:w-48 md:!rounded-none md:!rounded-s-lg" src="https://tecdn.b-cdn.net/wp-content/uploads/2020/06/vertical.jpg" alt=""/>
-	<div class="flex flex-col justify-start p-6">
-		<h5 class="mb-4 text-xl font-medium">Antonio Guillén García</h5>
-		<p class="mb-2 text-base">
-			<b>
-				DNI:
-			</b>
-			79122206K
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Teléfono:
-			</b>
-			640104081
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Email:
-			</b>
-			antonioguillengarcia123@gmail.com
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Dirección:
-			</b>
-			C/ Serenata Edf. Puerta Grande, 20 B ati J - 29600
-		</p>
-		<div class="mt-2 flex justify-between">
-			<span class="text-xs text-surface/75 dark:text-neutral-300">
-				04/09/2003
-			</span>
-			<span class="text-xs text-surface/75 dark:text-neutral-300">
-				2º DAW
-			</span>
-		</div>
-	</div>
-</div><div class="flex flex-col rounded-lg border-4 bg-white text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-black md:max-w-xl md:flex-row">
-	<img class="h-96 w-full rounded-t-lg object-cover md:h-auto md:w-48 md:!rounded-none md:!rounded-s-lg" src="https://tecdn.b-cdn.net/wp-content/uploads/2020/06/vertical.jpg" alt=""/>
-	<div class="flex flex-col justify-start p-6">
-		<h5 class="mb-4 text-xl font-medium">Antonio Guillén García</h5>
-		<p class="mb-2 text-base">
-			<b>
-				DNI:
-			</b>
-			79122206K
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Teléfono:
-			</b>
-			640104081
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Email:
-			</b>
-			antonioguillengarcia123@gmail.com
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Dirección:
-			</b>
-			C/ Serenata Edf. Puerta Grande, 20 B ati J - 29600
-		</p>
-		<div class="mt-2 flex justify-between">
-			<span class="text-xs text-surface/75 dark:text-neutral-300">
-				04/09/2003
-			</span>
-			<span class="text-xs text-surface/75 dark:text-neutral-300">
-				2º DAW
-			</span>
-		</div>
-	</div>
-</div><div class="flex flex-col rounded-lg border-4 bg-white text-surface shadow-secondary-1 dark:bg-surface-dark dark:text-black md:max-w-xl md:flex-row">
-	<img class="h-96 w-full rounded-t-lg object-cover md:h-auto md:w-48 md:!rounded-none md:!rounded-s-lg" src="https://tecdn.b-cdn.net/wp-content/uploads/2020/06/vertical.jpg" alt=""/>
-	<div class="flex flex-col justify-start p-6">
-		<h5 class="mb-4 text-xl font-medium">Antonio Guillén García</h5>
-		<p class="mb-2 text-base">
-			<b>
-				DNI:
-			</b>
-			79122206K
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Teléfono:
-			</b>
-			640104081
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Email:
-			</b>
-			antonioguillengarcia123@gmail.com
-		</p>
-		<p class="mb-2 text-base">
-			<b>
-				Dirección:
-			</b>
-			C/ Serenata Edf. Puerta Grande, 20 B ati J - 29600
-		</p>
-		<div class="mt-2 flex justify-between">
-			<span class="text-xs text-surface/75 dark:text-neutral-300">
-				04/09/2003
-			</span>
-			<span class="text-xs text-surface/75 dark:text-neutral-300">
-				2º DAW
-			</span>
-		</div>
-	</div>
-</div>
+{% endfor %}
