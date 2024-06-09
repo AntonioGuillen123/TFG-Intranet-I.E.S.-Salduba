@@ -1,0 +1,24 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block title %}
+	Intranet - Horario
+{% endblock %}
+
+{% block titlePage %}
+	Mi Horario
+{% endblock %}
+
+{% block jsContent %}
+	{{ encore_entry_script_tags('teacherSchedulejs') }}
+{% endblock %}
+
+{% block styleContentDashBoard %}
+	{{ encore_entry_link_tags('teacherSchedule') }}
+{% endblock %}
+
+{% block toolbarPage %}{% endblock %}
+{% block pageContent %}
+	<div class="flex justify-center">
+		{% include 'teacher_schedule/partials/teacherSchedule.html.twig' %}
+	</div>
+{% endblock %}

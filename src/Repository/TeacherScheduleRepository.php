@@ -15,29 +15,29 @@ class TeacherScheduleRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, TeacherSchedule::class);
     }
+    
+   /*  public function convertTOJSON($queryResult)
+    {
+        $result = [];
 
-    //    /**
-    //     * @return TeacherSchedule[] Returns an array of TeacherSchedule objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('t.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+        for ($i = 0; $i < count($queryResult); $i++) {
+            $result[] = [
+                'id' => $queryResult[$i]->getId(),
+                'day' => $queryResult[$i]->getDayNumber()->getName(),
+                'hour' => $queryResult[$i]->getHourNumber()->getName(),
+                'abbreviation' => $queryResult[$i]->getSubjectAbbreviation(),
+                'removed' => $queryResult[$i]->isRemoved(),
+                'important' => $queryResult[$i]->isImportant(),
+                'readed' => $queryResult[$i]->isReaded(),
+                'user_from' => $queryResult[$i]->getUserFrom()->getUsername(),
+                'user_to' => $queryResult[$i]->getUserTo()->getUsername(),
+                'image' => $queryResult[$i]->getUserTo()->getTeacher()->getImage()
+            ];
+        }
+        return $result;
+    } */
 
-    //    public function findOneBySomeField($value): ?TeacherSchedule
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function getSchedule(){
+
+    }
 }

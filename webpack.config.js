@@ -18,6 +18,8 @@ Encore
     .addEntry('bookingjs', './assets/js/booking.js')
     .addEntry('studentjs', './assets/js/student.js')
     .addEntry('teacherjs', './assets/js/teacher.js')
+    .addEntry('teacherSchedulejs', './assets/js/teacherSchedule.js')
+    .addEntry('absencejs', './assets/js/absence.js')
     .addStyleEntry('global', './assets/styles/global.scss')
     .addStyleEntry('header', './assets/styles/header.css')
     .addStyleEntry('sidebar', './assets/styles/sidebar.css')
@@ -28,9 +30,11 @@ Encore
     .addStyleEntry('booking', './assets/styles/booking.css')
     .addStyleEntry('student', './assets/styles/student.css')
     .addStyleEntry('teacher', './assets/styles/teacher.css')
+    .addStyleEntry('teacherSchedule', './assets/styles/teacherSchedule.css')
+    .addStyleEntry('absence', './assets/styles/absence.css')
     .enableSassLoader()
     .enablePostCssLoader()
     .enableSingleRuntimeChunk()
     .autoProvidejQuery();
-
+    
 module.exports = Encore.getWebpackConfig();

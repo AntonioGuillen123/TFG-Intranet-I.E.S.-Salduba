@@ -1,0 +1,4 @@
+getTeacherSchedule:
+  path: /teacherSchedule
+  controller: App\Controller\TeacherScheduleController::index
+  methods: [GET]

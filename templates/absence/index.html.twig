@@ -1,0 +1,24 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block title %}
+	Intranet - Ausencias
+{% endblock %}
+
+{% block titlePage %}
+	Ausencias
+{% endblock %}
+
+{% block jsContent %}
+	{{ encore_entry_script_tags('absencejs') }}
+{% endblock %}
+
+{% block styleContentDashBoard %}
+	{{ encore_entry_link_tags('absence') }}
+{% endblock %}
+
+{% block toolbarPage %}{% endblock %}
+{% block pageContent %}
+	<div class="flex">
+		{% include 'absence/partials/absence.html.twig' %}
+	</div>
+{% endblock %}

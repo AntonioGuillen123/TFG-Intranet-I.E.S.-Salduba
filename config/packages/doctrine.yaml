@@ -25,6 +25,8 @@ doctrine:
         controller_resolver:
             auto_mapping: true
         dql:
+            numeric_functions:
+                DAYOFWEEK: DoctrineExtensions\Query\Mysql\DayOfWeek
             string_functions:
                 MONTH: DoctrineExtensions\Query\Mysql\Month
                 YEAR: DoctrineExtensions\Query\Mysql\Year

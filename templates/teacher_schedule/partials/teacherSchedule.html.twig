@@ -1,0 +1,81 @@
+{% set daysOfWeek = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'] %}
+{% set hoursOfDay = [
+    '8:30', 
+    '9:30', 
+    '10:30',
+    '10:50', 
+    '11:50',
+    '12:50', 
+    '13:00', 
+    '14:00', 
+    '15:00', 
+    '15:30', 
+    '16:30', 
+    '17:30', 
+    '17:45',
+    '18:45', 
+    '19:45', 
+    '20:00', 
+    '21:00'
+    ] %}
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg w-100">
+	<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 text-center">
+		<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+			<tr>
+				<th scope="col" class="px-6 py-3">
+					Día
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Hora
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Abreviatura
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Asignatura
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Aula
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Grupo
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Comienzo
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Finalización
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for day in schedule %}
+				<tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+					<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+						{{daysOfWeek[day.dayNumber - 1]}}
+					</th>
+					<td class="px-6 py-4">
+						{{hoursOfDay[day.hourNumber - 1]}}
+					</td>
+					<td class="px-6 py-4">
+						{{day.subjectAbbreviation}}
+					</td>
+					<td class="px-6 py-4">
+						{{day.subject}}
+					</td>
+					<td class="px-6 py-4">
+						{{day.classroomName}}
+					</td>
+                    <td class="px-6 py-4">
+						{{day.groupName}}
+					</td>
+                    <td class="px-6 py-4">
+						{{day.startHour}}
+					</td>
+                    <td class="px-6 py-4">
+						{{day.endHour}}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>

@@ -1,0 +1,4 @@
+getAbsences:
+  path: /absence
+  controller: App\Controller\AbsenceController::index
+  methods: [GET]
