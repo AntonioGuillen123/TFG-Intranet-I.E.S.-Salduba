@@ -31,6 +31,9 @@ class Absence
     #[ORM\JoinColumn(nullable: false)]
     private ?Teacher $author = null;
 
+    #[ORM\ManyToOne]
+    private ?Teacher $coveredBy = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,6 +95,18 @@ class Absence
     public function setAuthor(?Teacher $author): static
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getCoveredBy(): ?Teacher
+    {
+        return $this->coveredBy;
+    }
+
+    public function setCoveredBy(?Teacher $coveredBy): static
+    {
+        $this->coveredBy = $coveredBy;
 
         return $this;
     }

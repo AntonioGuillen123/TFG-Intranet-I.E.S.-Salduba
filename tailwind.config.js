@@ -5,6 +5,7 @@ module.exports = {
   content: [
     "./assets/**/*.js",
     "./templates/**/*.html.twig",
+    "./node_modules/flowbite/**/*.js"
   ],
   theme: {
     extend: {},
@@ -30,6 +31,8 @@ module.exports = {
       fuchsia: colors.fuchsia,
     }
   },
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin')
+  ],
 }
 

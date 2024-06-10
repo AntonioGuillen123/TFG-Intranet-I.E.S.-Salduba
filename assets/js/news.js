@@ -5,12 +5,12 @@ $(document).ready(() => {
     const searchBar = document.querySelector('#search-bg input')
     searchBar.addEventListener('keyup', debounce((event) => getRenderNews(event.target.value), 500))
 
-    const uploadFile = document.querySelector('#news_image')
+   /*  const uploadFile = document.querySelector('#news_image')
     uploadFile?.addEventListener('change', (event) => {
         console.log('hola')
 
         console.log(event.target.files)
-    })
+    }) */
 
     const news = document.querySelectorAll('.new')
     news.forEach((newsItem) => {
@@ -54,8 +54,6 @@ const markViewNew = async (id) => {
         url: `/news/markViewNew/${id}`,
         type: 'PUT',
         success: (response) => {
-            console.log('LISTO AB AB AB')
-            console.log(response)
         },
         error: (err) => {
             console.log(`Error :( ${err.responseText}`)

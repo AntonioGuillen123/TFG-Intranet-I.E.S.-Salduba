@@ -43,25 +43,36 @@ class AbsenceRepository extends ServiceEntityRepository
             $month = $date->format('F');
             $year = $date->format('Y');
 
+            $coveredBy = $queryResult[$i]->getCoveredBy()?->getEmploye();
+
             $result[] = [
                 'id' => $queryResult[$i]->getId(),
                 'task' => $queryResult[$i]->getTask(),
                 'reason' => $queryResult[$i]->getReason(),
                 'author' => $queryResult[$i]->getAuthor()->getEmploye(),
                 'absence_date' => $day . ' de ' . ($months[$month]) . ' de ' . $year,
-                'hour' => $queryResult[$i]->getHour()
+                'hour' => $queryResult[$i]->getHour(),
+                'coveredBy' => $coveredBy ?? '',
+                'isCovered' => $coveredBy != null
             ];
         }
         return $result;
     }
 
-    public function getAbsences($hourID, $dayID)
+    public function getAbsences($teacherID, $hourID, $dayID)
     {
+        $currentDate = new \DateTime();
+
         $queryResult = $this->createQueryBuilder('a')
-            ->where('DAYOFWEEK(a.absence_date) = :dayOfWeek')
+            ->where('a.absence_date >= :currentDate')
+            ->andWhere('DAYOFWEEK(a.absence_date) = :dayOfWeek')
             ->andWhere('a.hour = :hourId')
+            ->andWhere('a.author != :authorId')
+            ->setParameter('currentDate', $currentDate->format('Y-m-d'))
             ->setParameter('dayOfWeek', $dayID + 1)
             ->setParameter('hourId', $hourID)
+            ->setParameter('authorId', $teacherID)
+            ->orderBy('a.absence_date', 'ASC')
             ->getQuery()
             ->getResult();
 

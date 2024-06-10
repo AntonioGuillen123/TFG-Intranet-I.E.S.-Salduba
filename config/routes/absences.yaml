@@ -2,3 +2,18 @@ getAbsences:
   path: /absence
   controller: App\Controller\AbsenceController::index
   methods: [GET]
+
+createAbsenceView:
+  path: /absence/create
+  controller: App\Controller\AbsenceController::createView
+  methods: [GET]
+
+createAbsence:
+  path: /absence/create
+  controller: App\Controller\AbsenceController::create
+  methods: [POST]
+
+coverAbsence:
+  path: /absence/{id}
+  controller: App\Controller\AbsenceController::coverAbsence
+  methods: [PUT]

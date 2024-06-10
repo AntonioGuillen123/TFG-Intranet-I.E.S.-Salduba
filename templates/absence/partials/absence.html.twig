@@ -1,20 +1,42 @@
-<section class="relative min-h-screen flex flex-col justify-start bg-slate-50 overflow-hidden">
+<section class="relative flex flex-col justify-start bg-slate-50 mb-4">
 	<div class="w-full max-w-6xl mx-auto px-4 md:px-6">
 		<div class="flex flex-col justify-center divide-y divide-slate-200">
 			<div class="w-full max-w-3xl mx-auto">
 				<div class="-my-6">
 					{% for absence in absences %}
-						<div class="relative pl-8 sm:pl-32 py-6 group">
+						{% set isCovered = absence.isCovered %}
+						{% set isCoveredClass = isCovered ? 'covered' : '' %}
+						{% set absenceCursor = isCovered ? '' : 'cursor-pointer' %}
+						{% set absenceBgColor = isCovered ? 'bg-emerald-100' : 'bg-red-400' %}
+						{% set absenceTextColor = isCovered ? 'text-emerald-600' : 'text-white' %}
+						{% set absencePointColor = isCovered ? 'after:bg-emerald-600' : 'after:bg-red-400' %}
+						{% set popoverTarget = isCovered ? 'hover' : 'click' %}
+						<div id="absence-{{absence.id}}" class="relative pl-8 sm:pl-32 py-6 group absence {{isCoveredClass}}">
 							<div class="font-medium text-indigo-500 mb-1 sm:mb-0">{{absence.absence_date}}</div>
-							<div class="flex flex-col sm:flex-row items-start mb-1 group-last:before:hidden before:absolute before:left-2 sm:before:left-0 before:h-full before:px-px before:bg-slate-300 sm:before:ml-[6.5rem] before:self-start before:-translate-x-1/2 before:translate-y-3 after:absolute after:left-2 sm:after:left-0 after:w-2 after:h-2 after:bg-indigo-600 after:border-4 after:box-content after:border-slate-50 after:rounded-full sm:after:ml-[6.5rem] after:-translate-x-1/2 after:translate-y-1.5">
-								<time class="sm:absolute left-0 translate-y-0.5 inline-flex items-center justify-center text-s font-semibold uppercase w-20 h-6 mb-3 sm:mb-0 text-emerald-600 bg-emerald-100 rounded-full">{{absence.hour.name}}</time>
+							<div class="flex flex-col sm:flex-row items-start mb-1 group-last:before:hidden before:absolute before:left-2 sm:before:left-0 before:h-full before:px-px before:bg-slate-300 sm:before:ml-[6.5rem] before:self-start before:-translate-x-1/2 before:translate-y-3 after:absolute after:left-2 sm:after:left-0 after:w-2 after:h-2 {{absencePointColor}} after:border-4 after:box-content after:border-slate-50 after:rounded-full sm:after:ml-[6.5rem] after:-translate-x-1/2 after:translate-y-1.5">
+								<time data-popover-target="popover-{{absence.id}}" data-popover-trigger="{{popoverTarget}}" data-popover-placement="right" class="sm:absolute {{absenceCursor}} left-0 translate-y-0.5 inline-flex items-center justify-center text-s font-semibold uppercase w-20 h-6 mb-3 sm:mb-0 {{absenceTextColor}} {{absenceBgColor}} rounded-full" {# {% if isCovered } onclick="" {% endif %} #}>{{absence.hour.name}}</time>
 								<div class="text-xl font-bold text-slate-900">{{absence.author}}</div>
 							</div>
-							<div class="text-slate-500">{{absence.task}}</div>
+							<div class="text-slate-500 mt-3">
+								<b>Tarea:
+								</b>
+								{{absence.task}}</div>
+							{% if isDirective %}
+								<hr>
+								<div class="text-slate-500">
+									<b>Motivo:
+									</b>
+									{{absence.reason}}</div>
+							{% endif %}
+							{% if isCovered %}
+								<div style="display: none;" class="coveredBy">{{absence.coveredBy}}</div>
+							{% endif %}
 						</div>
+						<div data-popover data-bs-html="true" id="popover-{{absence.id}}" role="tooltip" class="absolute z-1000 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800"></div>
 					{% endfor %}
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.4/flowbite.min.js"></script>

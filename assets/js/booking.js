@@ -429,7 +429,6 @@ const makeBooking = async () => {
             'bookingDateID': parseInt(bookingDateID)
         },
         success: (response) => {
-            console.log(response)
             const actualDate = new Date()
             const actualMonth = actualDate.getMonth() + 1
             const month = dateFromModal.getMonth() + 1
