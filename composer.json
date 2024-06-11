@@ -14,6 +14,7 @@
         "doctrine/doctrine-bundle": "^2.12",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^3.1",
+        "dompdf/dompdf": "^3.0",
         "laminas/laminas-hydrator": "^4.15",
         "symfony/console": "6.4.*",
         "symfony/dotenv": "6.4.*",

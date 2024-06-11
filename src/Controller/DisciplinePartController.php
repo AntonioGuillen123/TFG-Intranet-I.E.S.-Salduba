@@ -58,6 +58,7 @@ class DisciplinePartController extends AbstractController
 
                 $partID = intval($request->request->get('partID'));
                 $measureID = intval($request->request->get('measureID'));
+                $pdf = $request->request->get('pdf');
 
                 $parts = $entityManager->getRepository(DisciplinePart::class)->findAll();
                 $measures = $entityManager->getRepository(CrimeMeasure::class)->findAll();
@@ -77,11 +78,73 @@ class DisciplinePartController extends AbstractController
                     'isDirective' => $isDirective
                 ]);
 
-                $response = new JsonResponse(['content' => $content]);
+                if($pdf) $this->generatePDF($part);
+
+                $response = new JsonResponse(['content' => $content, 'pdf' => $pdf]);
             } catch (Exception $e) {
             }
         }
 
         return $response;
+    }
+
+    public function generatePDF($part){
+        $student = $part->getStudent();
+        $studentName = $student->getName();
+        $studentUnit = $student->getUnit();
+
+        $crime = $part->getCrime();
+        $crimeName = $crime->getName();
+        $crimeSeverity = $crime->getSeverity()->getName();
+
+        $measure = $part->getMeasure()->getName();
+        
+        $teacher = $part->getTeacher()->getEmploye();
+
+        $date = $part->getPartDate()->format('d/m/Y');
+
+        $pdfContent = '<!DOCTYPE html>
+                <html lang="en">
+
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>PDF Report</title>
+                </head>
+
+                <body>
+                    <div>
+                        <img src="images/iessalduba.jpg" alt="Imagen Salduba">
+                        <h1>I.E.S Salduba</h1>
+                    </div>
+                    <div>
+                        <div>
+                            <label><b>Alumn@:</b> </label>
+                            <span>%s</span>
+                        </div>
+                        <div>
+                            <label><b>Fecha de la falta: </b></label>
+                            <span>%s</span>
+                        </div>
+                        <div>
+                            <label><b>Falta de disciplina:</b> </label>
+                            <span>%s</span>
+                        </div>
+                        <div>
+                            <label><b>Motivo:</b> </label>
+                            <span>%s</span>
+                        </div>
+                        <div>
+                            <label><b>Sanción:</b> </label>
+                            <span>%s</span>
+                        </div>
+                        <div>
+                            <label><b>Profesor:</b> </label>
+                            <span>%s</span>
+                        </div>
+                    </div>
+                </body>
+
+                </html>';
     }
 }

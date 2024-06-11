@@ -12,8 +12,9 @@ const getDisciplineParts = () => {
     modalButton.addEventListener('click', () => {
         const partID = modal.getAttribute('partID')
         const measureID = modal.querySelector('select').value
+        const pdf = modal.querySelector('#pdf').checked
 
-        makeMeasure(partID, measureID)
+        makeMeasure(partID, measureID, pdf)
     })
 
     parts.forEach((item) => {
@@ -33,31 +34,21 @@ const getDisciplineParts = () => {
     })
 }
 
-const makeMeasure = async (partID, measureID) => {
+const makeMeasure = async (partID, measureID, pdf) => {
     await $.ajax({
         url: `/disciplinePart/makeMeasure`,
         type: 'PUT',
         headers: 'Content-Type: application/json',
         data: {
             'partID': parseInt(partID),
-            'measureID': parseInt(measureID)
+            'measureID': parseInt(measureID),
+            'pdf': pdf
         },
         success: (response) => {
-            $('.modal').modal('hide')
-            /* const modalBackDrop = document.querySelector('.modal-backdrop')
-            modalBackDrop.remove()
-            const modal = document.querySelector('.modal')
-            modal.classList.remove('show')
-            modal.style.display = 'none'
-            modal.removeAttribute('aria-modal')
-            modal.removeAttribute('role')
-            modal.setAttribute('aria-hidden', true) */
-
-            /* const bootstrapModal = new Modal(modal)
-
-            bootstrapModal.hide() */
-
             const content = response.content
+            console.log(response.pdf)
+
+            $('.modal').modal('hide')
 
             $('#main-content').html(content)
 
