@@ -1,0 +1,69 @@
+<div class="modal fade" id="part-modal" tabindex="-1" aria-labelledby="partModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="part-modal-label"></h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div id="part-measure">
+					<span>
+						<b>Medidas</b>
+					</span>
+					<div>
+						<select class="form-select cursor-pointer" aria-label="Select De Medidas">
+							{% for measure in measures %}
+								<option value="{{measure.id}}">{{measure.name}}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+				<button id="submit-button" type="button" class="btn btn-danger">Sancionar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% for part in parts %}
+	<div id="discipline-part-{{part.id}}" class="w-full md:w-1/3 mb-4 discipline-part">
+		<div class="d-flex flex-column h-100 bg-white p-6 shadow-lg rounded-xl justify-between dark:bg-gray-800">
+			<div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
+				<div class="d-flex align-items-center w-100">
+					<a href="student#student-{{part.student.id}}" class="relative block">
+						<img alt="Imagen de {{part.student.name}} no encontrada :(" src="{{part.student.image}}" class="mx-auto object-cover rounded-full h-10 w-10 "/>
+					</a>
+					<div class="flex flex-col items-start ml-4">
+						<span class="text-gray-700 dark:text-white">
+							{{part.student.student}}
+						</span>
+						<span class="text-sm font-light text-gray-400 dark:text-gray-300">
+							{{part.partDate|date("d/m/Y")}}
+						</span>
+					</div>
+				</div>
+				<div class="flex-none hidden md:block ">
+					<span class="w-full px-3 py-1 text-sm text-white bg-cyan-700 rounded-full">
+						{{part.student.unit}}
+					</span>
+				</div>
+			</div>
+			<p class="crime-name mt-4 mb-2 text-lg text-gray-800 dark:text-white">
+				<b>{{part.crime.name}}</b>
+			</p>
+			<p class="text-m font-normal text-gray-600">
+				{{part.measure.name ?? 'Aún sin medida...'}}
+			</p>
+			<p class="text-m font-normal text-gray-600">
+				{{part.teacher.employe}}
+			</p>
+			{% if isDirective and not part.measure %}
+				<button data-bs-toggle="modal" data-bs-target="#part-modal" type="button" class="py-2 px-4  bg-cyan-600 hover:bg-cyan-700 focus:ring-blue-500 focus:ring-offset-cyan-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+					Aplicar Medida
+				</button>
+			{% endif %}
+		</div>
+	</div>
+{% endfor %}

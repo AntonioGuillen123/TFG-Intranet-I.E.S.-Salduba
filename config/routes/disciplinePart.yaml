@@ -1,0 +1,9 @@
+getDisciplineParts:
+  path: /disciplinePart
+  controller: App\Controller\DisciplinePartController::index
+  methods: [GET]
+
+makeMeasure:
+  path: /disciplinePart/makeMeasure
+  controller: App\Controller\DisciplinePartController::makeMeasure
+  methods: [PUT]

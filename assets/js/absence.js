@@ -69,10 +69,10 @@ const coverAbsence = async (id) => {
     await $.ajax({
         url: `/absence/${id}`,
         type: 'PUT',
-        success: async (response) => {
+        success: (response) => {
             const content = response.content
 
-            await $('#absences-container').html(content)
+            $('#absences-container').html(content)
 
             getPopOvers(true)
         },

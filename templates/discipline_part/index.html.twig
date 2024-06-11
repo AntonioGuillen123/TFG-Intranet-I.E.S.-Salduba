@@ -1,0 +1,27 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block title %}
+	Intranet - Partes
+{% endblock %}
+
+{% block titlePage %}
+	Partes
+{% endblock %}
+
+{% block jsContent %}
+	{{ encore_entry_script_tags('disciplinePartjs') }}
+{% endblock %}
+
+{% block styleContentDashBoard %}
+	{{ encore_entry_link_tags('disciplinePart') }}
+{% endblock %}
+
+{% block toolbarPage %}{% endblock %}
+
+{% block pageContent %}
+	
+
+	<div id="main-content" class="d-flex flex-wrap gap-4 align-items-stretch justify-evenly m-4">
+		{% include 'discipline_part/partials/discipline_part.html.twig' %}
+	</div>
+{% endblock %}
