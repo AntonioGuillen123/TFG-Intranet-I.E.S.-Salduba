@@ -7,3 +7,13 @@ makeMeasure:
   path: /disciplinePart/makeMeasure
   controller: App\Controller\DisciplinePartController::makeMeasure
   methods: [PUT]
+
+createDisciplinePartView:
+  path: /disciplinePart/create
+  controller: App\Controller\DisciplinePartController::createDisciplinePartView
+  methods: [GET]
+
+createDisciplinePart:
+  path: /disciplinePart/create
+  controller: App\Controller\DisciplinePartController::createDisciplinePart
+  methods: [POST]

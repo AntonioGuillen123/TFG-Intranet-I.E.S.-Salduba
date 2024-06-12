@@ -42,9 +42,11 @@ const makeMeasure = async (partID, measureID, pdf) => {
         data: {
             'partID': parseInt(partID),
             'measureID': parseInt(measureID),
-            'pdf': pdf
+            'pdf': pdf ? '1' : '0'
         },
         success: (response) => {
+            document.querySelector('#pdf').checked = false
+
             const content = response.content
             console.log(response.pdf)
 
