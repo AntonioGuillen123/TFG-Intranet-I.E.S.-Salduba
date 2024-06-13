@@ -187,7 +187,7 @@ const printCalendary = (newDate, newDateDay, monthIndex) => {
 
                     const bookingRemitent = document.createElement('span')
                     bookingRemitent.classList.add('remitent', 'text-muted')
-                    bookingRemitent.innerHTML = `<b>Reservado Por: </b> ${remitent}`
+                    bookingRemitent.innerHTML = `<b>Reservado Por: </b> ${item.teacher}`
 
                     const br = document.createElement('br')
                     const br2 = document.createElement('br')

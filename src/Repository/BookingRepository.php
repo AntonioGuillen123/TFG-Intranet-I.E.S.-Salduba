@@ -27,6 +27,7 @@ class BookingRepository extends ServiceEntityRepository
             $result[] = [
                 'id' => $queryResult[$i]->getId(),
                 'user_from' => $queryResult[$i]->getUserFrom()->getUsername(),
+                'teacher' => $queryResult[$i]->getUserFrom()->getTeacher()->getEmploye(),
                 'resource_name' => $queryResult[$i]->getResource()->getName(),
                 'resource_type' => $queryResult[$i]->getResource()->getResourceType()->getName(),
                 'booking_date' => $queryResult[$i]->getBookingDate()->format('d-m-Y H:i'),

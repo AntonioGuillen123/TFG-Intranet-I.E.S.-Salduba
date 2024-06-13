@@ -30,10 +30,14 @@ class AuthenticationListener
 
         $isLogged = $this->session->has('username');
 
-        // $users = $this->entityManager->getRepository(Session::class)->findAll();
-
         if (!$isLogged && $route !== 'login' && $route !== 'checkUser') {
             $response = new RedirectResponse($this->urlGenerator->generate('login'));
+
+            $event->setResponse($response);
+        }
+
+        if($route === 'index'){
+            $response = new RedirectResponse($this->urlGenerator->generate('getStudents'));
 
             $event->setResponse($response);
         }

@@ -90,7 +90,9 @@ class DisciplinePartController extends AbstractController
 
                 $pdf = $request->request->get('pdf');
 
-                if($pdf) $this->generatePDF($kernel, $newDisciplinePart);
+                $measure = $newDisciplinePart->getMeasure();
+
+                if($pdf && $measure) $this->generatePDF($kernel, $newDisciplinePart);
             } catch (Exception $e) {
             }   
         }
@@ -138,7 +140,7 @@ class DisciplinePartController extends AbstractController
 
                 if ($pdf == '1') $this->generatePDF($kernel, $part);
 
-                $response = new JsonResponse(['content' => $content, 'pdf' => $pdf]);
+                $response = new JsonResponse(['content' => $content, 'pdf' => $pdf, 'measureID' => $measureID]);
             } catch (Exception $e) {
             }
         }

@@ -20,21 +20,26 @@ class DisciplinePartType extends AbstractType
             ->add('part_date', null, [
                 'label' => 'Fecha de la falta',
                 'widget' => 'single_text',
+                'required' => true
             ])
             ->add('student', EntityType::class, [
                 'label' => 'Alumno',
                 'class' => Student::class,
                 'choice_label' => 'name',
+                'required' => true
             ])
             ->add('crime', EntityType::class, [
                 'label' => 'Motivo de la falta',
                 'class' => Crime::class,
                 'choice_label' => 'name',
+                'required' => true
             ])
             ->add('measure', EntityType::class, [
                 'label' => 'Sanción de la falta',
                 'class' => CrimeMeasure::class,
                 'choice_label' => 'name',
+                'placeholder' => 'Nombre de la sanción',
+                'required' => false
             ]);
     }
 
