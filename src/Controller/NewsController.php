@@ -81,21 +81,22 @@ class NewsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form->get('image')->getData();
 
-            if ($file) {
-                $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFileName = $slugger->slug($originalFileName);
-                $newFileName = $safeFileName . '-' . uniqid() . '-' . $file->guessExtension();
+        if ($file) {
+    $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+    $safeFileName = $slugger->slug($originalFileName);
+    $newFileName = $safeFileName . '-' . uniqid() . '-' . $file->guessExtension();
 
-                try {
-                    $files_directory = 'files';
+    try {
+        $files_directory = 'files';
 
-                    $file->move($files_directory, $newFileName);
+        $file->move($files_directory, $newFileName);
 
-                    $newNews->setImage($newFileName);
-                } catch (FileException $e) {
-                    error_log('Error' . $e);
-                }
-            }
+        $newNews->setImage($newFileName);
+    } catch (FileException $e) {
+        error_log('Error' . $e);
+    }
+}
+
             try {
                 $userFrom = $entityManager->getRepository(Session::class)->findOneBy(['username' => $username]);
 
@@ -111,8 +112,6 @@ class NewsController extends AbstractController
             } catch (Exception $e) {
                 error_log('Error' . $e);
             }
-
-            $image = $newNews->getImage();
         }
 
         return $this->redirectToRoute('getNews');

@@ -27,6 +27,7 @@ class NotificationRepository extends ServiceEntityRepository
                 'user_from' => $queryResult[$i]->getUserFrom()->getUsername(),
                 'user_to' => $queryResult[$i]->getUserTo()->getUsername(),
                 'type' => $queryResult[$i]->getType()->getName(),
+                'teacher' => $queryResult[$i]->getUserFrom()->getTeacher()->getEmploye(),
                 'associated_id' => $queryResult[$i]->getAssociatedId()
             ];
         }

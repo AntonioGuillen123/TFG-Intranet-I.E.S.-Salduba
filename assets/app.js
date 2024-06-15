@@ -54,7 +54,6 @@ const deleteNotification = async (id) => {
         url: `/notification/${id}`,
         type: 'DELETE',
         success: (data) => {
-            /* alert('Borrao Picha') */
             getNotifications()
         },
         error: (err) => {
@@ -68,7 +67,6 @@ const deleteAllNotifications = async () => {
         url: `/notification`,
         type: 'DELETE',
         success: () => {
-            console.log('e')
             getNotifications()
         },
         error: (err) => {
@@ -100,7 +98,8 @@ const createNotifications = (data) => {
             title,
             user_from,
             user_to,
-            associated_id
+            associated_id,
+            teacher
         } = item
 
         const isMail = type === MESSAGE_TYPE
@@ -133,7 +132,7 @@ const createNotifications = (data) => {
         titleMessage.innerHTML = `<b>${title}</b>`
 
         const fromMessage = document.createElement('span')
-        fromMessage.innerHTML = `<b>De: ${user_from}</b>`
+        fromMessage.innerHTML = `<b>De: ${teacher.split(',')[1].trim()}</b>`
 
         const deleteContainer = document.createElement('div')
         deleteContainer.classList.add('delete-notify')
@@ -185,7 +184,6 @@ export const getMessages = async () => {
         url: `/message/count`,
         type: 'GET',
         success: (response) => {
-            console.log(response)
             const data = JSON.parse(response)
 
             createMessages(data)

@@ -5,13 +5,6 @@ $(document).ready(() => {
     const searchBar = document.querySelector('#search-bg input')
     searchBar.addEventListener('keyup', debounce((event) => getRenderNews(event.target.value), 500))
 
-   /*  const uploadFile = document.querySelector('#news_image')
-    uploadFile?.addEventListener('change', (event) => {
-        console.log('hola')
-
-        console.log(event.target.files)
-    }) */
-
     const news = document.querySelectorAll('.new')
     news.forEach((newsItem) => {
         const id = newsItem.getAttribute('id')

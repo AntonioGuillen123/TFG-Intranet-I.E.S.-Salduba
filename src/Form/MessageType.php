@@ -27,7 +27,7 @@ class MessageType extends AbstractType
             ->add('user_to', EntityType::class, [
                 'class' => Session::class,
                 'label' => 'Para',
-                'choice_label' => 'username',
+                'choice_label' => 'teacher.employe',
                 'query_builder' => function (SessionRepository $messageRepository) use ($user) {
                     return $messageRepository->createQueryBuilder('s')
                         ->where('s.id != :username')

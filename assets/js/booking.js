@@ -370,7 +370,6 @@ const getResourceFromType = async (id) => {
         url: `/booking/getResourceFromType/${id}`,
         type: 'GET',
         success: (response) => {
-            console.log(response.resources)
             result = response.resources
         },
         error: (err) => {
@@ -387,8 +386,6 @@ const getScheduleFromResource = async (bookingDate, id) => {
     const day = bookingDate.getDate()
 
     const dateFormat = `${bookingDate.getFullYear()}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`
-    console.log(bookingDate)
-    console.log(dateFormat)
 
     await $.ajax({
         url: `/booking/getScheduleFromResource`,
@@ -399,8 +396,6 @@ const getScheduleFromResource = async (bookingDate, id) => {
             'date': dateFormat
         },
         success: (response) => {
-            console.log(response)
-
             result = response.schedule
         },
         error: (err) => {
@@ -416,8 +411,6 @@ const makeBooking = async () => {
     const date = dateFromModal.toLocaleDateString('sv-SE')
     const resourceID = document.querySelector('#resource-container select').value
     const bookingDateID = document.querySelector('#booking-date select').value
-
-    console.log(date)
 
     await $.ajax({
         url: `/booking/makeBooking`,

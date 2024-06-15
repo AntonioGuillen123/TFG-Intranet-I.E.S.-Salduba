@@ -48,7 +48,6 @@ const makeMeasure = async (partID, measureID, pdf) => {
             document.querySelector('#pdf').checked = false
 
             const content = response.content
-            console.log(response.pdf)
 
             $('.modal').modal('hide')
 

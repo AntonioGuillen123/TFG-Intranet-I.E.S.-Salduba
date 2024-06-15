@@ -16,7 +16,7 @@ class News
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 75)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -24,10 +24,7 @@ class News
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $image = null;
-
-/*     #[ORM\Column(options: ["default" => "0"])]
-    private ?int $views = null; */
-
+    
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Session $user_from = null;
@@ -86,18 +83,6 @@ class News
 
         return $this;
     }
-
-   /*  public function getViews(): ?int
-    {
-        return $this->views;
-    }
-
-    public function setViews(int $views): static
-    {
-        $this->views = $views;
-
-        return $this;
-    } */
 
     public function getUserFrom(): ?Session
     {

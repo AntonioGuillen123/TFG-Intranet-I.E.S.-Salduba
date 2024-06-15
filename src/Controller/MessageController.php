@@ -173,7 +173,7 @@ class MessageController extends AbstractController
         $isAYAX = $request->isXmlHttpRequest();
 
         if ($isAYAX) {
-            try { //TODO REUTILIZAR ESTO
+            try {
                 $message = $entityManager->getRepository(Message::class)->find($id);
 
                 if ($message->isRemoved()) {

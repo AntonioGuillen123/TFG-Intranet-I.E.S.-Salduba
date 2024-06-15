@@ -265,10 +265,8 @@ class DisciplinePartController extends AbstractController
 
             // Configuración del remitente
             $mail->setFrom($_ENV['SMTP_USER'], 'Antonio Guillén');
-            $mail->addAddress('antonioguillengarcia123@gmail.com', 'Antonio Guillén García :))');
-            //$mail->addAddress('benitezjuanma25@gmail.com', 'Yuanma');
-            // if ($firstTutor['email']) $mail->addAddress($firstTutor['email'], $firstTutor['name']);
-            // if ($secondTutor['email']) $mail->addAddress($secondTutor['email'], $secondTutor['name']);
+            if ($firstTutor['email']) $mail->addAddress($firstTutor['email'], $firstTutor['name']);
+            if ($secondTutor['email']) $mail->addAddress($secondTutor['email'], $secondTutor['name']);
 
             // Asunto y cuerpo del mensaje
             $mail->Subject = 'Nuevo Parte De Disciplina';

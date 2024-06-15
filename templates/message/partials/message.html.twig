@@ -10,7 +10,9 @@
 	{% set iconReaded = isReaded ? 'fa-eye' : 'fa-eye-slash' %}
 	{% set userFrom = message.user_from %}
 	{% set userTo = message.user_to %}
-	{% set userName = userFrom == username ? 'Para: ' ~ userTo : 'De: ' ~ userFrom %}
+	{% set teacherFrom = message.teacher_from|split(',')[1]|trim %}
+	{% set teacherTo = message.teacher_to|split(',')[1]|trim %}
+	{% set userName = userFrom == username ? 'Para: ' ~ teacherTo : 'De: ' ~ teacherFrom %}
 	{% set image = message.image %}
 
 	<div id="{{id}}" class="d-flex message-item w-100 justify-content-center">
